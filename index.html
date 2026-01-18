@@ -1,0 +1,2333 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowBoost — Генерация качественного трафика для вашего сайта</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-white: #ffffff;
+            --secondary-gray: #f8fafc;
+            --accent-blue: #0ea5e9;
+            --accent-blue-dark: #0284c7;
+            --accent-amber: #f59e0b;
+            --accent-green: #10b981;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-tertiary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.12);
+            --gradient-primary: linear-gradient(135deg, #0ea5e9, #3b82f6);
+            --gradient-subtle: linear-gradient(135deg, #f8fafc, #ffffff);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--primary-white);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Шапка */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 18px 0;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            box-shadow: var(--shadow-md);
+            padding: 12px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .logo-icon::before {
+            content: '';
+            width: 18px;
+            height: 18px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 4px;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            transform: rotate(180deg);
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: var(--transition);
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-link.active {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-blue);
+            border-radius: 1px;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-family: 'Inter', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-login:hover {
+            background: var(--secondary-gray);
+            border-color: var(--accent-blue);
+            transform: translateY(-1px);
+        }
+
+        .btn-register {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+        }
+
+        /* Герой секция */
+        .hero {
+            padding: 180px 0 120px;
+            background: var(--gradient-subtle);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 90%;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 14px 32px;
+            font-size: 16px;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(14, 165, 233, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 14px 32px;
+            font-size: 16px;
+            border-radius: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary-gray);
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Счётчик */
+        .counter-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            background: white;
+            padding: 16px 24px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .counter-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #10b981, #34d399);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .counter-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .counter-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-green);
+            line-height: 1;
+        }
+
+        .counter-text {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+        }
+
+        .counter-trend {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--accent-green);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        /* Визуализация героя */
+        .hero-visual {
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .browser-mockup {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-color);
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotateX(5deg); }
+            50% { transform: translateY(-20px) rotateX(5deg); }
+        }
+
+        .browser-header {
+            background: white;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .browser-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .browser-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .browser-dot:nth-child(1) { background: #ef4444; }
+        .browser-dot:nth-child(2) { background: #f59e0b; }
+        .browser-dot:nth-child(3) { background: #10b981; }
+
+        .browser-url {
+            flex: 1;
+            background: var(--secondary-gray);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(--text-tertiary);
+            font-family: 'SF Mono', 'Cascadia Code', monospace;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .browser-content {
+            padding: 0;
+            height: 320px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+        }
+
+        .activity-simulation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .activity-line {
+            position: absolute;
+            background: var(--accent-blue);
+            border-radius: 2px;
+            opacity: 0.3;
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { opacity: 0.2; }
+            50% { opacity: 0.6; }
+            100% { opacity: 0.2; }
+        }
+
+        .traffic-chart-widget {
+            position: absolute;
+            right: -60px;
+            bottom: 40px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow-lg);
+            width: 280px;
+            z-index: 2;
+            animation: slideIn 0.6s ease-out 0.3s both;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .chart-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .chart-badge {
+            background: var(--accent-green);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .chart-visual {
+            height: 80px;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .chart-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--border-color);
+        }
+
+        .chart-line::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            animation: chartProgress 4s ease-in-out infinite;
+        }
+
+        @keyframes chartProgress {
+            0% { width: 0%; }
+            50% { width: 100%; }
+            100% { width: 0%; }
+        }
+
+        .chart-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        /* Особенности */
+        .features {
+            padding: 120px 0;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 80px;
+        }
+
+        .section-title {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-blue);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(14, 165, 233, 0.05));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--accent-blue);
+            font-size: 28px;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .feature-desc {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        /* Как это работает */
+        .how-it-works {
+            padding: 120px 0;
+            background: var(--secondary-gray);
+            position: relative;
+        }
+
+        .how-it-works::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 80px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+
+        .timeline-step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 30%;
+            padding-top: 80px;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            margin: 0 auto 32px;
+            color: var(--text-primary);
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: var(--transition);
+        }
+
+        .timeline-step:hover .step-number {
+            border-color: var(--accent-blue);
+            background: var(--gradient-primary);
+            color: white;
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .step-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .step-desc {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .step-visual {
+            height: 180px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-tertiary);
+            font-size: 48px;
+            transition: var(--transition);
+        }
+
+        .timeline-step:hover .step-visual {
+            border-color: var(--accent-blue);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Тарифы */
+        .pricing {
+            padding: 120px 0;
+            background: white;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 80px;
+        }
+
+        .pricing-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .pricing-card.popular {
+            border-color: var(--accent-blue);
+            transform: translateY(-16px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-primary);
+            color: white;
+            padding: 8px 24px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+        }
+
+        .plan-name {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .plan-period {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .plan-price {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+
+        .plan-price span {
+            font-size: 24px;
+            color: var(--text-tertiary);
+        }
+
+        .plan-discount {
+            color: var(--accent-green);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .plan-features li {
+            padding: 12px 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .plan-features li i {
+            color: var(--accent-green);
+            font-size: 16px;
+        }
+
+        .plan-features li.disabled {
+            color: var(--text-tertiary);
+        }
+
+        .plan-features li.disabled i {
+            color: var(--text-tertiary);
+        }
+
+        .plan-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .plan-button {
+            width: 100%;
+            padding: 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+        }
+
+        .plan-button.primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .plan-button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+        }
+
+        .plan-button.secondary {
+            background: white;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .plan-button.secondary:hover {
+            background: var(--secondary-gray);
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .plan-details-link {
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .plan-details-link a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .plan-details-link a:hover {
+            color: var(--accent-blue-dark);
+            gap: 8px;
+        }
+
+        /* Финальный CTA */
+        .final-cta {
+            padding: 120px 0;
+            background: var(--gradient-subtle);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .cta-form {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 48px;
+            margin-top: 48px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .form-group {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .form-input {
+            flex: 1;
+            padding: 16px 20px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .form-select {
+            padding: 16px 20px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 200px;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .cta-note {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Футер */
+        .footer {
+            background: white;
+            border-top: 1px solid var(--border-color);
+            padding: 80px 0 40px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-logo .logo {
+            font-size: 20px;
+        }
+
+        .footer-description {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+            max-width: 280px;
+        }
+
+        .footer-links h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 15px;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-blue);
+            gap: 12px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--secondary-gray);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--accent-blue);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-legal a {
+            color: var(--text-tertiary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-legal a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* Модальные окна */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: 48px;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: var(--shadow-xl);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .modal-subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: none;
+            border: none;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            font-size: 20px;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .modal-close:hover {
+            background: var(--secondary-gray);
+            color: var(--text-primary);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .hero-container,
+            .features-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+            
+            .hero-content {
+                text-align: center;
+            }
+            
+            .hero-content p {
+                max-width: 100%;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .counter-container {
+                margin: 0 auto;
+            }
+            
+            .timeline {
+                flex-direction: column;
+                gap: 80px;
+            }
+            
+            .timeline-step {
+                width: 100%;
+                padding-top: 0;
+            }
+            
+            .timeline::before {
+                display: none;
+            }
+            
+            .step-number {
+                position: relative;
+                left: auto;
+                transform: none;
+                margin-bottom: 32px;
+            }
+            
+            .traffic-chart-widget {
+                position: relative;
+                right: auto;
+                bottom: auto;
+                margin-top: 32px;
+                width: 100%;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .form-group {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content h1 {
+                font-size: 36px;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .pricing-card.popular {
+                transform: none;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .footer-legal {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .modal-content {
+                padding: 32px 24px;
+            }
+        }
+
+        /* Утилиты */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-8 {
+            margin-top: 32px;
+        }
+
+        .mb-8 {
+            margin-bottom: 32px;
+        }
+
+        .opacity-50 {
+            opacity: 0.5;
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon"></div>
+                <span class="logo-text">ShadowBoost</span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="#how-it-works" class="nav-link">Как это работает</a>
+                <a href="#pricing" class="nav-link">Тарифы</a>
+                <a href="#features" class="nav-link">Функции</a>
+                <a href="#contact" class="nav-link">Контакты</a>
+            </div>
+            
+            <div class="auth-buttons">
+                <button class="btn btn-login" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Вход
+                </button>
+                <button class="btn btn-register" id="registerBtn">
+                    <i class="fas fa-user-plus"></i> Регистрация
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Модальное окно входа -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeLogin">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Вход в систему</h2>
+                <p class="modal-subtitle">Войдите в свой аккаунт ShadowBoost</p>
+            </div>
+            
+            <form class="modal-form" id="loginForm">
+                <div class="form-row">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" placeholder="your@email.com" required>
+                </div>
+                
+                <div class="form-row">
+                    <label class="form-label">Пароль</label>
+                    <input type="password" class="form-input" placeholder="••••••••" required>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" style="flex: 1;" id="closeLoginBtn">
+                        Отмена
+                    </button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">
+                        <i class="fas fa-sign-in-alt"></i> Войти
+                    </button>
+                </div>
+                
+                <p class="text-center mt-8" style="color: var(--text-tertiary); font-size: 14px;">
+                    Нет аккаунта? <a href="#" style="color: var(--accent-blue); cursor: pointer;" id="switchToRegister">Зарегистрироваться</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно регистрации -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeRegister">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Создать аккаунт</h2>
+                <p class="modal-subtitle">Начните использовать ShadowBoost сегодня</p>
+            </div>
+            
+            <form class="modal-form" id="registerForm">
+                <div class="form-row">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" placeholder="your@email.com" required>
+                </div>
+                
+                <div class="form-row">
+                    <label class="form-label">Пароль</label>
+                    <input type="password" class="form-input" placeholder="••••••••" required>
+                </div>
+                
+                <div class="form-row">
+                    <label class="form-label">Подтвердите пароль</label>
+                    <input type="password" class="form-input" placeholder="••••••••" required>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" style="flex: 1;" id="closeRegisterBtn">
+                        Отмена
+                    </button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">
+                        <i class="fas fa-user-plus"></i> Создать аккаунт
+                    </button>
+                </div>
+                
+                <p class="text-center mt-8" style="color: var(--text-tertiary); font-size: 14px;">
+                    Уже есть аккаунт? <a href="#" style="color: var(--accent-blue); cursor: pointer;" id="switchToLogin">Войти</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Герой секция -->
+    <section class="hero" id="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1>Генерируйте трафик, который не смогут обнаружить поисковые системы</h1>
+                <p>Реалистичное поведение посетителей через резидентские IP. Незаметно. Масштабируемо. Эффективно.</p>
+                
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="startTrialBtn">
+                        <i class="fas fa-play-circle"></i> Начать пробный период
+                    </button>
+                    <button class="btn btn-secondary" id="demoBtn">
+                        <i class="fas fa-eye"></i> Посмотреть демо
+                    </button>
+                </div>
+                
+                <div class="counter-container">
+                    <div class="counter-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="counter-content">
+                        <div class="counter-number" id="liveCounter">15,248</div>
+                        <div class="counter-text">успешных сессий сегодня</div>
+                        <div class="counter-trend">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+2,341 за последний час</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="browser-mockup">
+                    <div class="browser-header">
+                        <div class="browser-dots">
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                            <div class="browser-dot"></div>
+                        </div>
+                        <div class="browser-url">https://shadowboost.ru/dashboard</div>
+                    </div>
+                    <div class="browser-content">
+                        <div class="activity-simulation" id="activitySimulation"></div>
+                    </div>
+                </div>
+                
+                <div class="traffic-chart-widget">
+                    <div class="chart-header">
+                        <div class="chart-title">Рост трафика за 24 часа</div>
+                        <div class="chart-badge">+214%</div>
+                    </div>
+                    <div class="chart-visual">
+                        <div class="chart-line"></div>
+                    </div>
+                    <div class="chart-stats">
+                        <span>0 посетителей</span>
+                        <span>10,000+ посетителей</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Особенности -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Почему выбирают ShadowBoost?</h2>
+                <p class="section-subtitle">Передовые технологии генерации трафика с акцентом на безопасность и реалистичность</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye-shield"></i>
+                    </div>
+                    <h3 class="feature-title">Невидимый трафик</h3>
+                    <p class="feature-desc">
+                        Использует резидентские IP с реальных устройств. Никаких следов дата-центров. 
+                        Имитирует поведение реальных пользователей: прокрутка, клики, время на странице, 
+                        рандомизированные пути навигации.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3 class="feature-title">Максимальная безопасность</h3>
+                    <p class="feature-desc">
+                        Зашифрованные сессии AES-256, ротирующие прокси с авторизацией по токену, 
+                        рандомизированные отпечатки устройств и браузеров. Полное соответствие GDPR.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Масштабируемый объём</h3>
+                    <p class="feature-desc">
+                        От 100 до 10 000+ посетителей в неделю. Настраиваемые расписания, 
+                        интеллектуальное распределение нагрузки, детальная аналитика в реальном времени 
+                        с экспортом в CSV/JSON.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Как это работает -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Простой 3-шаговый процесс</h2>
+                <p class="section-subtitle">Начните генерировать качественный трафик за несколько минут</p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Введите ваш URL</h3>
+                    <p class="step-desc">Добавьте ссылку на ваш сайт или конкретную страницу. Система автоматически проанализирует структуру и оптимальные точки входа.</p>
+                    <div class="step-visual">
+                        <i class="fas fa-link"></i>
+                    </div>
+                </div>
+                
+                <div class="timeline-step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Настройте поведение</h3>
+                    <p class="step-desc">Выберите устройства, геолокации, длительность посещений, глубину просмотра. Используйте наши пресеты или создайте собственные сценарии.</p>
+                    <div class="step-visual">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                </div>
+                
+                <div class="timeline-step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Запустите и отслеживайте</h3>
+                    <p class="step-desc">Следите за трафиком в реальном времени через панель управления. Получайте уведомления и детальные отчёты по эффективности кампании.</p>
+                    <div class="step-visual">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Тарифы -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Выберите свой план</h2>
+                <p class="section-subtitle">Гибкие тарифы для проектов любого масштаба. Все планы включают 14-дневный пробный период.</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <!-- Старт -->
+                <div class="pricing-card">
+                    <div class="plan-name">Старт</div>
+                    <div class="plan-period">Идеально для тестирования и малых проектов</div>
+                    <div class="plan-price">2 500 <span>₽</span></div>
+                    <div class="plan-period">/неделя</div>
+                    
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> до 350 посещений/неделя</li>
+                        <li><i class="fas fa-check"></i> Базовые IP (Россия)</li>
+                        <li><i class="fas fa-check"></i> Поддержка 24/7 через чат</li>
+                        <li><i class="fas fa-check"></i> Базовая аналитика</li>
+                        <li><i class="fas fa-check"></i> 1 активный проект</li>
+                        <li class="disabled"><i class="fas fa-times"></i> Приоритетная поддержка</li>
+                        <li class="disabled"><i class="fas fa-times"></i> API доступ</li>
+                    </ul>
+                    
+                    <div class="plan-actions">
+                        <button class="plan-button secondary" onclick="selectPlan('start')">
+                            Подписаться
+                        </button>
+                        <div class="plan-details-link">
+                            <a href="#" onclick="showPlanDetails('start')">
+                                Подробнее <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Бизнес -->
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Популярный выбор</div>
+                    <div class="plan-name">Бизнес</div>
+                    <div class="plan-period">Для растущих проектов и компаний</div>
+                    <div class="plan-price">4 500 <span>₽</span></div>
+                    <div class="plan-period">/месяц</div>
+                    <div class="plan-discount">
+                        <i class="fas fa-percentage"></i> Экономия 10% против недельного плана
+                    </div>
+                    
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> до 700 посещений/неделя (2,800/месяц)</li>
+                        <li><i class="fas fa-check"></i> Резидентские IP (Россия, ЕС)</li>
+                        <li><i class="fas fa-check"></i> Подтверждение через Webvisor</li>
+                        <li><i class="fas fa-check"></i> Приоритетная поддержка</li>
+                        <li><i class="fas fa-check"></i> Детальная аналитика</li>
+                        <li><i class="fas fa-check"></i> до 5 активных проектов</li>
+                        <li class="disabled"><i class="fas fa-times"></i> API доступ</li>
+                    </ul>
+                    
+                    <div class="plan-actions">
+                        <button class="plan-button primary" onclick="selectPlan('business')">
+                            Начать
+                        </button>
+                        <div class="plan-details-link">
+                            <a href="#" onclick="showPlanDetails('business')">
+                                Подробнее <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Премиум -->
+                <div class="pricing-card">
+                    <div class="plan-name">Премиум</div>
+                    <div class="plan-period">Для корпоративных клиентов и агентств</div>
+                    <div class="plan-price">8 500 <span>₽</span></div>
+                    <div class="plan-period">/месяц</div>
+                    <div class="plan-discount">
+                        <i class="fas fa-percentage"></i> Экономия 15% против недельного плана
+                    </div>
+                    
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> до 1,400 посещений/неделя (5,600/месяц)</li>
+                        <li><i class="fas fa-check"></i> Глобальные IP (США, ЕС, РФ, Азия)</li>
+                        <li><i class="fas fa-check"></i> Видео сессии и тепловые карты</li>
+                        <li><i class="fas fa-check"></i> Полный доступ к REST API</li>
+                        <li><i class="fas fa-check"></i> Персональный менеджер</li>
+                        <li><i class="fas fa-check"></i> Расширенная аналитика</li>
+                        <li><i class="fas fa-check"></i> до 20 активных проектов</li>
+                    </ul>
+                    
+                    <div class="plan-actions">
+                        <button class="plan-button secondary" onclick="selectPlan('premium')">
+                            Перейти на Премиум
+                        </button>
+                        <div class="plan-details-link">
+                            <a href="#" onclick="showPlanDetails('premium')">
+                                Подробнее <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Финальный CTA -->
+    <section class="final-cta">
+        <div class="container cta-container">
+            <div class="section-header">
+                <h2 class="section-title">Готовы увеличить свой трафик?</h2>
+                <p class="section-subtitle">Начните 14-дневный пробный период прямо сейчас. Никаких обязательств, отмена в любой момент.</p>
+            </div>
+            
+            <div class="cta-form">
+                <div class="form-group">
+                    <input type="url" class="form-input" id="siteUrl" placeholder="https://вашсайт.com" required>
+                    <select class="form-select" id="planSelect">
+                        <option value="">Выберите план</option>
+                        <option value="start">Старт (2 500 ₽/неделя)</option>
+                        <option value="business" selected>Бизнес (4 500 ₽/месяц)</option>
+                        <option value="premium">Премиум (8 500 ₽/месяц)</option>
+                    </select>
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%; padding: 18px;" onclick="launchTraffic()">
+                    <i class="fas fa-rocket"></i> Запустить сейчас
+                </button>
+                
+                <p class="cta-note">
+                    <i class="fas fa-shield-alt"></i> Отменить можно в любой момент. Безопасная оплата через SSL-шифрование.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <a href="#" class="logo">
+                        <div class="logo-icon"></div>
+                        ShadowBoost
+                    </a>
+                    <p class="footer-description">
+                        Ведущая платформа для генерации качественного трафика с 2023 года. 
+                        Более 2,500 довольных клиентов по всему миру.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Продукт</h3>
+                    <ul>
+                        <li><a href="#features">Функции</a></li>
+                        <li><a href="#pricing">Тарифы</a></li>
+                        <li><a href="#how-it-works">Как это работает</a></li>
+                        <li><a href="#" onclick="showDemo()">Демо</a></li>
+                        <li><a href="#" onclick="showChangelog()">Обновления</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Компания</h3>
+                    <ul>
+                        <li><a href="#" onclick="showAbout()">О нас</a></li>
+                        <li><a href="#" onclick="showCareers()">Карьера</a></li>
+                        <li><a href="#" onclick="showPrivacyPolicy()">Политика конфиденциальности</a></li>
+                        <li><a href="#" onclick="showTerms()">Условия использования</a></li>
+                        <li><a href="#" onclick="showCompliance()">Соответствие требованиям</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Поддержка</h3>
+                    <ul>
+                        <li><a href="#" onclick="showSupport()">Техподдержка</a></li>
+                        <li><a href="#" onclick="showDocumentation()">Документация</a></li>
+                        <li><a href="#" onclick="showContact()">Контакты</a></li>
+                        <li><a href="#" onclick="showStatus()">Статус системы</a></li>
+                        <li><a href="#" onclick="showFAQ()">Частые вопросы</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div>
+                    © 2026 ShadowBoost. Все права защищены.
+                </div>
+                <div class="footer-legal">
+                    <a href="#" onclick="showPrivacyPolicy()">Политика конфиденциальности</a>
+                    <a href="#" onclick="showTerms()">Условия использования</a>
+                    <a href="#" onclick="showCookiePolicy()">Политика cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Глобальное состояние
+        const state = {
+            user: null,
+            sessionCount: 15248,
+            isAuthenticated: false,
+            activeSubscription: null
+        };
+
+        // DOM элементы
+        const elements = {
+            navbar: document.getElementById('navbar'),
+            loginBtn: document.getElementById('loginBtn'),
+            registerBtn: document.getElementById('registerBtn'),
+            loginModal: document.getElementById('loginModal'),
+            registerModal: document.getElementById('registerModal'),
+            closeLogin: document.getElementById('closeLogin'),
+            closeRegister: document.getElementById('closeRegister'),
+            closeLoginBtn: document.getElementById('closeLoginBtn'),
+            closeRegisterBtn: document.getElementById('closeRegisterBtn'),
+            switchToRegister: document.getElementById('switchToRegister'),
+            switchToLogin: document.getElementById('switchToLogin'),
+            loginForm: document.getElementById('loginForm'),
+            registerForm: document.getElementById('registerForm'),
+            liveCounter: document.getElementById('liveCounter'),
+            startTrialBtn: document.getElementById('startTrialBtn'),
+            demoBtn: document.getElementById('demoBtn'),
+            activitySimulation: document.getElementById('activitySimulation')
+        };
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            initCounter();
+            initActivitySimulation();
+            initScrollEffects();
+            initEventListeners();
+            checkAuthState();
+            
+            // Имитация "живого" сайта
+            setInterval(updateCounter, 3000);
+            setInterval(showRandomNotification, 20000);
+        });
+
+        // Счётчик
+        function initCounter() {
+            updateCounter();
+        }
+
+        function updateCounter() {
+            const increment = Math.floor(Math.random() * 5) + 1;
+            state.sessionCount += increment;
+            elements.liveCounter.textContent = state.sessionCount.toLocaleString();
+        }
+
+        // Симуляция активности
+        function initActivitySimulation() {
+            const container = elements.activitySimulation;
+            
+            for (let i = 0; i < 12; i++) {
+                const line = document.createElement('div');
+                line.className = 'activity-line';
+                line.style.left = `${Math.random() * 90}%`;
+                line.style.top = `${Math.random() * 90}%`;
+                line.style.width = `${Math.random() * 80 + 20}px`;
+                line.style.height = '2px';
+                line.style.animationDelay = `${Math.random() * 2}s`;
+                container.appendChild(line);
+            }
+        }
+
+        // Эффекты прокрутки
+        function initScrollEffects() {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    elements.navbar.classList.add('scrolled');
+                } else {
+                    elements.navbar.classList.remove('scrolled');
+                }
+                
+                // Активация ссылок навигации
+                const sections = ['hero', 'features', 'how-it-works', 'pricing', 'contact'];
+                const navLinks = document.querySelectorAll('.nav-link');
+                
+                sections.forEach(sectionId => {
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        const rect = section.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.bottom >= 100) {
+                            navLinks.forEach(link => link.classList.remove('active'));
+                            const activeLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+                            if (activeLink) activeLink.classList.add('active');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Обработчики событий
+        function initEventListeners() {
+            // Модальные окна
+            elements.loginBtn.addEventListener('click', () => showModal('login'));
+            elements.registerBtn.addEventListener('click', () => showModal('register'));
+            elements.closeLogin.addEventListener('click', () => hideModal('login'));
+            elements.closeRegister.addEventListener('click', () => hideModal('register'));
+            elements.closeLoginBtn.addEventListener('click', () => hideModal('login'));
+            elements.closeRegisterBtn.addEventListener('click', () => hideModal('register'));
+            elements.switchToRegister.addEventListener('click', (e) => {
+                e.preventDefault();
+                hideModal('login');
+                showModal('register');
+            });
+            elements.switchToLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                hideModal('register');
+                showModal('login');
+            });
+
+            // Формы
+            elements.loginForm.addEventListener('submit', handleLogin);
+            elements.registerForm.addEventListener('submit', handleRegister);
+
+            // Кнопки CTA
+            elements.startTrialBtn.addEventListener('click', startTrial);
+            elements.demoBtn.addEventListener('click', showDemo);
+            
+            // Клик по модальному фону
+            window.addEventListener('click', (e) => {
+                if (e.target === elements.loginModal) hideModal('login');
+                if (e.target === elements.registerModal) hideModal('register');
+            });
+        }
+
+        // Модальные окна
+        function showModal(modalName) {
+            const modal = modalName === 'login' ? elements.loginModal : elements.registerModal;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideModal(modalName) {
+            const modal = modalName === 'login' ? elements.loginModal : elements.registerModal;
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Авторизация
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const email = formData.get('email');
+            const password = formData.get('password');
+            
+            // Валидация
+            if (!email || !password) {
+                showNotification('Заполните все поля', 'error');
+                return;
+            }
+            
+            // Имитация запроса
+            showLoading('loginForm', 'Вход...');
+            
+            setTimeout(() => {
+                state.user = { email };
+                state.isAuthenticated = true;
+                updateAuthUI();
+                
+                hideModal('login');
+                showNotification('Успешный вход! Перенаправляем в кабинет...', 'success');
+                
+                // Перенаправление в "кабинет"
+                setTimeout(() => {
+                    showNotification('Добро пожаловать в панель управления ShadowBoost', 'success');
+                }, 1000);
+            }, 1500);
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const email = formData.get('email');
+            const password = formData.get('password');
+            const confirmPassword = formData.get('confirmPassword');
+            
+            // Валидация
+            if (!email || !password || !confirmPassword) {
+                showNotification('Заполните все поля', 'error');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showNotification('Пароли не совпадают', 'error');
+                return;
+            }
+            
+            if (password.length < 8) {
+                showNotification('Пароль должен содержать минимум 8 символов', 'error');
+                return;
+            }
+            
+            // Имитация запроса
+            showLoading('registerForm', 'Регистрация...');
+            
+            setTimeout(() => {
+                state.user = { email };
+                state.isAuthenticated = true;
+                updateAuthUI();
+                
+                hideModal('register');
+                showNotification('Аккаунт успешно создан! Начинаем 14-дневный пробный период.', 'success');
+            }, 1500);
+        }
+
+        function checkAuthState() {
+            const savedUser = localStorage.getItem('shadowboost_user');
+            if (savedUser) {
+                state.user = JSON.parse(savedUser);
+                state.isAuthenticated = true;
+                updateAuthUI();
+            }
+        }
+
+        function updateAuthUI() {
+            if (state.isAuthenticated && state.user) {
+                elements.loginBtn.innerHTML = `<i class="fas fa-user"></i> ${state.user.email}`;
+                elements.registerBtn.innerHTML = `<i class="fas fa-tachometer-alt"></i> Кабинет`;
+                elements.registerBtn.onclick = () => showNotification('Переход в панель управления...', 'info');
+                
+                // Сохраняем в localStorage для "постоянной" сессии
+                localStorage.setItem('shadowboost_user', JSON.stringify(state.user));
+            }
+        }
+
+        // Функции CTA
+        function startTrial() {
+            if (!state.isAuthenticated) {
+                showModal('register');
+                showNotification('Создайте аккаунт для начала пробного периода', 'info');
+                return;
+            }
+            
+            showNotification('Запускаем 14-дневный пробный период...', 'info');
+            
+            setTimeout(() => {
+                showNotification('Пробный период активирован! Доступно до 100 посещений.', 'success');
+                state.activeSubscription = 'trial';
+            }, 1500);
+        }
+
+        function showDemo() {
+            showNotification('Загружаем демонстрационную версию...', 'info');
+            
+            setTimeout(() => {
+                const demoWindow = window.open('', '_blank');
+                if (demoWindow) {
+                    demoWindow.document.write(`
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <title>ShadowBoost Demo</title>
+                            <style>
+                                body { font-family: 'Inter', sans-serif; padding: 40px; }
+                                .demo-container { max-width: 800px; margin: 0 auto; }
+                                .demo-header { margin-bottom: 40px; }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="demo-container">
+                                <div class="demo-header">
+                                    <h1>Демо-версия ShadowBoost</h1>
+                                    <p>Это демонстрационная версия панели управления. Полный доступ доступен после регистрации.</p>
+                                </div>
+                                <div style="background: #f8fafc; padding: 30px; border-radius: 12px;">
+                                    <h3>Функции демо-версии:</h3>
+                                    <ul>
+                                        <li>Просмотр интерфейса панели управления</li>
+                                        <li>Симуляция добавления проекта</li>
+                                        <li>Демонстрация аналитики</li>
+                                        <li>Ознакомление с настройками</li>
+                                    </ul>
+                                    <button onclick="window.close()" style="margin-top: 20px; padding: 10px 20px; background: #0ea5e9; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                                        Закрыть демо
+                                    </button>
+                                </div>
+                            </div>
+                        </body>
+                        </html>
+                    `);
+                }
+            }, 1000);
+        }
+
+        function selectPlan(planName) {
+            if (!state.isAuthenticated) {
+                showModal('register');
+                showNotification('Создайте аккаунт для выбора тарифа', 'info');
+                return;
+            }
+            
+            const plans = {
+                start: { name: 'Старт', price: '2 500 ₽/неделя' },
+                business: { name: 'Бизнес', price: '4 500 ₽/месяц' },
+                premium: { name: 'Премиум', price: '8 500 ₽/месяц' }
+            };
+            
+            const plan = plans[planName];
+            showNotification(`Выбран тариф "${plan.name}" (${plan.price}). Открываем страницу оплаты...`, 'info');
+            
+            // Имитация перехода на страницу оплаты
+            setTimeout(() => {
+                showNotification('Используйте тестовые данные для оплаты:\nКарта: 4242 4242 4242 4242\nСрок: любая будущая дата\nCVC: 123', 'info');
+                state.activeSubscription = planName;
+            }, 1500);
+        }
+
+        function showPlanDetails(planName) {
+            if (!state.isAuthenticated) {
+                showModal('login');
+                showNotification('Войдите в систему для просмотра деталей тарифа', 'info');
+                return;
+            }
+            
+            const details = {
+                start: 'Детальная информация о тарифе "Старт": 350 посещений/неделя, базовая аналитика, поддержка 24/7.',
+                business: 'Детальная информация о тарифе "Бизнес": 700 посещений/неделя, резидентские IP, приоритетная поддержка.',
+                premium: 'Детальная информация о тарифе "Премиум": 1400 посещений/неделя, глобальные IP, API доступ, персональный менеджер.'
+            };
+            
+            showNotification(details[planName], 'info');
+        }
+
+        function launchTraffic() {
+            const url = document.getElementById('siteUrl').value;
+            const plan = document.getElementById('planSelect').value;
+            
+            if (!url || url === 'https://вашсайт.com') {
+                showNotification('Введите URL вашего сайта', 'error');
+                return;
+            }
+            
+            if (!plan) {
+                showNotification('Выберите тарифный план', 'error');
+                return;
+            }
+            
+            if (!state.isAuthenticated) {
+                showModal('register');
+                showNotification('Создайте аккаунт для запуска трафика', 'info');
+                return;
+            }
+            
+            showNotification('Запускаем генерацию трафика на ' + url + '...', 'info');
+            
+            setTimeout(() => {
+                showNotification('Генерация трафика успешно начата! Первые посетители появятся в течение 5-10 минут.', 'success');
+                showNotification('Мониторинг доступен в панели управления → раздел "Активные кампании"', 'info');
+            }, 2000);
+        }
+
+        // Уведомления
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'error' ? '#ef4444' : type === 'success' ? '#10b981' : '#0ea5e9'};
+                color: white;
+                padding: 16px 20px;
+                border-radius: 10px;
+                font-family: 'Inter', sans-serif;
+                font-size: 14px;
+                z-index: 10000;
+                box-shadow: var(--shadow-lg);
+                max-width: 320px;
+                transform: translateX(120%);
+                transition: transform 0.3s ease;
+                display: flex;
+                align-items: flex-start;
+                gap: 12px;
+            `;
+            
+            const icon = type === 'error' ? 'fas fa-exclamation-circle' : 
+                         type === 'success' ? 'fas fa-check-circle' : 
+                         'fas fa-info-circle';
+            
+            notification.innerHTML = `
+                <i class="${icon}" style="font-size: 18px; flex-shrink: 0;"></i>
+                <div>${message}</div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 10);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(120%)';
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+
+        function showRandomNotification() {
+            if (Math.random() > 0.7) {
+                const notifications = [
+                    '🔄 Обновление: Добавлены новые IP-адреса в Европе',
+                    '📈 Статистика: Пиковая нагрузка в 15:00 МСК',
+                    '🛡️ Безопасность: Обновлены алгоритмы шифрования',
+                    '🚀 Производительность: Ускорена обработка запросов на 15%',
+                    '🌍 География: Добавлены новые регионы для трафика'
+                ];
+                
+                showNotification(notifications[Math.floor(Math.random() * notifications.length)]);
+            }
+        }
+
+        // Вспомогательные функции
+        function showLoading(formId, text) {
+            const form = document.getElementById(formId);
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${text}`;
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 1500);
+        }
+
+        // Функции для ссылок футера
+        function showPrivacyPolicy() {
+            const policy = `
+                Политика конфиденциальности ShadowBoost
+            
+                1. Сбор и использование информации
+                1.1. Мы собираем информацию, которую вы предоставляете при регистрации: email, пароль.
+                1.2. Мы не храним данные о генерируемом трафике после завершения сессии.
+                
+                2. Защита данных
+                2.1. Все данные шифруются с использованием AES-256.
+                2.2. Доступ к данным имеют только авторизованные сотрудники.
+                
+                3. Согласие
+                3.1. Используя ShadowBoost, вы соглашаетесь с нашей политикой конфиденциальности.
+                
+                Полная версия: https://shadowboost.ru/privacy
+            `;
+            
+            alert(policy);
+        }
+
+        function showTerms() {
+            const terms = `
+                Условия использования ShadowBoost
+            
+                1. Приемлемое использование
+                1.1. Сервис предназначен только для легального использования.
+                1.2. Запрещено использование для обхода систем безопасности.
+                
+                2. Оплата и возвраты
+                2.1. Подписки оплачиваются авансом.
+                2.2. Возвраты осуществляются в течение 14 дней.
+                
+                3. Ответственность
+                3.1. Мы не несем ответственности за действия третьих лиц.
+                
+                Полные условия: https://shadowboost.ru/terms
+            `;
+            
+            alert(terms);
+        }
+
+        function showAbout() {
+            showNotification('ShadowBoost — ведущая платформа генерации трафика с 2023 года', 'info');
+        }
+
+        function showSupport() {
+            showNotification('Техподдержка: support@shadowboost.ru | Ответ в течение 2 часов', 'info');
+        }
+
+        function showDocumentation() {
+            showNotification('Документация: docs.shadowboost.ru | API Reference доступен после входа', 'info');
+        }
+
+        function showContact() {
+            showNotification('Контакты: contact@shadowboost.ru | +7 (800) 123-45-67', 'info');
+        }
+
+        function showStatus() {
+            showNotification('Статус системы: ✅ Все сервисы работают в штатном режиме', 'success');
+        }
+
+        function showFAQ() {
+            showNotification('FAQ: help.shadowboost.ru | База знаний постоянно обновляется', 'info');
+        }
+
+        function showChangelog() {
+            showNotification('Changelog: updates.shadowboost.ru | Последнее обновление: 20.11.2023', 'info');
+        }
+
+        function showCareers() {
+            showNotification('Карьера: careers@shadowboost.ru | Мы всегда ищем таланты!', 'info');
+        }
+
+        function showCompliance() {
+            showNotification('Соответствие: GDPR, CCPA, ISO 27001. Подробнее: compliance.shadowboost.ru', 'info');
+        }
+
+        function showCookiePolicy() {
+            showNotification('Мы используем только необходимые cookies для работы сервиса', 'info');
+        }
+
+        // Секретный функционал для особо любопытных
+        let secretClicks = 0;
+        const secretArea = document.querySelector('.logo-icon');
+        
+        secretArea.addEventListener('click', function(e) {
+            e.preventDefault();
+            secretClicks++;
+            
+            if (secretClicks === 5) {
+                showNotification('🔓 Секретный режим разблокирован! Доступ к аналитике конкурентов...', 'info');
+                document.documentElement.style.setProperty('--accent-blue', '#8b5cf6');
+                
+                // Показать секретную панель
+                setTimeout(() => {
+                    const secretPanel = document.createElement('div');
+                    secretPanel.style.cssText = `
+                        position: fixed;
+                        bottom: 20px;
+                        right: 20px;
+                        background: linear-gradient(135deg, #0f172a, #1e1b4b);
+                        border: 2px solid #8b5cf6;
+                        border-radius: 12px;
+                        padding: 20px;
+                        color: white;
+                        font-family: 'Inter', monospace;
+                        z-index: 9999;
+                        max-width: 300px;
+                        box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
+                    `;
+                    secretPanel.innerHTML = `
+                        <div style="font-weight: 700; margin-bottom: 12px; color: #8b5cf6;">⚡ ShadowBoost Pro</div>
+                        <div style="font-size: 13px; opacity: 0.9;">
+                            • AI-анализ конкурентов<br>
+                            • Прогнозирование трафика<br>
+                            • Авто-A/B тестирование<br>
+                            • Расширенная сегментация<br>
+                            <div style="margin-top: 12px; font-size: 11px; color: #a78bfa;">
+                                Эксклюзивно для корпоративных клиентов
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(secretPanel);
+                    
+                    setTimeout(() => secretPanel.remove(), 8000);
+                }, 1000);
+                
+                secretClicks = 0;
+            }
+        });
+    </script>
+</body>
+</html>
