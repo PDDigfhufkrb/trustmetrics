@@ -1,245 +1,499 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShadowBoost — Визиты, которые Яндекс.Метрика считает людьми</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+    // Здесь потом будет логика
+</script>
+
+<svelte:head>
+    <title>ShadowBoost — Резидентские IP для Яндекс.Метрики</title>
+    <meta name="description" content="Визиты с резидентских IP через браузерную эмуляцию. Безопасно для аналитики. Запуск за 5 минут." />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-        body { font-family: 'Inter', sans-serif; background: #0a0a0f; color: #f9f9f9; }
-        .bg-grid { background-image: linear-gradient(to right, #1a1a2e 1px, transparent 1px), linear-gradient(to bottom, #1a1a2e 1px, transparent 1px); background-size: 40px 40px; }
-        .gradient-text { background: linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass { background: rgba(30, 30, 46, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .btn-primary { background: linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%); color: white; font-weight: 600; transition: all 0.3s; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5); }
+        :global(body) {
+            margin: 0;
+            padding: 0;
+            background: #0a0a0f;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav a {
+            color: #a0a0b0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: #fff;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-outline {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .btn-outline:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .hero {
+            padding: 160px 0 100px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            max-width: 600px;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: #a0a0b0;
+            max-width: 500px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 60px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 60px;
+        }
+
+        .feature {
+            background: rgba(30, 30, 46, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #3b82f6;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-desc {
+            color: #a0a0b0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .tariffs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .tariff {
+            background: rgba(30, 30, 46, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 40px;
+            transition: all 0.3s;
+        }
+
+        .tariff:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .tariff-popular {
+            border-color: #8b5cf6;
+            position: relative;
+        }
+
+        .tariff-popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #8b5cf6;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .tariff-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .tariff-price {
+            font-size: 48px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 5px;
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tariff-period {
+            text-align: center;
+            color: #a0a0b0;
+            margin-bottom: 30px;
+        }
+
+        .tariff-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 30px 0;
+        }
+
+        .tariff-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #a0a0b0;
+        }
+
+        .tariff-features li:last-child {
+            border-bottom: none;
+        }
+
+        .tariff-button {
+            width: 100%;
+            text-align: center;
+        }
+
+        .faq-item {
+            background: rgba(30, 30, 46, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 15px;
+        }
+
+        .faq-question {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .faq-answer {
+            color: #a0a0b0;
+            line-height: 1.6;
+        }
+
+        .cta {
+            background: linear-gradient(135deg, rgba(30, 30, 46, 0.8), rgba(20, 20, 35, 0.8));
+            border-radius: 24px;
+            padding: 60px;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .cta-subtitle {
+            font-size: 18px;
+            color: #a0a0b0;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 50px 0;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .features,
+            .tariffs {
+                grid-template-columns: 1fr;
+            }
+
+            .nav {
+                display: none; /* В реальности сделаем бургер-меню */
+            }
+        }
     </style>
-</head>
-<body class="bg-grid min-h-screen">
-    <!-- Навигация -->
-    <nav class="glass sticky top-0 z-50 border-b border-white/5">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold">ShadowBoost</div>
-            <div class="flex items-center space-x-8">
-                <a href="#tariffs" class="text-gray-300 hover:text-white transition">Тарифы</a>
-                <a href="#how" class="text-gray-300 hover:text-white transition">Как работает</a>
-                <a href="#" class="text-gray-300 hover:text-white transition">Войти</a>
-                <a href="#start" class="btn-primary px-6 py-3 rounded-lg">Начать 7 дней бесплатно</a>
+</svelte:head>
+
+<div class="header">
+    <div class="container header-content">
+        <div class="logo">ShadowBoost</div>
+        <nav class="nav">
+            <a href="#tariffs">Тарифы</a>
+            <a href="#how">Как работает</a>
+            <a href="#faq">FAQ</a>
+            <a href="#" class="btn btn-outline">Войти</a>
+            <a href="#start" class="btn btn-primary">Начать бесплатно</a>
+        </nav>
+    </div>
+</div>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <h1>Визиты, которые <span class="hero-gradient">Яндекс.Метрика</span> считает людьми</h1>
+            <p class="hero-subtitle">
+                Сервис для моделирования трафика на резидентских IP с браузерным поведением. 
+                Безопасно для аналитики. Запуск за 5 минут.
+            </p>
+            <div class="hero-buttons">
+                <a href="#start" class="btn btn-primary">Запустить через Telegram</a>
+                <a href="#how" class="btn btn-outline">Как это работает</a>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">Резидентские IP</h3>
+                    <p class="feature-desc">Только реальные IP из России и СНГ. Никаких дата-центров.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🧠</div>
+                    <h3 class="feature-title">Браузерная эмуляция</h3>
+                    <p class="feature-desc">Playwright, реальные браузеры, скролл, клики, время на сайте.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Автоматический запуск</h3>
+                    <p class="feature-desc">Добавили сайт, выбрали тариф — система работает сама.</p>
+                </div>
             </div>
         </div>
-    </nav>
+    </section>
 
-    <!-- Hero-секция -->
-    <section class="container mx-auto px-4 py-20 md:py-32">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <!-- Текст -->
-            <div>
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                    Визиты, которые <span class="gradient-text">Яндекс.Метрика</span> считает людьми.
-                </h1>
-                <p class="text-xl text-gray-400 mt-6 mb-10">
-                    Сервис для моделирования трафика на резидентских IP с поведением реальных пользователей. Без риска для сайта. Запуск за 5 минут.
+    <section id="how" class="section">
+        <div class="container">
+            <h2 class="section-title">Запуск в три шага</h2>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">1</div>
+                    <h3 class="feature-title">Авторизация через Telegram</h3>
+                    <p class="feature-desc">Бот выдает доступ за 10 секунд. Без регистраций.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">2</div>
+                    <h3 class="feature-title">Добавьте сайт</h3>
+                    <p class="feature-desc">URL и ID Яндекс.Метрики. Больше настроек не нужно.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">3</div>
+                    <h3 class="feature-title">Выберите тариф и старт</h3>
+                    <p class="feature-desc">Месячные тарифы. Нажали «Старт» — визиты идут автоматически.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tariffs" class="section">
+        <div class="container">
+            <h2 class="section-title">Месячные тарифы</h2>
+            <div class="tariffs">
+                <!-- Базовый -->
+                <div class="tariff">
+                    <h3 class="tariff-title">Базовый</h3>
+                    <div class="tariff-price">2 000 ₽</div>
+                    <div class="tariff-period">в месяц</div>
+                    <ul class="tariff-features">
+                        <li><strong>1 500</strong> визитов в месяц</li>
+                        <li>Резидентские IP (Россия/СНГ)</li>
+                        <li>Браузерная эмуляция</li>
+                        <li>Автоматический запуск</li>
+                    </ul>
+                    <a href="#start" class="btn btn-primary tariff-button">Попробовать 7 дней</a>
+                </div>
+
+                <!-- Оптима -->
+                <div class="tariff tariff-popular">
+                    <div class="tariff-popular-badge">Популярный</div>
+                    <h3 class="tariff-title">Оптима</h3>
+                    <div class="tariff-price">5 000 ₽</div>
+                    <div class="tariff-period">в месяц</div>
+                    <ul class="tariff-features">
+                        <li><strong>4 000</strong> визитов в месяц</li>
+                        <li>Резидентские IP (Россия/СНГ)</li>
+                        <li>Браузерная эмуляция</li>
+                        <li>Приоритетная поддержка</li>
+                    </ul>
+                    <a href="#start" class="btn btn-primary tariff-button">Попробовать 7 дней</a>
+                </div>
+
+                <!-- Профи -->
+                <div class="tariff">
+                    <h3 class="tariff-title">Профи</h3>
+                    <div class="tariff-price">10 000 ₽</div>
+                    <div class="tariff-period">в месяц</div>
+                    <ul class="tariff-features">
+                        <li><strong>8 000</strong> визитов в месяц</li>
+                        <li>Резидентские IP (Россия/СНГ)</li>
+                        <li>Браузерная эмуляция</li>
+                        <li>Индивидуальные настройки</li>
+                    </ul>
+                    <a href="#start" class="btn btn-primary tariff-button">Попробовать 7 дней</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="section">
+        <div class="container">
+            <h2 class="section-title">Частые вопросы</h2>
+            <div class="faq-item">
+                <h3 class="faq-question">Это безопасно для Яндекс.Метрики?</h3>
+                <p class="faq-answer">
+                    Да. Мы используем только резидентские IP и эмулируем поведение реального человека в браузере. 
+                    Для систем аналитики это неотличимо от органического трафика.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#start" class="btn-primary px-8 py-4 rounded-lg text-lg font-semibold text-center">
-                        <i class="fab fa-telegram mr-2"></i> Запустить через Telegram
-                    </a>
-                    <a href="#how" class="glass px-8 py-4 rounded-lg text-lg font-semibold text-center border border-white/10 hover:border-white/20 transition">
-                        Как это работает
-                    </a>
-                </div>
-                <div class="mt-12 grid grid-cols-3 gap-6">
-                    <div class="glass p-4 rounded-xl">
-                        <div class="text-2xl text-purple-400 mb-2"><i class="fas fa-user-shield"></i></div>
-                        <div class="font-semibold">Резидентские IP</div>
-                        <div class="text-sm text-gray-400">Только реальные IP из России и СНГ</div>
-                    </div>
-                    <div class="glass p-4 rounded-xl">
-                        <div class="text-2xl text-blue-400 mb-2"><i class="fas fa-mouse-pointer"></i></div>
-                        <div class="font-semibold">Браузерное поведение</div>
-                        <div class="text-sm text-gray-400">Скролл, клики, время на сайте</div>
-                    </div>
-                    <div class="glass p-4 rounded-xl">
-                        <div class="text-2xl text-green-400 mb-2"><i class="fas fa-rocket"></i></div>
-                        <div class="font-semibold">Запуск за 5 минут</div>
-                        <div class="text-sm text-gray-400">Добавил сайт, выбрал тариф, старт</div>
-                    </div>
-                </div>
             </div>
-            <!-- График -->
-            <div class="relative">
-                <div class="glass rounded-2xl p-8">
-                    <div class="flex justify-between items-center mb-6">
-                        <div class="font-semibold text-lg">Рост визитов за месяц</div>
-                        <div class="text-sm text-gray-400">Яндекс.Метрика</div>
-                    </div>
-                    <!-- Встроим ваш график -->
-                    <div class="w-full h-64 flex items-end justify-between pt-8">
-                        <!-- Колонки графика -->
-                        <div class="flex flex-col items-center">
-                            <div class="w-8 bg-gradient-to-t from-purple-500 to-blue-500 rounded-t-lg" style="height: 40px;"></div>
-                            <div class="text-xs mt-2 text-gray-400">Нед1</div>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="w-8 bg-gradient-to-t from-purple-500 to-blue-500 rounded-t-lg" style="height: 80px;"></div>
-                            <div class="text-xs mt-2 text-gray-400">Нед2</div>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="w-8 bg-gradient-to-t from-purple-500 to-blue-500 rounded-t-lg" style="height: 120px;"></div>
-                            <div class="text-xs mt-2 text-gray-400">Нед3</div>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="w-8 bg-gradient-to-t from-purple-500 to-blue-500 rounded-t-lg" style="height: 160px;"></div>
-                            <div class="text-xs mt-2 text-gray-400">Нед4</div>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <div class="w-8 bg-gradient-to-t from-purple-500/30 to-blue-500/30 rounded-t-lg border border-dashed border-blue-400" style="height: 200px;"></div>
-                            <div class="text-xs mt-2 text-gray-400">С ShadowBoost</div>
-                        </div>
-                    </div>
-                    <div class="mt-8 pt-6 border-t border-white/10">
-                        <div class="text-sm text-gray-400">Каждый визит — с уникального IP, через реальный браузер. Система аналитики видит это как органику.</div>
-                    </div>
-                </div>
-                <!-- Декоративный элемент -->
-                <div class="absolute -top-6 -right-6 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl"></div>
+            <div class="faq-item">
+                <h3 class="faq-question">Чем вы отличаетесь от дешёвых накруток?</h3>
+                <p class="faq-answer">
+                    Дешёвые сервисы используют дата-центры и примитивные скрипты. Мы используем резидентские IP 
+                    и браузерную эмуляцию через Playwright — это следующий уровень.
+                </p>
+            </div>
+            <div class="faq-item">
+                <h3 class="faq-question">Когда начнутся визиты после запуска?</h3>
+                <p class="faq-answer">
+                    В течение часа после активации тарифа. Визиты распределяются равномерно в течение дня.
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- Секция "Как работает" -->
-    <section id="how" class="container mx-auto px-4 py-20">
-        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Запуск в три шага</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div class="glass p-8 rounded-2xl text-center">
-                <div class="text-4xl font-bold text-purple-400 mb-4">1</div>
-                <div class="text-2xl mb-4"><i class="fab fa-telegram"></i></div>
-                <h3 class="text-xl font-semibold mb-3">Авторизация через Telegram</h3>
-                <p class="text-gray-400">Бот выдаёт доступ к личному кабинету за 10 секунд. Без регистрации.</p>
-            </div>
-            <div class="glass p-8 rounded-2xl text-center">
-                <div class="text-4xl font-bold text-blue-400 mb-4">2</div>
-                <div class="text-2xl mb-4"><i class="fas fa-plus-circle"></i></div>
-                <h3 class="text-xl font-semibold mb-3">Добавьте сайт</h3>
-                <p class="text-gray-400">Введите URL и ID Яндекс.Метрики. Всё, больше настроек не нужно.</p>
-            </div>
-            <div class="glass p-8 rounded-2xl text-center">
-                <div class="text-4xl font-bold text-green-400 mb-4">3</div>
-                <div class="text-2xl mb-4"><i class="fas fa-play"></i></div>
-                <h3 class="text-xl font-semibold mb-3">Выберите тариф и старт</h3>
-                <p class="text-gray-400">Тарифы — месячные. Нажали «Старт» — система работает автоматически.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Секция "Тарифы" -->
-    <section id="tariffs" class="container mx-auto px-4 py-20">
-        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Месячные тарифы</h2>
-        <p class="text-gray-400 text-center mb-12">Выберите подходящий объём визитов. Все тарифы включают резидентские IP и браузерную эмуляцию.</p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <!-- Тариф 1 -->
-            <div class="glass rounded-2xl p-8 border border-white/10">
-                <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold mb-2">Базовый</h3>
-                    <div class="text-5xl font-bold gradient-text my-4">2 000 ₽</div>
-                    <div class="text-gray-400">в месяц</div>
-                </div>
-                <ul class="space-y-4 mb-8">
-                    <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i> <span><strong>1 500</strong> визитов в месяц</span></li>
-                    <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i> Резидентские IP (Россия/СНГ)</li>
-                    <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i> Браузерная эмуляция (Playwright)</li>
-                    <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i> Автоматический запуск</li>
-                </ul>
-                <a href="#start" class="btn-primary block text-center py-4 rounded-lg text-lg font-semibold">
-                    Попробовать 7 дней по этому тарифу
+    <section id="start" class="section">
+        <div class="container">
+            <div class="cta">
+                <h2 class="cta-title">Визиты, которые выглядят как реальные</h2>
+                <p class="cta-subtitle">
+                    Запустите ShadowBoost на 7 дней бесплатно. Никаких предоплат или привязки карты.
+                </p>
+                <a href="#" class="btn btn-primary" style="font-size: 18px; padding: 16px 40px;">
+                    🚀 Начать через Telegram
                 </a>
-            </div>
-            <!-- Тариф 2 -->
-            <div class="glass rounded-2xl p-8 border-2 border-purple-500/50 relative">
-                <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <span class="bg-purple-500 text-white px-4 py-1 rounded-full text-sm font-semibold">Популярный</span>
-                </div>
-                <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold mb-2">Оптима</h3>
-                    <div class="text-5xl font-bold gradient-text my-4">5 000 ₽</div>
-                    <div class="text-gray-400">в месяц</div>
-                </div>
-                <ul class="space-y-4 mb-8">
-                    <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i> <span><strong>4 000</strong> визитов в месяц</span></li>
-                    <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i> Резидентские IP (Россия/СНГ)</li>
-                    <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i> Браузерная эмуляция (Playwright)</li>
-                    <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i> Приоритетная поддержка</li>
-                </ul>
-                <a href="#start" class="btn-primary block text-center py-4 rounded-lg text-lg font-semibold">
-                    Попробовать 7 дней по этому тарифу
-                </a>
-            </div>
-            <!-- Тариф 3 -->
-            <div class="glass rounded-2xl p-8 border border-white/10">
-                <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold mb-2">Профи</h3>
-                    <div class="text-5xl font-bold gradient-text my-4">10 000 ₽</div>
-                    <div class="text-gray-400">в месяц</div>
-                </div>
-                <ul class="space-y-4 mb-8">
-                    <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i> <span><strong>8 000</strong> визитов в месяц</span></li>
-                    <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i> Резидентские IP (Россия/СНГ)</li>
-                    <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i> Браузерная эмуляция (Playwright)</li>
-                    <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i> Индивидуальные настройки</li>
-                </ul>
-                <a href="#start" class="btn-primary block text-center py-4 rounded-lg text-lg font-semibold">
-                    Попробовать 7 дней по этому тарифу
-                </a>
+                <p style="color: #666; font-size: 14px; margin-top: 20px;">
+                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности.
+                </p>
             </div>
         </div>
     </section>
+</main>
 
-    <!-- FAQ -->
-    <section class="container mx-auto px-4 py-20 max-w-3xl">
-        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Частые вопросы</h2>
-        <div class="space-y-6">
-            <div class="glass p-6 rounded-xl">
-                <h3 class="text-xl font-semibold mb-2">Это безопасно для Яндекс.Метрики?</h3>
-                <p class="text-gray-400">Да. Мы используем только резидентские IP и эмулируем поведение реального человека в браузере. Для систем аналитики это неотличимо от органического трафика. Риск санкций стремится к нулю.</p>
-            </div>
-            <div class="glass p-6 rounded-xl">
-                <h3 class="text-xl font-semibold mb-2">Чем вы отличаетесь от дешёвых накруток?</h3>
-                <p class="text-gray-400">Дешёвые сервисы используют дата-центры и примитивные скрипты, что легко детектируется. Мы используем только резидентские IP и сложную браузерную эмуляцию через Playwright — это следующий уровень.</p>
-            </div>
-            <div class="glass p-6 rounded-xl">
-                <h3 class="text-xl font-semibold mb-2">Когда начнутся визиты после запуска?</h3>
-                <p class="text-gray-400">В течение часа после активации тарифа. Визиты будут распределяться равномерно в течение дня, чтобы не создавать аномалий.</p>
+<footer class="footer">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo" style="font-size: 20px;">ShadowBoost</div>
+            <div style="display: flex; gap: 30px; color: #a0a0b0;">
+                <a href="#" style="color: #a0a0b0; text-decoration: none;">Тарифы</a>
+                <a href="#" style="color: #a0a0b0; text-decoration: none;">Войти</a>
+                <a href="#" style="color: #a0a0b0; text-decoration: none;">Поддержка</a>
+                <a href="#" style="color: #a0a0b0; text-decoration: none;">Документы</a>
             </div>
         </div>
-    </section>
-
-    <!-- Финальный CTA -->
-    <section id="start" class="container mx-auto px-4 py-20 text-center">
-        <div class="glass rounded-3xl p-12 max-w-4xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6">Визиты, которые выглядят как реальные — потому что они такими и являются.</h2>
-            <p class="text-xl text-gray-400 mb-10">Запустите ShadowBoost на 7 дней бесплатно. Никаких предоплат или привязки карты.</p>
-            <a href="#" class="btn-primary inline-flex items-center px-10 py-5 rounded-lg text-xl font-semibold">
-                <i class="fab fa-telegram mr-3 text-2xl"></i> Начать через Telegram
-            </a>
-            <p class="text-gray-500 text-sm mt-6">Нажимая кнопку, вы соглашаетесь с <a href="#" class="underline">политикой конфиденциальности</a>.</p>
+        <div style="text-align: center; color: #666; margin-top: 40px; font-size: 14px;">
+            © 2024 ShadowBoost. Все права защищены.
         </div>
-    </section>
-
-    <!-- Футер -->
-    <footer class="container mx-auto px-4 py-12 border-t border-white/10">
-        <div class="flex flex-col md:flex-row justify-between items-center">
-            <div class="text-2xl font-bold mb-6 md:mb-0">ShadowBoost</div>
-            <div class="flex space-x-8 mb-6 md:mb-0">
-                <a href="#" class="text-gray-400 hover:text-white transition">Тарифы</a>
-                <a href="#" class="text-gray-400 hover:text-white transition">Войти</a>
-                <a href="#" class="text-gray-400 hover:text-white transition">Поддержка</a>
-                <a href="#" class="text-gray-400 hover:text-white transition">Документы</a>
-            </div>
-            <div class="text-gray-500 text-sm">
-                © 2024 ShadowBoost. Все права защищены.
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+    </div>
+</footer>
