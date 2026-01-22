@@ -1,0 +1,152 @@
+// Вход - РЕАЛЬНАЯ ПРОВЕРКА КОДА
+async function login() {
+    const code = document.getElementById('code').value;
+    const agree = document.getElementById('agree').checked;
+    const message = document.getElementById('message');
+    
+    // Проверка согласия
+    if (!agree) {
+        showMessage('❌ Для входа необходимо согласие с политикой конфиденциальности', 'error');
+        return;
+    }
+    
+    // Проверка перехода в Telegram
+    if (!telegramClicked) {
+        showMessage('❌ Сначала перейдите в Telegram для получения кода', 'error');
+        return;
+    }
+    
+    // Проверка формата кода
+    if (!code.match(/^\d{3}-\d{3}$/)) {
+        showMessage('❌ Неверный формат кода. Используйте формат XXX-XXX', 'error');
+        return;
+    }
+    
+    // Показываем загрузку
+    showMessage('🔐 Проверяем код...', 'success');
+    document.getElementById('loginBtn').disabled = true;
+    document.getElementById('loginBtn').textContent = 'Проверка...';
+    
+    try {
+        // РЕАЛЬНАЯ ПРОВЕРКА ЧЕРЕЗ API
+        const response = await fetch('verify-code.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ code: code })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showMessage('✅ Код принят! Перенаправляем в кабинет...', 'success');
+            
+            // Сохраняем токен авторизации
+            if (result.token) {
+                localStorage.setItem('auth_token', result.token);
+                localStorage.setItem('user_id', result.user_id);
+            }
+            
+            // Сбрасываем флаги
+            localStorage.removeItem('telegramClicked');
+            telegramClicked = false;
+            
+            // Перенаправляем в кабинет через 2 секунды
+            setTimeout(() => {
+                window.location.href = 'cabinet.html';
+            }, 2000);
+            
+        } else {
+            showMessage(`❌ ${result.error || 'Неверный код. Получите новый код в Telegram'}`, 'error');
+            document.getElementById('loginBtn').textContent = 'Войти в кабинет';
+            document.getElementById('loginBtn').disabled = false;
+        }
+        
+    } catch (error) {
+        console.error('Ошибка проверки кода:', error);
+        showMessage('❌ Ошибка сервера. Попробуйте позже', 'error');
+        document.getElementById('loginBtn').textContent = 'Войти в кабинет';
+        document.getElementById('loginBtn').disabled = false;
+    }
+}
+
+// Файл verify-code.php на сервере:
+<?php
+// verify-code.php
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Content-Type');
+
+// Получаем данные
+$data = json_decode(file_get_contents('php://input'), true);
+$code = $data['code'] ?? '';
+
+if (empty($code)) {
+    echo json_encode(['success' => false, 'error' => 'Код не указан']);
+    exit;
+}
+
+// Читаем сохраненные коды
+$codes_file = 'codes.json';
+if (!file_exists($codes_file)) {
+    echo json_encode(['success' => false, 'error' => 'База кодов не найдена']);
+    exit;
+}
+
+$codes = json_decode(file_get_contents($codes_file), true);
+
+// Проверяем код
+if (!isset($codes[$code])) {
+    echo json_encode(['success' => false, 'error' => 'Код не найден']);
+    exit;
+}
+
+$code_data = $codes[$code];
+$now = time();
+$code_age = $now - $code_data['timestamp'];
+
+// Проверяем срок действия (10 минут = 600 секунд)
+if ($code_age > 600) {
+    echo json_encode(['success' => false, 'error' => 'Код истек. Получите новый код']);
+    exit;
+}
+
+// Проверяем, использовался ли уже
+if ($code_data['used'] ?? false) {
+    echo json_encode(['success' => false, 'error' => 'Код уже использован']);
+    exit;
+}
+
+// Помечаем код как использованный
+$codes[$code]['used'] = true;
+$codes[$code]['used_at'] = $now;
+
+// Сохраняем изменения
+file_put_contents($codes_file, json_encode($codes, JSON_PRETTY_PRINT));
+
+// Генерируем токен авторизации
+$token = bin2hex(random_bytes(32));
+$user_id = $code_data['chat_id'];
+
+// Сохраняем сессию (можно в отдельный файл)
+$sessions_file = 'sessions.json';
+$sessions = file_exists($sessions_file) ? json_decode(file_get_contents($sessions_file), true) : [];
+$sessions[$token] = [
+    'user_id' => $user_id,
+    'username' => $code_data['user_name'] ?? 'Пользователь',
+    'created_at' => $now,
+    'ip' => $_SERVER['REMOTE_ADDR'] ?? ''
+];
+file_put_contents($sessions_file, json_encode($sessions, JSON_PRETTY_PRINT));
+
+// Успешный ответ
+echo json_encode([
+    'success' => true,
+    'token' => $token,
+    'user_id' => $user_id,
+    'username' => $code_data['user_name'] ?? 'Пользователь',
+    'message' => 'Авторизация успешна'
+]);
+?>
