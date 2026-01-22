@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Политика конфиденциальности - ShadowBoost</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+            line-height: 1.6;
+            font-size: 14px;
+            padding: 20px;
+        }
+        
+        .document-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #dee2e6;
+        }
+        
+        .document-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #6c757d;
+        }
+        
+        .document-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #343a40;
+        }
+        
+        .document-meta {
+            color: #6c757d;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+        
+        .notice-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #6c757d;
+            padding: 15px;
+            margin: 25px 0;
+            font-size: 13px;
+            color: #495057;
+        }
+        
+        .important-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            margin: 25px 0;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+        
+        .warning-box {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            margin: 25px 0;
+            border-radius: 3px;
+            font-size: 13px;
+            color: #721c24;
+        }
+        
+        h2 {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 35px 0 15px 0;
+            color: #2c3e50;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        h3 {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 25px 0 10px 0;
+            color: #495057;
+        }
+        
+        h4 {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 20px 0 8px 0;
+            color: #6c757d;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+            padding-left: 5px;
+        }
+        
+        .definition {
+            margin: 15px 0;
+            padding-left: 15px;
+            border-left: 2px solid #e9ecef;
+        }
+        
+        .definition dt {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 3px;
+        }
+        
+        .definition dd {
+            margin-left: 15px;
+            margin-bottom: 12px;
+            color: #6c757d;
+        }
+        
+        .clause {
+            margin-bottom: 20px;
+        }
+        
+        .clause-number {
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .page-break {
+            page-break-before: always;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px dashed #dee2e6;
+        }
+        
+        .document-footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+        }
+        
+        .contact-info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+        
+        .highlight {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 2px;
+            font-family: monospace;
+        }
+        
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .data-categories {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .data-category {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .data-category h4 {
+            margin-top: 0;
+            color: #495057;
+        }
+        
+        .rights-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .right-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .right-item h4 {
+            margin-top: 0;
+            color: #495057;
+        }
+        
+        .contact-info-box {
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+            margin: 15px 0;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .document-container {
+                box-shadow: none;
+                border: none;
+                padding: 20px;
+            }
+            
+            .page-break {
+                page-break-before: always;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .data-categories,
+            .rights-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .document-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        <header class="document-header">
+            <h1 class="document-title">ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ</h1>
+            <p class="document-meta">Редакция № 1.0 от «01» января 2026 года</p>
+            <p class="document-meta">Действует с «01» января 2026 года</p>
+        </header>
+
+        <div class="notice-box">
+            <h4>Уведомление о конфиденциальности данных</h4>
+            <p>Настоящая Политика конфиденциальности описывает, как сервис ShadowBoost собирает, использует, хранит и защищает ваши персональные данные.</p>
+            <p>Используя сервис ShadowBoost, вы соглашаетесь с условиями обработки ваших данных, описанными в настоящей Политике.</p>
+        </div>
+
+        <h2>1. ОПРЕДЕЛЕНИЯ И ОСНОВНЫЕ ПОНЯТИЯ</h2>
+        
+        <div class="clause">
+            <h3>1.1. Термины и определения</h3>
+            <p>В настоящей Политике используются следующие термины:</p>
+            
+            <dl class="definition">
+                <dt>«Персональные данные»</dt>
+                <dd>Любая информация, относящаяся к прямо или косвенно определенному или определяемому физическому лицу.</dd>
+                
+                <dt>«Обработка персональных данных»</dt>
+                <dd>Любое действие (операция) или совокупность действий (операций), совершаемых с персональными данными, включая сбор, запись, систематизацию, накопление, хранение, уточнение, использование, передачу, обезличивание, блокирование, удаление, уничтожение.</dd>
+                
+                <dt>«Автоматизированная обработка»</dt>
+                <dd>Обработка персональных данных с помощью средств вычислительной техники.</dd>
+                
+                <dt>«Cookie-файлы»</dt>
+                <dd>Небольшие текстовые файлы, которые веб-сайт сохраняет на устройстве пользователя при посещении сайта.</dd>
+                
+                <dt>«IP-адрес»</dt>
+                <dd>Уникальный сетевой адрес узла в компьютерной сети.</dd>
+            </dl>
+        </div>
+
+        <div class="clause">
+            <h3>1.2. Оператор персональных данных</h3>
+            <p><span class="clause-number">1.2.1.</span> Оператором является администрация сервиса, действующая под обозначением «ShadowBoost Services».</p>
+            
+            <p><span class="clause-number">1.2.2.</span> Контактные данные оператора:</p>
+            <ul>
+                <li>Электронная почта: <span class="highlight">neurosprint.team@gmail.com</span></li>
+                <li>Telegram: <span class="highlight">@shadowboost_support</span></li>
+                <li>Сайт: <span class="highlight">https://shadowboost.ru</span></li>
+            </ul>
+        </div>
+
+        <div class="clause">
+            <h3>1.3. Правовые основания обработки</h3>
+            <p><span class="clause-number">1.3.1.</span> Обработка осуществляется на следующих основаниях:</p>
+            <ul>
+                <li>Согласие субъекта персональных данных</li>
+                <li>Исполнение договора</li>
+                <li>Выполнение законодательных обязанностей</li>
+                <li>Законные интересы оператора</li>
+            </ul>
+            
+            <div class="important-box">
+                <p><span class="clause-number">1.3.2.</span> Используя сервис, вы даете согласие на обработку персональных данных согласно настоящей Политике.</p>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h2>2. КАТЕГОРИИ ОБРАБАТЫВАЕМЫХ ДАННЫХ</h2>
+        
+        <div class="clause">
+            <h3>2.1. Данные, предоставляемые пользователем</h3>
+            <p><span class="clause-number">2.1.1.</span> При использовании сервиса предоставляются:</p>
+            
+            <div class="data-categories">
+                <div class="data-category">
+                    <h4>Данные для регистрации</h4>
+                    <ul>
+                        <li>Код авторизации из Telegram</li>
+                        <li>Идентификатор Telegram-аккаунта</li>
+                    </ul>
+                </div>
+                
+                <div class="data-category">
+                    <h4>Данные об использовании</h4>
+                    <ul>
+                        <li>URL целевых сайтов</li>
+                        <li>Идентификаторы счетчиков аналитики</li>
+                        <li>Настройки сервиса</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="clause">
+            <h3>2.2. Данные, собираемые автоматически</h3>
+            <p><span class="clause-number">2.2.1.</span> При посещении сайта собирается:</p>
+            
+            <div class="data-categories">
+                <div class="data-category">
+                    <h4>Технические данные</h4>
+                    <ul>
+                        <li>IP-адрес</li>
+                        <li>Тип и версия браузера</li>
+                        <li>Операционная система</li>
+                    </ul>
+                </div>
+                
+                <div class="data-category">
+                    <h4>Данные о посещении</h4>
+                    <ul>
+                        <li>Дата и время доступа</li>
+                        <li>Источник перехода</li>
+                        <li>Посещенные страницы</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="clause">
+            <h3>2.3. Особые категории данных</h3>
+            <p><span class="clause-number">2.3.1.</span> Сервис <strong>не собирает</strong> специальные категории данных:</p>
+            <ul>
+                <li>Расовую или этническую принадлежность</li>
+                <li>Политические взгляды</li>
+                <li>Данные о состоянии здоровья</li>
+                <li>Биометрические данные</li>
+            </ul>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h2>3. ЦЕЛИ ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ</h2>
+        
+        <div class="clause">
+            <h3>3.1. Основные цели</h3>
+            <p><span class="clause-number">3.1.1.</span> Данные обрабатываются для:</p>
+            
+            <div class="data-categories">
+                <div class="data-category">
+                    <h4>Предоставление услуг</h4>
+                    <ul>
+                        <li>Регистрация пользователей</li>
+                        <li>Предоставление доступа</li>
+                        <li>Техническая поддержка</li>
+                    </ul>
+                </div>
+                
+                <div class="data-category">
+                    <h4>Безопасность</h4>
+                    <ul>
+                        <li>Обеспечение безопасности</li>
+                        <li>Предотвращение злоупотреблений</li>
+                        <li>Улучшение качества услуг</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="clause">
+            <h3>3.2. Автоматизированная обработка</h3>
+            <p><span class="clause-number">3.2.1.</span> Обработка осуществляется с использованием:</p>
+            <ul>
+                <li>Алгоритмов машинного обучения</li>
+                <li>Систем автоматической модерации</li>
+                <li>Инструментов для статистики</li>
+            </ul>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h2>4. СПОСОБЫ ОБРАБОТКИ И ХРАНЕНИЯ</h2>
+        
+        <div class="clause">
+            <h3>4.1. Сроки хранения</h3>
+            <p><span class="clause-number">4.1.1.</span> Данные хранятся:</p>
+            
+            <div class="data-categories">
+                <div class="data-category">
+                    <h4>Данные учетной записи</h4>
+                    <p>Весь период существования + 5 лет</p>
+                </div>
+                
+                <div class="data-category">
+                    <h4>Логи действий</h4>
+                    <p>3 года</p>
+                </div>
+                
+                <div class="data-category">
+                    <h4>Технические данные</h4>
+                    <p>12 месяцев</p>
+                </div>
+                
+                <div class="data-category">
+                    <h4>Обезличенные данные</h4>
+                    <p>Бессрочно</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="clause">
+            <h3>4.2. Безопасность данных</h3>
+            <p><span class="clause-number">4.2.1.</span> Принимаются меры безопасности:</p>
+            <ul>
+                <li>Технические (шифрование, межсетевые экраны)</li>
+                <li>Организационные (ограничение доступа)</li>
+                <li>Юридические (соглашения о конфиденциальности)</li>
+            </ul>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h2>5. ПЕРЕДАЧА ДАННЫХ ТРЕТЬИМ ЛИЦАМ</h2>
+        
+        <div class="clause">
+            <h3>5.1. Условия передачи</h3>
+            <p><span class="clause-number">5.1.1.</span> Передача осуществляется при:</p>
+            <ul>
+                <li>Необходимости для предоставления услуг</li>
+                <li>Требовании законодательства</li>
+                <li>Защите прав и безопасности</li>
+            </ul>
+        </div>
+
+        <div class="clause">
+            <h3>5.2. Категории получателей</h3>
+            <p><span class="clause-number">5.2.1.</span> Данные передаются:</p>
+            
+            <div class="data-categories">
+                <div class="data-category">
+                    <h4>Технические партнеры</h4>
+                    <ul>
+                        <li>Хостинг-провайдеры</li>
+                        <li>Облачные сервисы</li>
+                    </ul>
+                </div>
+                
+                <div class="data-category">
+                    <h4>Бизнес-партнеры</h4>
+                    <ul>
+                        <li>Платежные системы</li>
+                        <li>Маркетинговые агентства</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h2>6. COOKIE-ФАЙЛЫ И АНАЛОГИЧНЫЕ ТЕХНОЛОГИИ</h2>
+        
+        <div class="clause">
+            <h3>6.1. Типы Cookie-файлов</h3>
+            <p><span class="clause-number">6.1.1.</span> Используются:</p>
+            
+            <div class="data-categories">
+                <div class="data-category">
+                    <h4>Необходимые</h4>
+                    <p>Для работы сайта</p>
+                </div>
+                
+                <div class="data-category">
+                    <h4>Функциональные</h4>
+                    <p>Запоминание настроек</p>
+                </div>
+                
+                <div class="data-category">
+                    <h4>Аналитические</h4>
+                    <p>Анализ поведения</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h2>7. ПРАВА ПОЛЬЗОВАТЕЛЕЙ</h2>
+        
+        <div class="clause">
+            <h3>7.1. Основные права</h3>
+            
+            <div class="rights-grid">
+                <div class="right-item">
+                    <h4>Право на доступ</h4>
+                    <p>Получать информацию о данных</p>
+                </div>
+                
+                <div class="right-item">
+                    <h4>Право на исправление</h4>
+                    <p>Требовать исправления данных</p>
+                </div>
+                
+                <div class="right-item">
+                    <h4>Право на удаление</h4>
+                    <p>Требовать удаления данных</p>
+                </div>
+                
+                <div class="right-item">
+                    <h4>Право на ограничение</h4>
+                    <p>Требовать ограничения обработки</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="clause">
+            <h3>7.2. Реализация прав</h3>
+            <p><span class="clause-number">7.2.1.</span> Для реализации прав направьте запрос на электронную почту.</p>
+            <p><span class="clause-number">7.2.2.</span> Срок рассмотрения - 30 дней.</p>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h2>8. ОТВЕТСТВЕННОСТЬ</h2>
+        
+        <div class="clause">
+            <h3>8.1. Ограничение ответственности</h3>
+            <p><span class="clause-number">8.1.1.</span> Оператор не гарантирует абсолютную безопасность данных.</p>
+            <p><span class="clause-number">8.1.2.</span> Оператор не несет ответственности за действия третьих лиц.</p>
+        </div>
+
+        <div class="clause">
+            <h3>8.2. Гарантии пользователя</h3>
+            <p><span class="clause-number">8.2.1.</span> Пользователь гарантирует точность предоставляемых данных.</p>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h2>9. ИЗМЕНЕНИЕ ПОЛИТИКИ</h2>
+        
+        <div class="clause">
+            <h3>9.1. Право на изменение</h3>
+            <p><span class="clause-number">9.1.1.</span> Оператор вправе изменять Политику в одностороннем порядке.</p>
+            <p><span class="clause-number">9.1.2.</span> Изменения вступают в силу с момента публикации.</p>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h2>10. ЗАКЛЮЧИТЕЛЬНЫЕ ПОЛОЖЕНИЯ</h2>
+        
+        <div class="clause">
+            <h3>10.1. Срок действия</h3>
+            <p><span class="clause-number">10.1.1.</span> Политика действует бессрочно.</p>
+        </div>
+
+        <div class="clause">
+            <h3>10.2. Контактная информация</h3>
+            
+            <div class="contact-info-box">
+                <p><strong>Электронная почта:</strong> neurosprint.team@gmail.com</p>
+                <p><strong>Сайт:</strong> shadowboost.ru</p>
+                <p><strong>Время ответа:</strong> до 30 дней</p>
+            </div>
+        </div>
+
+        <div class="clause">
+            <h3>10.3. Применимое право</h3>
+            <p><span class="clause-number">10.3.1.</span> Политика регулируется законодательством РФ.</p>
+        </div>
+
+        <footer class="document-footer">
+            <div class="footer-content">
+                <p><strong>ShadowBoost Services</strong></p>
+                <p>Политика конфиденциальности</p>
+                <p>Актуальная версия: <a href="https://shadowboost.ru/privacy">https://shadowboost.ru/privacy</a></p>
+                
+                <div class="version-info">
+                    <p><strong>Редакция № 1.0</strong></p>
+                    <p>Принята: «01» января 2026 года</p>
+                    <p>Действует с: «01» января 2026 года</p>
+                </div>
+                
+                <p class="copyright">© 2024-2026 ShadowBoost Services. Все права защищены.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
