@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowBoost — Выбор тарифа</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            background: #0a0a0f;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #8b5cf6;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #a0a0b0;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 50px;
+            line-height: 1.6;
+        }
+        
+        /* Тарифы */
+        .tariffs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .tariff {
+            background: rgba(30, 30, 46, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .tariff:hover {
+            border-color: #3b82f6;
+            transform: translateY(-10px);
+        }
+        
+        .tariff.popular {
+            border-color: #8b5cf6;
+            background: linear-gradient(135deg, rgba(30, 30, 46, 0.9), rgba(30, 30, 46, 0.9));
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .tariff-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .tariff-price {
+            font-size: 48px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .tariff-period {
+            text-align: center;
+            color: #a0a0b0;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .tariff-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .tariff-feature {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #a0a0b0;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tariff-feature:last-child {
+            border-bottom: none;
+        }
+        
+        .tariff-feature strong {
+            color: #fff;
+        }
+        
+        .check-icon {
+            color: #22c55e;
+            font-size: 18px;
+        }
+        
+        /* Кнопки */
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            gap: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 15px;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Сообщения */
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+        }
+        
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+        
+        /* Инфо */
+        .info {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .info h3 {
+            color: #3b82f6;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .info p {
+            color: #a0a0b0;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .tariffs {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .tariff {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">ShadowBoost</div>
+            <a href="how-it-works.html" class="back-btn">← Назад</a>
+        </div>
+        
+        <h1>Выберите тариф</h1>
+        <p class="subtitle">
+            Все тарифы включают резидентские IP и браузерную эмуляцию
+        </p>
+        
+        <div id="message" class="message"></div>
+        
+        <div class="tariffs">
+            <!-- Базовый тариф -->
+            <div class="tariff">
+                <h3 class="tariff-name">Базовый</h3>
+                <div class="tariff-price">2 000 ₽</div>
+                <div class="tariff-period">в месяц</div>
+                
+                <ul class="tariff-features">
+                    <li class="tariff-feature">
+                        <span class="check-icon">✓</span>
+                        <strong>1 500</strong> визитов в месяц
+                    </li>
+                    <li class="tariff-feature">
+                        <span class="check-icon">✓</span>
+                        Резидентские IP (Россия/СНГ)
+                    </li>
+                    <li class="tariff-feature">
+                        <span class="check-icon">✓</span>
+                        Браузерная эмуляция (Playwright)
+                    </li>
+                    <li class="tariff-feature">
+                        <span class="check-icon">✓</span>
+                        Автоматический запуск
+                    </li>
+                    <li class="tariff-feature">
+                        <span class="check-icon">✓</span>
+                        Поддержка в чате
+                    </li>
+                </ul>
+                
+                <button onclick="selectTariff('basic')" class="btn">
+                    🚀 Выбрать Базовый
+                </button>
+                <a href="how-it-works.html" class="btn btn-secondary">
+                    Подробнее о тарифе
+                </a>
+            </div>
+            
+            <!-- Оптимальный тариф -->
+            <div class="tariff popular">
+                <div class="popular-badge">Самый популярный</div>
+                <h3 class="tariff-name">Оптима</h3>
+                <div class="tariff-price">5 000 ₽</div>
+                <div class="tariff-period">в месяц</div>
+                
+                <ul class="tariff-features">
+                    <li class="tariff-feature">
+                        <span class="check-icon">✓</span>
+                        <strong>4 000</strong> визитов в месяц
+                    </li>
+                    <li class="tariff-feature">
+                        <span class="check-icon">✓</span>
+                        Резидентские IP (Россия/СНГ)
+                    </li>
+                    <li class="tariff-feature">
+                        <span class="check-icon">✓</span>
+                        Браузерная эмуляция (Playwright)
+                    </li>
+                    <li class="tariff-feature">
+                        <span class="check-icon">✓</span>
+                        Приоритетная поддержка
+                    </li>
+                    <li class="tariff-feature">
+                        <span class="check-icon">✓</span>
+                        Статистика в реальном времени
+                    </li>
+                </ul>
+                
+                <button onclick="selectTariff('optimal')" class="btn">
+                    🚀 Выбрать Оптима
+                </button>
+                <a href="how-it-works.html" class="btn btn-secondary">
+                    Подробнее о тарифе
+                </a>
+            </div>
+            
+            <!-- Профессиональный тариф -->
+            <div class="tariff">
+                <h3 class="tariff-name">Профи</h3>
+                <div class="tariff-price">10 000 ₽</div>
+                <div class="tariff-period">в месяц</div>
+                
+                <ul class="tariff-features">
+                    <li class="tariff-feature">
+                        <span class="check-icon">✓</span>
+                        <strong>8 000</strong> визитов в месяц
+                    </li>
+                    <li class="tariff-feature">
+                        <span class="check-icon">✓</span>
+                        Резидентские IP (Россия/СНГ)
+                    </li>
+                    <li class="tariff-feature">
+                        <span class="check-icon">✓</span>
+                        Браузерная эмуляция (Playwright)
+                    </li>
+                    <li class="tariff-feature">
+                        <span class="check-icon">✓</span>
+                        Индивидуальные настройки
+                    </li>
+                    <li class="tariff-feature">
+                        <span class="check-icon">✓</span>
+                        Персональный менеджер
+                    </li>
+                </ul>
+                
+                <button onclick="selectTariff('pro')" class="btn">
+                    🚀 Выбрать Профи
+                </button>
+                <a href="how-it-works.html" class="btn btn-secondary">
+                    Подробнее о тарифе
+                </a>
+            </div>
+        </div>
+        
+        <div class="info">
+            <h3>💡 Как работает оплата?</h3>
+            <p>
+                Вы выбираете тариф → Оплачиваете через ЮKassa (картой, СБП, ЮMoney) → 
+                Система автоматически запускается → Визиты начинаются в течение часа → 
+                Вы видите статистику в Яндекс.Метрике. Отмена в любой момент.
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Данные тарифов
+        const tariffs = {
+            basic: {
+                name: 'Базовый',
+                price: 2000,
+                visits: 1500,
+                features: [
+                    '1 500 визитов в месяц',
+                    'Резидентские IP (Россия/СНГ)',
+                    'Браузерная эмуляция (Playwright)',
+                    'Автоматический запуск',
+                    'Поддержка в чате'
+                ]
+            },
+            optimal: {
+                name: 'Оптима',
+                price: 5000,
+                visits: 4000,
+                features: [
+                    '4 000 визитов в месяц',
+                    'Резидентские IP (Россия/СНГ)',
+                    'Браузерная эмуляция (Playwright)',
+                    'Приоритетная поддержка',
+                    'Статистика в реальном времени'
+                ]
+            },
+            pro: {
+                name: 'Профи',
+                price: 10000,
+                visits: 8000,
+                features: [
+                    '8 000 визитов в месяц',
+                    'Резидентские IP (Россия/СНГ)',
+                    'Браузерная эмуляция (Playwright)',
+                    'Индивидуальные настройки',
+                    'Персональный менеджер'
+                ]
+            }
+        };
+        
+        // Показать сообщение
+        function showMessage(text, type) {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.className = 'message ' + type;
+            message.style.display = 'block';
+            
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Выбор тарифа
+        function selectTariff(tariffType) {
+            // Проверяем авторизацию
+            const user = localStorage.getItem('shadowboost_user');
+            if (!user) {
+                window.location.href = 'register.html';
+                return;
+            }
+            
+            // Проверяем добавлен ли сайт
+            const site = localStorage.getItem('shadowboost_current_site');
+            if (!site) {
+                showMessage('❌ Сначала добавьте сайт', 'error');
+                setTimeout(() => {
+                    window.location.href = 'add-site.html';
+                }, 1500);
+                return;
+            }
+            
+            // Сохраняем выбранный тариф
+            const tariff = tariffs[tariffType];
+            localStorage.setItem('shadowboost_selected_tariff', JSON.stringify(tariff));
+            
+            showMessage(`✅ Выбран тариф "${tariff.name}". Перенаправляем на оплату...`, 'success');
+            
+            // Через 1 секунду перенаправляем на страницу оплаты
+            setTimeout(() => {
+                window.location.href = `payment.html?tariff=${tariffType}`;
+            }, 1000);
+        }
+        
+        // Проверяем авторизацию при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = localStorage.getItem('shadowboost_user');
+            if (!user) {
+                window.location.href = 'register.html';
+            }
+        });
+    </script>
+</body>
+</html>
