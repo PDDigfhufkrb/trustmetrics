@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowBoost — Регистрация</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            background: #0a0a0f;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .logo {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
+        
+        .auth-card {
+            background: rgba(30, 30, 46, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #a0a0b0;
+            margin-bottom: 30px;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #a0a0b0;
+            font-size: 14px;
+        }
+        
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .checkbox-group {
+            margin: 25px 0;
+            text-align: left;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            accent-color: #3b82f6;
+            cursor: pointer;
+        }
+        
+        .checkbox-label {
+            font-size: 14px;
+            color: #a0a0b0;
+            line-height: 1.5;
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .checkbox-label a {
+            color: #8b5cf6;
+            text-decoration: none;
+        }
+        
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+        }
+        
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+        
+        .links {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .links a {
+            color: #8b5cf6;
+            text-decoration: none;
+        }
+        
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">ShadowBoost</div>
+        
+        <div class="auth-card">
+            <h1>Создать аккаунт</h1>
+            <p class="subtitle">Для начала работы с ShadowBoost</p>
+            
+            <div id="message" class="message"></div>
+            
+            <form id="registerForm">
+                <div class="input-group">
+                    <label for="email">Email адрес</label>
+                    <input type="email" id="email" placeholder="ваш@email.com" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" placeholder="Придумайте пароль" required>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="agree" required>
+                    <label for="agree" class="checkbox-label">
+                        Я прочитал(а) и соглашаюсь с 
+                        <a href="privacy.html" target="_blank">политикой конфиденциальности</a> 
+                        и 
+                        <a href="terms.html" target="_blank">пользовательским соглашением</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn">Создать аккаунт</button>
+            </form>
+            
+            <div class="links">
+                Уже есть аккаунт? <a href="login.html">Войти</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Генерация случайного ID пользователя
+        function generateUserId() {
+            return 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+        
+        // Проверка email
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        // Показать сообщение
+        function showMessage(text, type) {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.className = 'message ' + type;
+            message.style.display = 'block';
+            
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Регистрация
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const agree = document.getElementById('agree').checked;
+            
+            // Валидация
+            if (!email || !password) {
+                showMessage('❌ Заполните все поля', 'error');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showMessage('❌ Неверный формат email', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showMessage('❌ Пароль должен быть не менее 6 символов', 'error');
+                return;
+            }
+            
+            if (!agree) {
+                showMessage('❌ Необходимо согласие с условиями', 'error');
+                return;
+            }
+            
+            // Создаем пользователя
+            const user = {
+                id: generateUserId(),
+                email: email,
+                password: password,
+                created: new Date().toISOString(),
+                tariff: null,
+                sites: []
+            };
+            
+            // Сохраняем пользователя
+            localStorage.setItem('shadowboost_user', JSON.stringify(user));
+            localStorage.setItem('shadowboost_email', email);
+            localStorage.setItem('shadowboost_password', password);
+            
+            showMessage('✅ Аккаунт создан! Перенаправляем...', 'success');
+            
+            // Через 1 секунду перенаправляем на страницу добавления сайта
+            setTimeout(() => {
+                window.location.href = 'add-site.html';
+            }, 1000);
+        });
+        
+        // Автофокус на поле email
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('email').focus();
+        });
+    </script>
+</body>
+</html>
