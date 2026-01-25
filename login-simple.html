@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowBoost — Вход</title>
+    <style>
+        /* Те же стили как в register.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            background: #0a0a0f;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .logo {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
+        
+        .auth-card {
+            background: rgba(30, 30, 46, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #a0a0b0;
+            margin-bottom: 30px;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #a0a0b0;
+            font-size: 14px;
+        }
+        
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 15px;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+        }
+        
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+        
+        .links {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .links a {
+            color: #8b5cf6;
+            text-decoration: none;
+        }
+        
+        .links a:hover {
+            text-decoration: underline;
+        }
+        
+        .forgot-password {
+            text-align: right;
+            margin-top: 10px;
+        }
+        
+        .forgot-password a {
+            color: #8b5cf6;
+            font-size: 14px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">ShadowBoost</div>
+        
+        <div class="auth-card">
+            <h1>Вход в аккаунт</h1>
+            <p class="subtitle">Введите email и пароль для доступа</p>
+            
+            <div id="message" class="message"></div>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="email">Email адрес</label>
+                    <input type="email" id="email" placeholder="ваш@email.com" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" placeholder="Ваш пароль" required>
+                </div>
+                
+                <div class="forgot-password">
+                    <a href="reset-password.html">Забыли пароль?</a>
+                </div>
+                
+                <button type="submit" class="btn">Войти</button>
+            </form>
+            
+            <button onclick="autoLogin()" class="btn btn-secondary">
+                🔄 Автоматический вход
+            </button>
+            
+            <div class="links">
+                Нет аккаунта? <a href="register.html">Зарегистрироваться</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Проверяем сохранённые данные
+        function checkAutoLogin() {
+            const savedEmail = localStorage.getItem('shadowboost_email');
+            const savedPassword = localStorage.getItem('shadowboost_password');
+            
+            if (savedEmail && savedPassword) {
+                // Автоматически заполняем форму
+                document.getElementById('email').value = savedEmail;
+                document.getElementById('password').value = savedPassword;
+                return true;
+            }
+            return false;
+        }
+        
+        // Автоматический вход
+        function autoLogin() {
+            if (checkAutoLogin()) {
+                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+            } else {
+                showMessage('❌ Нет сохранённых данных для входа', 'error');
+            }
+        }
+        
+        // Показать сообщение
+        function showMessage(text, type) {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.className = 'message ' + type;
+            message.style.display = 'block';
+            
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Вход
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            
+            // Проверка
+            if (!email || !password) {
+                showMessage('❌ Заполните все поля', 'error');
+                return;
+            }
+            
+            // Проверяем сохранённые данные
+            const savedEmail = localStorage.getItem('shadowboost_email');
+            const savedPassword = localStorage.getItem('shadowboost_password');
+            
+            if (email === savedEmail && password === savedPassword) {
+                showMessage('✅ Успешный вход! Перенаправляем...', 'success');
+                
+                // Обновляем время входа
+                localStorage.setItem('shadowboost_last_login', Date.now());
+                
+                // Перенаправляем в кабинет
+                setTimeout(() => {
+                    window.location.href = 'cabinet.html';
+                }, 1000);
+            } else {
+                showMessage('❌ Неверный email или пароль', 'error');
+            }
+        });
+        
+        // Проверяем при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            if (checkAutoLogin()) {
+                showMessage('🔐 Данные для входа найдены. Нажмите "Автоматический вход"', 'success');
+            }
+            
+            // Фокус на поле email
+            document.getElementById('email').focus();
+        });
+    </script>
+</body>
+</html>
