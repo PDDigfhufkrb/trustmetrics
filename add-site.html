@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowBoost — Добавить сайт</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            background: #0a0a0f;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .logo {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(30, 30, 46, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #a0a0b0;
+            margin-bottom: 30px;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #a0a0b0;
+            font-size: 14px;
+        }
+        
+        input[type="url"], input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .help-text {
+            font-size: 13px;
+            color: #a0a0b0;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+        
+        .help-text a {
+            color: #8b5cf6;
+            text-decoration: none;
+        }
+        
+        .help-text a:hover {
+            text-decoration: underline;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 15px;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+        }
+        
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .back-link a {
+            color: #8b5cf6;
+            text-decoration: none;
+        }
+        
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .info-box h3 {
+            color: #3b82f6;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .info-box p {
+            color: #a0a0b0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">ShadowBoost</div>
+        
+        <div class="card">
+            <div class="info-box">
+                <h3>🎯 Добро пожаловать в ShadowBoost!</h3>
+                <p>Сначала добавьте ваш сайт, затем выберите тариф и запустите систему. Визиты начнутся автоматически в течение часа после оплаты.</p>
+            </div>
+            
+            <h1>Добавьте ваш сайт</h1>
+            <p class="subtitle">Укажите данные сайта для начала работы</p>
+            
+            <div id="message" class="message"></div>
+            
+            <form id="addSiteForm">
+                <div class="input-group">
+                    <label for="siteUrl">URL вашего сайта</label>
+                    <input type="url" id="siteUrl" placeholder="https://ваш-сайт.ru" required>
+                    <div class="help-text">
+                        Введите полный адрес вашего сайта, включая https://
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="yandexId">ID Яндекс.Метрики</label>
+                    <input type="text" id="yandexId" placeholder="12345678" required>
+                    <div class="help-text">
+                        <a href="https://yandex.ru/support/metrica/general/counter-setup.html" target="_blank">
+                            Где найти ID счётчика?
+                        </a>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn">Продолжить →</button>
+            </form>
+            
+            <a href="register.html" class="btn btn-secondary">← Назад</a>
+            
+            <div class="back-link">
+                <a href="cabinet.html">Пропустить и перейти в кабинет</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Проверка авторизации
+        function checkAuth() {
+            const user = localStorage.getItem('shadowboost_user');
+            if (!user) {
+                window.location.href = 'register.html';
+                return false;
+            }
+            return true;
+        }
+        
+        // Проверка URL
+        function isValidUrl(url) {
+            try {
+                new URL(url);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+        
+        // Проверка ID Яндекс.Метрики
+        function isValidYandexId(id) {
+            return /^\d+$/.test(id) && id.length >= 6;
+        }
+        
+        // Показать сообщение
+        function showMessage(text, type) {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.className = 'message ' + type;
+            message.style.display = 'block';
+            
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Добавление сайта
+        document.getElementById('addSiteForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const siteUrl = document.getElementById('siteUrl').value.trim();
+            const yandexId = document.getElementById('yandexId').value.trim();
+            
+            // Валидация
+            if (!siteUrl || !yandexId) {
+                showMessage('❌ Заполните все поля', 'error');
+                return;
+            }
+            
+            if (!isValidUrl(siteUrl)) {
+                showMessage('❌ Неверный формат URL', 'error');
+                return;
+            }
+            
+            if (!isValidYandexId(yandexId)) {
+                showMessage('❌ ID Яндекс.Метрики должен содержать только цифры', 'error');
+                return;
+            }
+            
+            // Получаем данные пользователя
+            const user = JSON.parse(localStorage.getItem('shadowboost_user'));
+            
+            // Сохраняем сайт
+            const site = {
+                id: 'site_' + Date.now(),
+                url: siteUrl,
+                yandexId: yandexId,
+                created: new Date().toISOString(),
+                status: 'pending', // pending, active, paused
+                tariff: null,
+                visitsToday: 0,
+                visitsTotal: 0
+            };
+            
+            // Добавляем сайт к пользователю
+            user.sites = [site];
+            localStorage.setItem('shadowboost_user', JSON.stringify(user));
+            localStorage.setItem('shadowboost_current_site', JSON.stringify(site));
+            
+            showMessage('✅ Сайт добавлен! Перенаправляем...', 'success');
+            
+            // Через 1 секунду перенаправляем на страницу объяснения
+            setTimeout(() => {
+                window.location.href = 'how-it-works.html';
+            }, 1000);
+        });
+        
+        // Проверяем авторизацию при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            if (checkAuth()) {
+                // Автофокус на поле URL
+                document.getElementById('siteUrl').focus();
+                
+                // Проверяем, есть ли уже сохраненный сайт
+                const user = JSON.parse(localStorage.getItem('shadowboost_user'));
+                if (user.sites && user.sites.length > 0) {
+                    const lastSite = user.sites[0];
+                    document.getElementById('siteUrl').value = lastSite.url;
+                    document.getElementById('yandexId').value = lastSite.yandexId;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
