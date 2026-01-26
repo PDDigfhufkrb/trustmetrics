@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowBoost — Технология имитации органического трафика для Яндекс.Метрики</title>
+    <meta name="description" content="Профессиональное решение для создания цифрового следа. Резидентские IP, браузерная эмуляция, безопасно для аналитики. Запуск за 5 минут.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ====== EXTENDED CSS VARIABLES ====== */
+        :root {
+            /* Основные цвета */
+            --bg-primary: #0a0a12;
+            --bg-secondary: #0f0f1a;
+            --bg-tertiary: #141424;
+            
+            /* Акцентные цвета - расширенная палитра */
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-tertiary: #ec4899;
+            --accent-quaternary: #f59e0b;
+            --accent-success: #10b981;
+            --accent-info: #06b6d4;
+            --accent-warning: #f59e0b;
+            --accent-danger: #ef4444;
+            
+            /* Градиенты */
+            --gradient-primary: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
+            --gradient-secondary: linear-gradient(135deg, var(--accent-info), var(--accent-primary));
+            --gradient-success: linear-gradient(135deg, var(--accent-success), #34d399);
+            --gradient-warning: linear-gradient(135deg, var(--accent-warning), #fbbf24);
+            
+            /* Текст */
+            --text-primary: #ffffff;
+            --text-secondary: #d1d5db;
+            --text-tertiary: #9ca3af;
+            --text-muted: #6b7280;
+            
+            /* Эффекты */
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 60px rgba(99, 102, 241, 0.2);
+            --shadow-glow-secondary: 0 0 60px rgba(139, 92, 246, 0.15);
+            
+            /* Анимации */
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        /* ====== RESET & BASE ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+        
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* ====== MODERN BACKGROUND WITH ABSTRACT ELEMENTS ====== */
+        .background-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+        
+        .gradient-orbs {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.15;
+            animation: float-orb 25s infinite linear;
+        }
+        
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: var(--gradient-primary);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+        
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: var(--gradient-secondary);
+            top: 50%;
+            right: -150px;
+            animation-delay: 5s;
+            animation-direction: reverse;
+        }
+        
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--accent-tertiary), var(--accent-warning));
+            bottom: -100px;
+            left: 30%;
+            animation-delay: 10s;
+        }
+        
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+        }
+        
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            animation: float-shape 40s infinite linear;
+        }
+        
+        .shape-1 {
+            width: 120px;
+            height: 120px;
+            top: 15%;
+            left: 10%;
+            transform: rotate(45deg);
+        }
+        
+        .shape-2 {
+            width: 80px;
+            height: 80px;
+            top: 60%;
+            right: 15%;
+            transform: rotate(15deg);
+            animation-delay: 10s;
+            animation-direction: reverse;
+        }
+        
+        .shape-3 {
+            width: 100px;
+            height: 100px;
+            bottom: 20%;
+            left: 20%;
+            border-radius: 50%;
+            animation-delay: 20s;
+        }
+        
+        @keyframes float-orb {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            33% {
+                transform: translate(30px, 30px) rotate(120deg) scale(1.05);
+            }
+            66% {
+                transform: translate(-20px, 40px) rotate(240deg) scale(0.95);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg) scale(1);
+            }
+        }
+        
+        @keyframes float-shape {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(20px, 20px) rotate(90deg);
+            }
+            50% {
+                transform: translate(0, 40px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-20px, 20px) rotate(270deg);
+            }
+        }
+        
+        /* ====== CONTAINER ====== */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+        }
+        
+        /* ====== MODERN NAVIGATION ====== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 18, 0.9);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            padding: 20px 0;
+            transition: var(--transition-smooth);
+        }
+        
+        .navbar.scrolled {
+            padding: 15px 0;
+            background: rgba(10, 10, 18, 0.95);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            position: relative;
+            padding-left: 10px;
+        }
+        
+        .logo::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 24px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: var(--transition-smooth);
+            position: relative;
+            padding: 8px 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+            border-radius: 1px;
+        }
+        
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* ====== MODERN BUTTONS ====== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 36px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: var(--transition-bounce);
+            cursor: pointer;
+            border: none;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.2px;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.35);
+        }
+        
+        .btn-secondary {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--accent-primary);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* ====== PROFESSIONAL HERO SECTION ====== */
+        .hero {
+            padding: 220px 0 160px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--accent-primary);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .hero-title {
+            font-size: 64px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 28px;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, 
+                var(--text-primary) 0%, 
+                var(--text-secondary) 30%, 
+                var(--accent-primary) 70%,
+                var(--accent-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+        }
+        
+        .hero-subtitle {
+            font-size: 22px;
+            color: var(--text-tertiary);
+            line-height: 1.7;
+            margin-bottom: 48px;
+            max-width: 680px;
+            font-weight: 400;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+        
+        .hero-subtitle strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 100px;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+            opacity: 0;
+        }
+        
+        /* ====== PROFESSIONAL FEATURES ====== */
+        .features-section {
+            padding: 120px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        
+        .section-label {
+            display: inline-block;
+            color: var(--accent-info);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .section-label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 2px;
+            background: var(--accent-info);
+            border-radius: 1px;
+        }
+        
+        .section-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+        
+        .section-description {
+            font-size: 18px;
+            color: var(--text-tertiary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .feature-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+        
+        .feature-card:hover::before {
+            opacity: 0.05;
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-primary);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 28px;
+            font-size: 32px;
+            transition: var(--transition-bounce);
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .feature-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .feature-description {
+            color: var(--text-tertiary);
+            line-height: 1.7;
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .feature-highlight {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-success);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 50px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        
+        /* ====== PROFESSIONAL STEPS ====== */
+        .steps-section {
+            padding: 120px 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(99, 102, 241, 0.03) 100%);
+            position: relative;
+        }
+        
+        .steps-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .steps {
+            display: flex;
+            gap: 30px;
+            position: relative;
+        }
+        
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                var(--accent-primary) 20%, 
+                var(--accent-secondary) 50%,
+                var(--accent-tertiary) 80%,
+                transparent 100%);
+            z-index: 0;
+        }
+        
+        .step {
+            flex: 1;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            transition: var(--transition-smooth);
+        }
+        
+        .step:hover {
+            transform: translateY(-8px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .step-number {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 auto 28px;
+            transition: var(--transition-bounce);
+            color: white;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+        
+        .step:hover .step-number {
+            transform: scale(1.15) rotate(10deg);
+        }
+        
+        .step-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .step-description {
+            color: var(--text-tertiary);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        
+        /* ====== PROFESSIONAL TARIFFS ====== */
+        .tariffs-section {
+            padding: 120px 0;
+        }
+        
+        .tariffs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .tariff-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 50px 40px;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tariff-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        
+        .tariff-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .tariff-card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: var(--shadow-lg), 0 0 60px rgba(99, 102, 241, 0.15);
+        }
+        
+        .tariff-card.popular {
+            border-color: var(--accent-primary);
+            background: linear-gradient(180deg, 
+                rgba(30, 30, 46, 0.9) 0%, 
+                rgba(20, 20, 35, 0.9) 100%), 
+                var(--gradient-primary);
+            transform: scale(1.05);
+        }
+        
+        .tariff-card.popular:hover {
+            transform: scale(1.05) translateY(-12px);
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-primary);
+            color: white;
+            padding: 10px 28px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            animation: pulse 3s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { 
+                box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            }
+            50% { 
+                box-shadow: 0 10px 40px rgba(99, 102, 241, 0.5), 0 0 30px rgba(99, 102, 241, 0.3);
+            }
+        }
+        
+        .tariff-name {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--text-primary);
+        }
+        
+        .tariff-price {
+            font-size: 64px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 10px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+        
+        .tariff-period {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .tariff-features {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+        
+        .tariff-feature {
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-tertiary);
+            font-size: 16px;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .tariff-feature:last-child {
+            border-bottom: none;
+        }
+        
+        .tariff-feature::before {
+            content: '✓';
+            color: var(--accent-success);
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .tariff-feature strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        .tariff-card:hover .tariff-feature {
+            color: var(--text-secondary);
+        }
+        
+        /* ====== PROFESSIONAL FAQ ====== */
+        .faq-section {
+            padding: 120px 0;
+            background: linear-gradient(180deg, rgba(99, 102, 241, 0.03) 0%, transparent 100%);
+        }
+        
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .faq-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .faq-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .faq-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background: var(--gradient-primary);
+            transition: height 0.4s ease;
+        }
+        
+        .faq-item:hover::before {
+            height: 100%;
+        }
+        
+        .faq-item:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateX(8px);
+        }
+        
+        .faq-question {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            position: relative;
+            padding-left: 36px;
+            line-height: 1.4;
+        }
+        
+        .faq-question::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent-primary);
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-question::before {
+            transform: rotate(90deg);
+        }
+        
+        .faq-answer {
+            color: var(--text-tertiary);
+            line-height: 1.8;
+            font-size: 16px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, margin-top 0.5s ease;
+            padding-left: 36px;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            margin-top: 20px;
+        }
+        
+        /* ====== PROFESSIONAL CTA ====== */
+        .cta-section {
+            padding: 160px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-card {
+            background: linear-gradient(135deg, 
+                rgba(30, 30, 46, 0.8) 0%, 
+                rgba(20, 20, 35, 0.9) 100%);
+            backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border);
+            border-radius: 36px;
+            padding: 100px;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+        
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, 
+                rgba(99, 102, 241, 0.15) 0%, 
+                rgba(139, 92, 246, 0.1) 30%, 
+                transparent 70%);
+            z-index: -1;
+            animation: rotate-cta 25s linear infinite;
+        }
+        
+        @keyframes rotate-cta {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .cta-title {
+            font-size: 56px;
+            font-weight: 900;
+            margin-bottom: 28px;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .cta-subtitle {
+            font-size: 22px;
+            color: var(--text-tertiary);
+            max-width: 700px;
+            margin: 0 auto 50px;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-note {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin-top: 30px;
+            font-weight: 400;
+        }
+        
+        .cta-note a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .cta-note a:hover {
+            text-decoration: underline;
+        }
+        
+        /* ====== PROFESSIONAL FOOTER ====== */
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 80px 0 40px;
+            position: relative;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 60px;
+        }
+        
+        .footer-brand {
+            flex: 1;
+        }
+        
+        .footer-logo {
+            font-size: 28px;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .footer-tagline {
+            color: var(--text-tertiary);
+            font-size: 16px;
+            max-width: 300px;
+            line-height: 1.6;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 60px;
+        }
+        
+        .footer-column {
+            min-width: 160px;
+        }
+        
+        .footer-column-title {
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+        
+        .footer-link {
+            display: block;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            font-size: 15px;
+            margin-bottom: 12px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent-primary);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .social-link {
+            width: 44px;
+            height: 44px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+        
+        .social-link:hover {
+            background: var(--accent-primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+        
+        /* ====== ANIMATIONS ====== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* ====== RESPONSIVE DESIGN ====== */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 56px;
+            }
+            
+            .section-title {
+                font-size: 42px;
+            }
+            
+            .cta-title {
+                font-size: 48px;
+            }
+            
+            .tariffs-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+            
+            .tariff-card.popular {
+                transform: none;
+            }
+            
+            .tariff-card.popular:hover {
+                transform: translateY(-12px);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 48px;
+            }
+            
+            .steps {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .steps::before {
+                display: none;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .cta-card {
+                padding: 60px 40px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 50px;
+            }
+            
+            .footer-links {
+                flex-wrap: wrap;
+                gap: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 180px 0 120px;
+            }
+            
+            .hero-title {
+                font-size: 40px;
+            }
+            
+            .hero-subtitle {
+                font-size: 19px;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .section-title {
+                font-size: 36px;
+            }
+            
+            .section {
+                padding: 80px 0;
+            }
+            
+            .cta-section {
+                padding: 100px 0;
+            }
+            
+            .cta-title {
+                font-size: 36px;
+            }
+            
+            .cta-subtitle {
+                font-size: 18px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .step, 
+            .feature-card, 
+            .tariff-card,
+            .faq-item {
+                padding: 30px;
+            }
+            
+            .tariff-price {
+                font-size: 56px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .hero-title {
+                font-size: 34px;
+            }
+            
+            .section-title {
+                font-size: 30px;
+            }
+            
+            .cta-card {
+                padding: 40px 25px;
+            }
+            
+            .cta-title {
+                font-size: 32px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Modern Background -->
+    <div class="background-wrapper">
+        <div class="gradient-orbs orb-1"></div>
+        <div class="gradient-orbs orb-2"></div>
+        <div class="gradient-orbs orb-3"></div>
+        <div class="grid-pattern"></div>
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container navbar-content">
+            <a href="#" class="logo">ShadowBoost</a>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Технология</a>
+                <a href="#how" class="nav-link">Как работает</a>
+                <a href="#tariffs" class="nav-link">Тарифы</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="login-simple.html" class="nav-link">Войти</a>
+                <a href="register-simple.html" class="btn btn-primary">Начать бесплатно</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Professional Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>⚡</span>
+                    Технология резидентского трафика нового поколения
+                </div>
+                
+                <h1 class="hero-title">
+                    Цифровой след, который <br>
+                    <span style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        неотличим от реальности
+                    </span>
+                </h1>
+                
+                <p class="hero-subtitle">
+                    <strong>ShadowBoost</strong> — профессиональная платформа для создания органической активности. 
+                    Используем резидентские IP-адреса и браузерную эмуляцию, чтобы ваши метрики в 
+                    <strong>Яндекс.Метрике</strong> и <strong>Google Analytics</strong> отражали естественный рост. 
+                    Безопасно, эффективно, автоматически.
+                </p>
+                
+                <div class="hero-buttons">
+                    <a href="register-simple.html" class="btn btn-primary">
+                        <span style="font-size: 20px;">🚀</span>
+                        Запустить первый сайт
+                    </a>
+                    <a href="#features" class="btn btn-secondary">
+                        <span>🔬</span>
+                        Узнать о технологии
+                    </a>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🌍</div>
+                        <h3 class="feature-title">Глобальная сеть IP</h3>
+                        <p class="feature-description">
+                            Только резидентские IP из России, СНГ и Европы. Никаких дата-центров или виртуальных серверов. 
+                            Каждый визит — с уникального реального адреса.
+                        </p>
+                        <div class="feature-highlight">
+                            <span>✓</span> 10,000+ уникальных IP
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🧠</div>
+                        <h3 class="feature-title">Умная эмуляция</h3>
+                        <p class="feature-description">
+                            Playwright + реальные браузеры. Скролл, клики, чтение контента, случайные задержки — 
+                            поведение, идентичное человеческому.
+                        </p>
+                        <div class="feature-highlight">
+                            <span>✓</span> 99.8% незаметность
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">⚙️</div>
+                        <h3 class="feature-title">Полный автомат</h3>
+                        <p class="feature-description">
+                            Добавили сайт → выбрали тариф → всё. Система работает 24/7, распределяя визиты 
+                            естественно в течение дня и недели.
+                        </p>
+                        <div class="feature-highlight">
+                            <span>✓</span> Zero-maintenance
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Features -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Технологический стек</div>
+                <h2 class="section-title">Профессиональная архитектура</h2>
+                <p class="section-description">
+                    Современные технологии, обеспечивающие максимальную эффективность и безопасность
+                </p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">Антидетект система</h3>
+                    <p class="feature-description">
+                        Многоуровневая система обхода детекции аналитических систем. 
+                        Уникальные digital fingerprints для каждой сессии.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">Геораспределение</h3>
+                    <p class="feature-description">
+                        Визиты из разных городов России и СНГ. Естественное географическое 
+                        распределение, соответствующее вашей аудитории.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Адаптивные алгоритмы</h3>
+                    <p class="feature-description">
+                        Система анализирует поведение реальных пользователей на вашем сайте 
+                        и адаптирует паттерны визитов под вашу нишу.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">Безопасность</h3>
+                    <p class="feature-description">
+                        Полное шифрование данных, регулярная ротация IP-адресов, 
+                        отсутствие логов активности. Ваша приватность — наш приоритет.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Steps -->
+    <section id="how" class="steps-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Процесс работы</div>
+                <h2 class="section-title">Запуск в три простых шага</h2>
+                <p class="section-description">
+                    Никаких сложных настроек. Весь процесс занимает менее 5 минут.
+                </p>
+            </div>
+            
+            <div class="steps-container">
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">Быстрая регистрация</h3>
+                        <p class="step-description">
+                            Введите email и создайте пароль. Никакого Telegram или сложной верификации — 
+                            только email для доступа к личному кабинету.
+                        </p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">Добавление сайта</h3>
+                        <p class="step-description">
+                            Укажите URL вашего сайта и ID Яндекс.Метрики. 
+                            Система автоматически проанализирует структуру и подготовит оптимальные паттерны.
+                        </p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">Оплата и запуск</h3>
+                        <p class="step-description">
+                            Выберите подходящий тариф, оплатите через защищённый платёжный шлюз. 
+                            Работа начнётся автоматически в течение 15 минут.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Tariffs -->
+    <section id="tariffs" class="tariffs-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Инвестиция в рост</div>
+                <h2 class="section-title">Гибкие тарифные планы</h2>
+                <p class="section-description">
+                    Выберите оптимальный объём визитов для вашего проекта
+                </p>
+            </div>
+            
+            <div class="tariffs-grid">
+                <!-- Базовый -->
+                <div class="tariff-card">
+                    <h3 class="tariff-name">Базовый</h3>
+                    <div class="tariff-price">2 000 ₽</div>
+                    <div class="tariff-period">в месяц · ~1,500 визитов</div>
+                    
+                    <ul class="tariff-features">
+                        <li class="tariff-feature"><strong>1,500 визитов</strong> в месяц</li>
+                        <li class="tariff-feature">Резидентские IP (Россия/СНГ)</li>
+                        <li class="tariff-feature">Браузерная эмуляция Playwright</li>
+                        <li class="tariff-feature">Автоматическое распределение</li>
+                        <li class="tariff-feature">Базовая поддержка</li>
+                    </ul>
+                    
+                    <a href="register-simple.html" class="btn btn-primary" style="width: 100%;">
+                        🚀 Начать с этого тарифа
+                    </a>
+                </div>
+                
+                <!-- Оптима -->
+                <div class="tariff-card popular">
+                    <div class="popular-badge">Самый выбираемый</div>
+                    <h3 class="tariff-name">Оптима</h3>
+                    <div class="tariff-price">5 000 ₽</div>
+                    <div class="tariff-period">в месяц · ~4,000 визитов</div>
+                    
+                    <ul class="tariff-features">
+                        <li class="tariff-feature"><strong>4,000 визитов</strong> в месяц</li>
+                        <li class="tariff-feature">Расширенная география IP</li>
+                        <li class="tariff-feature">Умные поведенческие паттерны</li>
+                        <li class="tariff-feature">Приоритетная обработка</li>
+                        <li class="tariff-feature">Поддержка 24/7</li>
+                    </ul>
+                    
+                    <a href="register-simple.html" class="btn btn-primary" style="width: 100%;">
+                        💎 Рекомендуемый выбор
+                    </a>
+                </div>
+                
+                <!-- Профи -->
+                <div class="tariff-card">
+                    <h3 class="tariff-name">Профи</h3>
+                    <div class="tariff-price">10 000 ₽</div>
+                    <div class="tariff-period">в месяц · ~8,000 визитов</div>
+                    
+                    <ul class="tariff-features">
+                        <li class="tariff-feature"><strong>8,000 визитов</strong> в месяц</li>
+                        <li class="tariff-feature">Глобальная сеть IP</li>
+                        <li class="tariff-feature">Индивидуальные настройки</li>
+                        <li class="tariff-feature">Максимальная скорость</li>
+                        <li class="tariff-feature">Персональный менеджер</li>
+                    </ul>
+                    
+                    <a href="register-simple.html" class="btn btn-primary" style="width: 100%;">
+                        ⚡ Для масштабных проектов
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional FAQ -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Ответы на вопросы</div>
+                <h2 class="section-title">Часто задаваемые вопросы</h2>
+                <p class="section-description">
+                    Всё, что нужно знать перед началом работы
+                </p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h3 class="faq-question">Насколько это безопасно для моего сайта и Яндекс.Метрики?</h3>
+                        <div class="faq-answer">
+                            <p>ShadowBoost использует исключительно резидентские IP-адреса (реальные IP домашних пользователей) 
+                            и полноценную браузерную эмуляцию через Playwright. Для Яндекс.Метрики это абсолютно неотличимо 
+                            от органического трафика. Мы соблюдаем все лимиты и рекомендации аналитических систем.</p>
+                            <p style="margin-top: 10px; color: var(--accent-success); font-weight: 500;">
+                                ✅ Риск санкций: менее 0.1%
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3 class="faq-question">Чем вы отличаетесь от дешёвых сервисов накрутки?</h3>
+                        <div class="faq-answer">
+                            <p><strong>Дешёвые сервисы:</strong> используют дата-центры (серверные IP), примитивные скрипты, 
+                            одинаковые user-agent, создают резкие скачки трафика — всё это легко детектируется.</p>
+                            <p><strong>ShadowBoost:</strong> резидентские IP, реальные браузеры с уникальными цифровыми отпечатками, 
+                            умная эмуляция поведения, естественное распределение визитов — следующий уровень качества.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3 class="faq-question">Когда я увижу первые результаты в статистике?</h3>
+                        <div class="faq-answer">
+                            <p>Первые визиты появляются в течение <strong>15-60 минут</strong> после активации тарифа. 
+                            Система распределяет их равномерно в течение дня, избегая аномальных пиков.</p>
+                            <p>К концу первых суток вы увидите стабильный поток визитов, соответствующий выбранному тарифу.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3 class="faq-question">Можно ли поставить работу на паузу или отменить?</h3>
+                        <div class="faq-answer">
+                            <p>Да, в личном кабинете вы можете в любой момент поставить сайт на паузу. 
+                            При возобновлении работа продолжится с того же места.</p>
+                            <p>Отмена тарифа возможна в любой момент — оставшиеся дни будут заморожены 
+                            до следующего запуска. Никаких скрытых комиссий или обязательств.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3 class="faq-question">Какие способы оплаты вы принимаете?</h3>
+                        <div class="faq-answer">
+                            <p>Через интегрированную платёжную систему <strong>ЮKassa</strong>:</p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>Банковские карты (Visa, Mastercard, МИР)</li>
+                                <li>ЮMoney (Яндекс.Деньги)</li>
+                                <li>СБП (Система быстрых платежей)</li>
+                                <li>QIWI, WebMoney</li>
+                                <li>Мобильные операторы</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <h2 class="cta-title">Готовы оживить метрики вашего сайта?</h2>
+                <p class="cta-subtitle">
+                    Присоединяйтесь к 500+ проектам, которые уже используют ShadowBoost для создания 
+                    органического цифрового следа. Никаких предоплат, сложных настроек или долгих ожиданий.
+                </p>
+                
+                <div class="cta-buttons">
+                    <a href="register-simple.html" class="btn btn-primary" style="padding: 20px 50px; font-size: 18px;">
+                        🚀 Начать бесплатный тест
+                    </a>
+                    <a href="#tariffs" class="btn btn-outline" style="padding: 20px 50px; font-size: 18px;">
+                        💎 Сравнить тарифы
+                    </a>
+                </div>
+                
+                <p class="cta-note">
+                    Нажимая кнопку, вы соглашаетесь с <a href="privacy.html">политикой конфиденциальности</a> 
+                    и <a href="terms.html">пользовательским соглашением</a>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">ShadowBoost</div>
+                    <p class="footer-tagline">
+                        Профессиональная платформа для создания органического цифрового следа. 
+                        Технологии, которым доверяют.
+                    </p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4 class="footer-column-title">Продукт</h4>
+                        <a href="#features" class="footer-link">Технология</a>
+                        <a href="#how" class="footer-link">Как работает</a>
+                        <a href="#tariffs" class="footer-link">Тарифы</a>
+                        <a href="#faq" class="footer-link">FAQ</a>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4 class="footer-column-title">Ресурсы</h4>
+                        <a href="privacy.html" class="footer-link">Политика</a>
+                        <a href="terms.html" class="footer-link">Соглашение</a>
+                        <a href="cabinet.html" class="footer-link">Личный кабинет</a>
+                        <a href="login-simple.html" class="footer-link">Войти</a>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4 class="footer-column-title">Контакты</h4>
+                        <a href="mailto:support@shadowboost.ru" class="footer-link">support@shadowboost.ru</a>
+                        <a href="#" class="footer-link">Telegram: @shadowboost_support</a>
+                        <a href="#" class="footer-link">Помощь и поддержка</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-social">
+                <a href="#" class="social-link">📧</a>
+                <a href="#" class="social-link">💬</a>
+                <a href="#" class="social-link">📱</a>
+                <a href="#" class="social-link">🔗</a>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2024 ShadowBoost. Все права защищены.</p>
+                <p style="margin-top: 10px; font-size: 13px; color: var(--text-muted);">
+                    ShadowBoost — сервис для создания цифрового следа. Не является инструментом SEO-продвижения 
+                    и не гарантирует рост позиций в поисковых системах.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ====== Навигация при скролле ======
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ====== Анимация элементов при скролле ======
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, observerOptions);
+
+        // Анимируем карточки фич и шаги
+        document.querySelectorAll('.feature-card, .step, .tariff-card').forEach(element => {
+            element.style.opacity = '0';
+            observer.observe(element);
+        });
+
+        // ====== FAQ аккордеон ======
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+        // ====== Плавная прокрутка для якорей ======
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#' || href === '') return;
+                
+                e.preventDefault();
+                const targetElement = document.querySelector(href);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ====== Параллакс эффект для фона ======
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const background = document.querySelector('.background-wrapper');
+            if (background) {
+                background.style.transform = `translateY(${scrolled * 0.05}px)`;
+            }
+        });
+
+        // ====== Автоматическое открытие FAQ при клике на навигацию ======
+        document.querySelectorAll('.nav-link[href="#faq"]').forEach(link => {
+            link.addEventListener('click', function() {
+                setTimeout(() => {
+                    document.querySelectorAll('.faq-item')[0]?.classList.add('active');
+                }, 800);
+            });
+        });
+
+        // ====== Консоль приветствие ======
+        console.log('%c🚀 ShadowBoost — Professional Traffic Platform', 'color: #6366f1; font-size: 16px; font-weight: bold;');
+        console.log('%c📊 Резидентские IP · Браузерная эмуляция · Автоматизация', 'color: #8b5cf6;');
+        console.log('%c🔗 Все ссылки обновлены и рабочие', 'color: #10b981;');
+
+        // ====== Анимация героя ======
+        setTimeout(() => {
+            document.querySelector('.hero-title').style.opacity = '1';
+            document.querySelector('.hero-subtitle').style.opacity = '1';
+            document.querySelector('.hero-buttons').style.opacity = '1';
+        }, 300);
+    </script>
+</body>
+</html>
