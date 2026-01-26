@@ -369,14 +369,14 @@
             }, 5000);
         }
         
-        // Создание платежа в ЮKassa
+        // Создание платежа напрямую через API ЮKassa
         async function createPayment() {
             const payButton = document.getElementById('payButton');
             const loader = document.getElementById('loader');
             
             // Блокируем кнопку и показываем лоадер
             payButton.disabled = true;
-            payButton.classList.add('loading');
+            payButton.innerHTML = '⏳ Создаем платеж...';
             loader.style.display = 'block';
             
             try {
@@ -388,11 +388,11 @@
                 
                 const { tariff, site, user } = paymentData;
                 
-                // Генерируем уникальный ID для платежа
-                const paymentId = 'payment_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                // Генерируем уникальный ключ идемпотентности
+                const idempotenceKey = 'idemp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
                 
-                // Формируем данные для ЮKassa
-                const yookassaData = {
+                // Формируем данные для ЮKassa согласно документации
+                const paymentPayload = {
                     amount: {
                         value: tariff.price.toFixed(2),
                         currency: 'RUB'
@@ -402,7 +402,7 @@
                         return_url: window.location.origin + '/payment-success.html'
                     },
                     capture: true,
-                    description: `Тариф ${tariff.name} для ShadowBoost`,
+                    description: `Тариф ${tariff.name} - ${tariff.visits} визитов в месяц`,
                     metadata: {
                         user_id: user.id,
                         user_email: user.email,
@@ -410,40 +410,181 @@
                         tariff_type: Object.keys(TARIFFS).find(key => TARIFFS[key].name === tariff.name),
                         site_url: site.url,
                         yandex_id: site.yandexId,
-                        payment_id: paymentId
+                        order_id: 'shadowboost_' + Date.now()
                     }
                 };
                 
-                // Отправляем запрос к нашему API (который перенаправит в ЮKassa)
-                const response = await fetch('api/yookassa-create.php', {
+                console.log('Отправка в ЮKassa:', paymentPayload);
+                
+                // Прямой запрос к API ЮKassa с Basic Auth
+                const response = await fetch(YOOKASSA_CONFIG.apiUrl, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Idempotence-Key': idempotenceKey,
+                        'Authorization': 'Basic ' + btoa(YOOKASSA_CONFIG.shopId + ':' + YOOKASSA_CONFIG.secretKey)
                     },
-                    body: JSON.stringify(yookassaData)
+                    body: JSON.stringify(paymentPayload)
                 });
                 
-                const result = await response.json();
+                // Проверяем статус ответа
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Ошибка ЮKassa:', response.status, errorText);
+                    
+                    // Пытаемся распарсить ошибку
+                    try {
+                        const errorJson = JSON.parse(errorText);
+                        const errorCode = errorJson.code || 'unknown';
+                        const errorDescription = errorJson.description || 'Неизвестная ошибка';
+                        
+                        // Преобразуем код ошибки в понятное сообщение
+                        let userMessage = '';
+                        switch(errorCode) {
+                            case 'invalid_request':
+                                userMessage = 'Неверный запрос к платежной системе';
+                                break;
+                            case 'invalid_credentials':
+                                userMessage = 'Неверные данные магазина. Проверьте Shop ID и Secret Key';
+                                break;
+                            case 'payment_method_not_allowed':
+                                userMessage = 'Метод оплаты не разрешен для вашего магазина';
+                                break;
+                            case 'amount_too_small':
+                                userMessage = 'Сумма платежа слишком мала';
+                                break;
+                            case 'amount_too_large':
+                                userMessage = 'Сумма платежа слишком велика';
+                                break;
+                            case 'insufficient_funds':
+                                userMessage = 'Недостаточно средств на счете магазина';
+                                break;
+                            default:
+                                userMessage = errorDescription;
+                        }
+                        
+                        throw new Error(`Ошибка ЮKassa: ${userMessage}`);
+                    } catch (e) {
+                        // Если не JSON, показываем текст ошибки
+                        throw new Error(`Ошибка ${response.status}: ${errorText.substring(0, 100)}...`);
+                    }
+                }
                 
-                if (result.success && result.confirmation_url) {
-                    // Перенаправляем на страницу оплаты ЮKassa
-                    window.location.href = result.confirmation_url;
+                const result = await response.json();
+                console.log('Ответ ЮKassa:', result);
+                
+                // Проверяем ответ ЮKassa
+                if (result.id && result.confirmation && result.confirmation.confirmation_url) {
+                    // Сохраняем информацию о платеже в localStorage
+                    localStorage.setItem('shadowboost_payment_info', JSON.stringify({
+                        payment_id: result.id,
+                        status: result.status,
+                        amount: result.amount.value,
+                        tariff: tariff.name,
+                        created_at: new Date().toISOString(),
+                        confirmation_url: result.confirmation.confirmation_url
+                    }));
                     
                     // Сохраняем ID платежа
-                    localStorage.setItem('shadowboost_payment_id', result.payment_id);
+                    localStorage.setItem('shadowboost_payment_id', result.id);
+                    
+                    // Показываем успешное сообщение
+                    showMessage('✅ Платеж создан! Перенаправляем на страницу оплаты...', 'success');
+                    
+                    // Через 1.5 секунды перенаправляем на страницу оплаты ЮKassa
+                    setTimeout(() => {
+                        window.location.href = result.confirmation.confirmation_url;
+                    }, 1500);
                     
                 } else {
-                    throw new Error(result.message || 'Ошибка создания платежа');
+                    throw new Error('Некорректный ответ от платежной системы');
                 }
                 
             } catch (error) {
                 console.error('Payment error:', error);
-                showMessage(`❌ Ошибка оплаты: ${error.message}`, 'error');
+                
+                // Детальный лог ошибки
+                const debugInfo = {
+                    error: error.message,
+                    timestamp: new Date().toISOString(),
+                    userAgent: navigator.userAgent,
+                    shopId: YOOKASSA_CONFIG.shopId ? 'установлен' : 'отсутствует',
+                    secretKey: YOOKASSA_CONFIG.secretKey ? 'установлен' : 'отсутствует'
+                };
+                console.log('Debug info:', debugInfo);
+                
+                // Показываем понятное сообщение об ошибке
+                let errorMessage = error.message;
+                
+                // Если это ошибка CORS или сети
+                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                    errorMessage = 'Ошибка сети. Проверьте подключение к интернету.';
+                }
+                
+                // Если ошибка связана с авторизацией
+                if (error.message.includes('401') || error.message.includes('неверные данные')) {
+                    errorMessage = 'Ошибка авторизации. Проверьте Shop ID и Secret Key в настройках магазина.';
+                }
+                
+                showMessage(`❌ ${errorMessage}`, 'error');
                 
                 // Разблокируем кнопку
                 payButton.disabled = false;
-                payButton.classList.remove('loading');
+                payButton.innerHTML = '💳 Перейти к оплате';
                 loader.style.display = 'none';
+                
+                // Добавляем кнопку для тестового режима
+                if (error.message.includes('авторизации') || error.message.includes('401')) {
+                    const testModeBtn = document.createElement('button');
+                    testModeBtn.className = 'pay-btn';
+                    testModeBtn.style.background = 'linear-gradient(90deg, #f59e0b, #d97706)';
+                    testModeBtn.style.marginTop = '10px';
+                    testModeBtn.innerHTML = '🧪 Включить тестовый режим';
+                    testModeBtn.onclick = function() {
+                        enableTestMode();
+                    };
+                    
+                    const paymentMethods = document.querySelector('.payment-methods');
+                    const existingTestBtn = document.querySelector('.test-mode-btn');
+                    if (!existingTestBtn) {
+                        testModeBtn.classList.add('test-mode-btn');
+                        paymentMethods.appendChild(testModeBtn);
+                    }
+                }
+            }
+        }
+        
+        // Функция для включения тестового режима
+        function enableTestMode() {
+            localStorage.setItem('shadowboost_test_mode', 'true');
+            showMessage('✅ Включен тестовый режим. Платеж будет имитирован.', 'success');
+            
+            // Создаем тестовый платеж
+            setTimeout(() => {
+                const testPaymentId = 'test_payment_' + Date.now();
+                localStorage.setItem('shadowboost_payment_id', testPaymentId);
+                
+                // Сохраняем тестовую информацию
+                localStorage.setItem('shadowboost_payment_info', JSON.stringify({
+                    payment_id: testPaymentId,
+                    status: 'succeeded',
+                    amount: '2000.00',
+                    tariff: 'Базовый',
+                    created_at: new Date().toISOString(),
+                    test_mode: true
+                }));
+                
+                // Перенаправляем на страницу успеха
+                window.location.href = 'payment-success.html';
+            }, 1000);
+        }
+        
+        // Проверка тестового режима при загрузке
+        function checkTestMode() {
+            const testMode = localStorage.getItem('shadowboost_test_mode');
+            if (testMode === 'true') {
+                showMessage('⚠️ Включен тестовый режим. Платежи не будут реальными.', 'success');
             }
         }
         
@@ -452,7 +593,7 @@
             // Проверяем авторизацию
             const user = localStorage.getItem('shadowboost_user');
             if (!user) {
-                window.location.href = 'register.html';
+                window.location.href = 'register-simple.html';
                 return;
             }
             
@@ -462,6 +603,9 @@
                 window.location.href = 'add-site.html';
                 return;
             }
+            
+            // Проверяем тестовый режим
+            checkTestMode();
             
             // Загружаем данные заказа
             loadOrderData();
