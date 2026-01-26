@@ -4,261 +4,441 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShadowBoost — Добавить сайт</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #cbd5e1;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.2);
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         
         body {
-            background: #0a0a0f;
-            color: #fff;
+            background: linear-gradient(135deg, var(--darker), #1e293b);
+            color: var(--light);
+            font-family: 'Inter', sans-serif;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
         }
         
         .container {
-            max-width: 600px;
-            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
         }
         
         .logo {
-            text-align: center;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
-            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 30px;
-        }
-        
-        .card {
-            background: rgba(30, 30, 46, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-        }
-        
-        h1 {
-            font-size: 24px;
             margin-bottom: 10px;
-            text-align: center;
         }
         
-        .subtitle {
-            color: #a0a0b0;
-            margin-bottom: 30px;
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+        
+        .page-subtitle {
+            color: var(--gray);
             font-size: 16px;
-            text-align: center;
         }
         
-        .input-group {
+        .form-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+        
+        .form-group {
             margin-bottom: 25px;
         }
         
-        label {
+        .form-label {
             display: block;
-            margin-bottom: 8px;
-            color: #a0a0b0;
-            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--light);
+            font-size: 15px;
         }
         
-        input[type="url"], input[type="text"] {
+        .form-label .required {
+            color: var(--danger);
+        }
+        
+        .form-input {
             width: 100%;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #fff;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--light);
             font-size: 16px;
-            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
         }
         
-        input:focus {
+        .form-input:focus {
             outline: none;
-            border-color: #3b82f6;
-            background: rgba(59, 130, 246, 0.05);
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
         }
         
-        .help-text {
-            font-size: 13px;
-            color: #a0a0b0;
-            margin-top: 6px;
-            line-height: 1.5;
+        .form-input::placeholder {
+            color: var(--gray);
         }
         
-        .help-text a {
-            color: #8b5cf6;
+        .form-help {
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .form-help a {
+            color: var(--accent);
             text-decoration: none;
         }
         
-        .help-text a:hover {
+        .form-help a:hover {
             text-decoration: underline;
         }
         
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
+        .tariffs {
+            margin: 40px 0;
+        }
+        
+        .tariff-title {
+            font-size: 20px;
             font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .tariffs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .tariffs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .tariff-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
             cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 20px;
-            text-decoration: none;
-            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
         }
         
-        .btn:hover {
+        .tariff-card:hover {
+            border-color: var(--primary);
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
         }
         
-        .btn-secondary {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .tariff-card.selected {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .tariff-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+        
+        .tariff-price {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .tariff-period {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .tariff-features {
+            list-style: none;
             margin-top: 15px;
         }
         
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.05);
+        .tariff-feature {
+            padding: 6px 0;
+            color: var(--gray-light);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tariff-feature::before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-icon {
+            font-size: 24px;
         }
         
         .message {
-            padding: 12px;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 12px;
             margin-bottom: 20px;
             display: none;
         }
         
-        .success {
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            color: #22c55e;
+        .message.success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--success);
         }
         
-        .error {
+        .message.error {
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
+            color: var(--danger);
+        }
+        
+        .message.info {
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: var(--accent);
         }
         
         .back-link {
-            text-align: center;
-            margin-top: 30px;
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .back-link a {
-            color: #8b5cf6;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray);
             text-decoration: none;
+            margin-top: 20px;
+            font-size: 15px;
+            transition: color 0.2s;
         }
         
-        .back-link a:hover {
-            text-decoration: underline;
+        .back-link:hover {
+            color: var(--light);
         }
         
-        .info-box {
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 10px;
+        .payment-info {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 12px;
             padding: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .info-box h3 {
-            color: #3b82f6;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-        
-        .info-box p {
-            color: #a0a0b0;
+            margin-top: 30px;
+            text-align: center;
+            color: var(--warning);
             font-size: 14px;
-            line-height: 1.6;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">ShadowBoost</div>
+        <div class="header">
+            <div class="logo">ShadowBoost</div>
+            <h1 class="page-title">Добавить сайт</h1>
+            <p class="page-subtitle">Введите данные вашего сайта и выберите тариф</p>
+        </div>
         
-        <div class="card">
-            <div class="info-box">
-                <h3>🎯 Добро пожаловать в ShadowBoost!</h3>
-                <p>Сначала добавьте ваш сайт, затем выберите тариф и запустите систему. Визиты начнутся автоматически в течение часа после оплаты.</p>
-            </div>
-            
-            <h1>Добавьте ваш сайт</h1>
-            <p class="subtitle">Укажите данные сайта для начала работы</p>
-            
-            <div id="message" class="message"></div>
-            
+        <div id="message" class="message"></div>
+        
+        <div class="form-card">
             <form id="addSiteForm">
-                <div class="input-group">
-                    <label for="siteUrl">URL вашего сайта</label>
-                    <input type="url" id="siteUrl" placeholder="https://ваш-сайт.ru" required>
-                    <div class="help-text">
-                        Введите полный адрес вашего сайта, включая https://
+                <div class="form-group">
+                    <label for="siteUrl" class="form-label">
+                        URL вашего сайта <span class="required">*</span>
+                    </label>
+                    <input type="url" id="siteUrl" class="form-input" 
+                           placeholder="https://ваш-сайт.ru" required>
+                    <div class="form-help">
+                        🔗 Введите полный адрес сайта с https://
                     </div>
                 </div>
                 
-                <div class="input-group">
-                    <label for="yandexId">ID Яндекс.Метрики</label>
-                    <input type="text" id="yandexId" placeholder="12345678" required>
-                    <div class="help-text">
-                        <a href="https://yandex.ru/support/metrica/general/counter-setup.html" target="_blank">
+                <div class="form-group">
+                    <label for="yandexId" class="form-label">
+                        ID Яндекс.Метрики <span class="required">*</span>
+                    </label>
+                    <input type="text" id="yandexId" class="form-input" 
+                           placeholder="12345678" required>
+                    <div class="form-help">
+                        📊 <a href="https://yandex.ru/support/metrica/general/counter-setup.html" target="_blank">
                             Где найти ID счётчика?
                         </a>
                     </div>
                 </div>
                 
-                <button type="submit" class="btn">Продолжить →</button>
+                <div class="tariffs">
+                    <h3 class="tariff-title">Выберите тариф:</h3>
+                    <div class="tariffs-grid">
+                        <div class="tariff-card" data-tariff="basic" onclick="selectTariff('basic')">
+                            <div class="tariff-name">Базовый</div>
+                            <div class="tariff-price">2 000 ₽</div>
+                            <div class="tariff-period">в месяц</div>
+                            <ul class="tariff-features">
+                                <li class="tariff-feature">1 500 визитов в месяц</li>
+                                <li class="tariff-feature">Резидентские IP</li>
+                                <li class="tariff-feature">Автоматический запуск</li>
+                                <li class="tariff-feature">Поддержка 24/7</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tariff-card" data-tariff="optimal" onclick="selectTariff('optimal')">
+                            <div class="tariff-name">Оптима</div>
+                            <div class="tariff-price">5 000 ₽</div>
+                            <div class="tariff-period">в месяц</div>
+                            <ul class="tariff-features">
+                                <li class="tariff-feature">4 000 визитов в месяц</li>
+                                <li class="tariff-feature">Резидентские IP</li>
+                                <li class="tariff-feature">Приоритетная очередь</li>
+                                <li class="tariff-feature">Расширенная статистика</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tariff-card" data-tariff="pro" onclick="selectTariff('pro')">
+                            <div class="tariff-name">Профи</div>
+                            <div class="tariff-price">10 000 ₽</div>
+                            <div class="tariff-period">в месяц</div>
+                            <ul class="tariff-features">
+                                <li class="tariff-feature">8 000 визитов в месяц</li>
+                                <li class="tariff-feature">Резидентские IP</li>
+                                <li class="tariff-feature">Индивидуальные настройки</li>
+                                <li class="tariff-feature">Персональный менеджер</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn" id="submitBtn">
+                    <span class="btn-icon">💳</span>
+                    Перейти к оплате
+                </button>
             </form>
             
-            <a href="register.html" class="btn btn-secondary">← Назад</a>
-            
-            <div class="back-link">
-                <a href="cabinet.html">Пропустить и перейти в кабинет</a>
+            <div class="payment-info">
+                💡 После оплаты работа начнётся автоматически. Никаких дополнительных действий не требуется.
             </div>
         </div>
+        
+        <a href="welcome.html" class="back-link">
+            ← Вернуться назад
+        </a>
     </div>
-    
+
     <script>
-        // Проверка авторизации
-        function checkAuth() {
-            const user = localStorage.getItem('shadowboost_user');
-            if (!user) {
-                window.location.href = 'register.html';
-                return false;
-            }
-            return true;
-        }
+        // Выбранный тариф
+        let selectedTariff = 'optimal'; // По умолчанию
         
-        // Проверка URL
-        function isValidUrl(url) {
-            try {
-                new URL(url);
-                return true;
-            } catch {
-                return false;
+        // Данные тарифов
+        const tariffs = {
+            basic: {
+                name: 'Базовый',
+                price: 2000,
+                visits: 1500,
+                description: 'Для новых сайтов и тестирования'
+            },
+            optimal: {
+                name: 'Оптима',
+                price: 5000,
+                visits: 4000,
+                description: 'Самый популярный выбор'
+            },
+            pro: {
+                name: 'Профи',
+                price: 10000,
+                visits: 8000,
+                description: 'Для серьёзных проектов'
             }
-        }
+        };
         
-        // Проверка ID Яндекс.Метрики
-        function isValidYandexId(id) {
-            return /^\d+$/.test(id) && id.length >= 6;
+        // Выбор тарифа
+        function selectTariff(tariff) {
+            selectedTariff = tariff;
+            
+            // Убираем выделение со всех карточек
+            document.querySelectorAll('.tariff-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Выделяем выбранную
+            document.querySelector(`[data-tariff="${tariff}"]`).classList.add('selected');
         }
         
         // Показать сообщение
@@ -273,8 +453,18 @@
             }, 5000);
         }
         
-        // Добавление сайта
-        document.getElementById('addSiteForm').addEventListener('submit', function(e) {
+        // Валидация URL
+        function isValidUrl(url) {
+            try {
+                new URL(url);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+        
+        // Отправка формы
+        document.getElementById('addSiteForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const siteUrl = document.getElementById('siteUrl').value.trim();
@@ -287,56 +477,91 @@
             }
             
             if (!isValidUrl(siteUrl)) {
-                showMessage('❌ Неверный формат URL', 'error');
+                showMessage('❌ Введите корректный URL (например: https://ваш-сайт.ru)', 'error');
                 return;
             }
             
-            if (!isValidYandexId(yandexId)) {
+            if (!/^\d+$/.test(yandexId)) {
                 showMessage('❌ ID Яндекс.Метрики должен содержать только цифры', 'error');
                 return;
             }
             
             // Получаем данные пользователя
-            const user = JSON.parse(localStorage.getItem('shadowboost_user'));
+            const userEmail = localStorage.getItem('shadowboost_email');
+            const userId = localStorage.getItem('shadowboost_user_id') || 'user_' + Date.now();
             
-            // Сохраняем сайт
-            const site = {
-                id: 'site_' + Date.now(),
-                url: siteUrl,
-                yandexId: yandexId,
-                created: new Date().toISOString(),
-                status: 'pending', // pending, active, paused
-                tariff: null,
-                visitsToday: 0,
-                visitsTotal: 0
-            };
+            if (!userEmail) {
+                showMessage('❌ Вы не авторизованы', 'error');
+                setTimeout(() => {
+                    window.location.href = 'login-simple.html';
+                }, 2000);
+                return;
+            }
             
-            // Добавляем сайт к пользователю
-            user.sites = [site];
-            localStorage.setItem('shadowboost_user', JSON.stringify(user));
-            localStorage.setItem('shadowboost_current_site', JSON.stringify(site));
+            // Отключаем кнопку
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="btn-icon">⏳</span> Создаём платеж...';
             
-            showMessage('✅ Сайт добавлен! Перенаправляем...', 'success');
-            
-            // Через 1 секунду перенаправляем на страницу объяснения
-            setTimeout(() => {
-                window.location.href = 'how-it-works.html';
-            }, 1000);
+            try {
+                // Создаем платеж через API
+                const response = await fetch('api/yookassa.php?action=create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_id: userId,
+                        email: userEmail,
+                        site_url: siteUrl,
+                        yandex_id: yandexId,
+                        tariff: selectedTariff,
+                        tariff_name: tariffs[selectedTariff].name,
+                        visits: tariffs[selectedTariff].visits,
+                        amount: tariffs[selectedTariff].price,
+                        description: `Тариф "${tariffs[selectedTariff].name}" - ${tariffs[selectedTariff].visits} визитов/мес`,
+                        return_url: window.location.origin + '/success.html'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Сохраняем данные для страницы оплаты
+                    localStorage.setItem('pending_payment', JSON.stringify({
+                        payment_id: result.payment_id,
+                        site_url: siteUrl,
+                        yandex_id: yandexId,
+                        tariff: selectedTariff,
+                        amount: result.amount
+                    }));
+                    
+                    // Перенаправляем на страницу оплаты
+                    window.location.href = 'payment.html?payment_id=' + result.payment_id;
+                    
+                } else {
+                    showMessage('❌ Ошибка при создании платежа: ' + (result.error || 'Неизвестная ошибка'), 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span class="btn-icon">💳</span> Перейти к оплате';
+                }
+                
+            } catch (error) {
+                console.error('Payment error:', error);
+                showMessage('❌ Ошибка соединения с сервером', 'error');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span class="btn-icon">💳</span> Перейти к оплате';
+            }
         });
         
-        // Проверяем авторизацию при загрузке
+        // Инициализация
         document.addEventListener('DOMContentLoaded', function() {
-            if (checkAuth()) {
-                // Автофокус на поле URL
-                document.getElementById('siteUrl').focus();
-                
-                // Проверяем, есть ли уже сохраненный сайт
-                const user = JSON.parse(localStorage.getItem('shadowboost_user'));
-                if (user.sites && user.sites.length > 0) {
-                    const lastSite = user.sites[0];
-                    document.getElementById('siteUrl').value = lastSite.url;
-                    document.getElementById('yandexId').value = lastSite.yandexId;
-                }
+            // Выбираем тариф по умолчанию
+            selectTariff(selectedTariff);
+            
+            // Проверяем авторизацию
+            const userEmail = localStorage.getItem('shadowboost_email');
+            if (!userEmail) {
+                window.location.href = 'login-simple.html';
             }
         });
     </script>
