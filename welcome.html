@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowBoost — Добро пожаловать!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #cbd5e1;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker), #1e293b);
+            color: var(--light);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 40% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 40%);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        
+        .greeting {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #fff, var(--gray-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+        
+        .welcome-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 50px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+        
+        .card-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .card-title::before {
+            content: "✨";
+            font-size: 32px;
+        }
+        
+        .simple-explanation {
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--gray-light);
+            margin-bottom: 30px;
+        }
+        
+        .highlight {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .step {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .step:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 auto 20px;
+            color: white;
+        }
+        
+        .step-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+        
+        .step-description {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 40px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .btn-icon {
+            font-size: 24px;
+        }
+        
+        .note {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 12px;
+            color: var(--accent);
+            font-size: 15px;
+        }
+        
+        .user-info {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .user-email {
+            font-weight: 600;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">ShadowBoost</div>
+            <h1 class="greeting">Добро пожаловать! 🎉</h1>
+            <p class="subtitle">Пора добавить ваш первый сайт и начать получать визиты</p>
+        </div>
+        
+        <div class="user-info" id="userInfo">
+            Вы вошли как: <span class="user-email" id="userEmail">user@example.com</span>
+        </div>
+        
+        <div class="welcome-card">
+            <h2 class="card-title">Как это работает — простыми словами</h2>
+            
+            <p class="simple-explanation">
+                Представьте, что ваш сайт — это новый магазин в торговом центре. 
+                Пока никто не знает о нём, и он выглядит пустым.
+            </p>
+            
+            <p class="simple-explanation">
+                <span class="highlight">ShadowBoost</span> отправляет в ваш "магазин" людей, которые:
+            </p>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Выглядят как настоящие</h3>
+                    <p class="step-description">Каждый с уникального IP-адреса, из разных городов, через обычные браузеры</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Ведёт себя как человек</h3>
+                    <p class="step-description">Скроллит страницу, читает текст, кликает на ссылки, проводит время на сайте</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Работает автоматически</h3>
+                    <p class="step-description">Вы просто добавляете сайт и выбираете тариф. Всё остальное — наша работа</p>
+                </div>
+            </div>
+            
+            <p class="simple-explanation">
+                Для <span class="highlight">Яндекс.Метрики</span> и <span class="highlight">Google Analytics</span> 
+                эти визиты неотличимы от реальных посетителей. Никакого риска для вашего сайта.
+            </p>
+            
+            <div class="note">
+                💡 <strong>Важно:</strong> Мы не влияем на поисковую выдачу Яндекса. 
+                Мы создаём цифровую активность, которая делает ваш сайт "живым" и доверенным в аналитике.
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <a href="add-site.html" class="btn">
+                <span class="btn-icon">🚀</span>
+                Добавить первый сайт
+            </a>
+            
+            <p style="color: var(--gray); margin-top: 20px; font-size: 15px;">
+                Весь процесс займёт 2 минуты. Никаких сложных настроек.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Показываем email пользователя
+        document.addEventListener('DOMContentLoaded', function() {
+            const userEmail = localStorage.getItem('shadowboost_email');
+            if (userEmail) {
+                document.getElementById('userEmail').textContent = userEmail;
+            } else {
+                // Если нет пользователя, редирект на регистрацию
+                window.location.href = 'register-simple.html';
+            }
+        });
+    </script>
+</body>
+</html>
