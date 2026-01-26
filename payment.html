@@ -3,357 +3,505 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShadowBoost — Оплата тарифа</title>
+    <title>ShadowBoost — Оплата</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #cbd5e1;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.2);
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         
         body {
-            background: #0a0a0f;
-            color: #fff;
+            background: linear-gradient(135deg, var(--darker), #1e293b);
+            color: var(--light);
+            font-family: 'Inter', sans-serif;
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
         }
         
         .container {
             max-width: 600px;
-            margin: 0 auto;
+            width: 100%;
         }
         
         .logo {
-            text-align: center;
             font-size: 32px;
             font-weight: 800;
-            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 30px;
-        }
-        
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #8b5cf6;
-            text-decoration: none;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-        
-        h1 {
-            font-size: 28px;
-            margin-bottom: 20px;
             text-align: center;
+            margin-bottom: 30px;
         }
         
-        .subtitle {
-            color: #a0a0b0;
-            font-size: 16px;
+        .payment-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+        
+        .payment-header {
             text-align: center;
             margin-bottom: 40px;
-            line-height: 1.6;
         }
         
-        /* Информация о заказе */
+        .payment-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+        
+        .payment-subtitle {
+            color: var(--gray);
+            font-size: 16px;
+        }
+        
         .order-info {
-            background: rgba(30, 30, 46, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 25px;
             margin-bottom: 30px;
         }
         
-        .info-row {
+        .info-item {
             display: flex;
             justify-content: space-between;
-            padding: 15px 0;
+            padding: 12px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         
-        .info-row:last-child {
+        .info-item:last-child {
             border-bottom: none;
         }
         
         .info-label {
-            color: #a0a0b0;
+            color: var(--gray);
         }
         
         .info-value {
+            font-weight: 500;
+            color: var(--light);
+        }
+        
+        .info-value.highlight {
+            color: var(--primary);
             font-weight: 600;
         }
         
-        .info-value.tariff-price {
-            font-size: 28px;
-            color: #3b82f6;
-        }
-        
-        /* Платежные методы */
-        .payment-methods {
-            background: rgba(30, 30, 46, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-        }
-        
-        .payment-title {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: #fff;
-        }
-        
-        .payment-icons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-        
-        .payment-icon {
-            width: 60px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .info-value.amount {
             font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
-        /* Кнопка оплаты */
-        .pay-btn {
+        .payment-methods {
+            margin-bottom: 30px;
+        }
+        
+        .methods-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+        
+        .methods-list {
             display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .method {
+            flex: 1;
+            min-width: 120px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .method:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .method-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .method-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .btn {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
+            gap: 12px;
             width: 100%;
-            padding: 20px;
-            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            padding: 18px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             color: white;
             border: none;
             border-radius: 12px;
             font-size: 18px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            gap: 10px;
-            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-top: 10px;
         }
         
-        .pay-btn:hover:not(:disabled) {
+        .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
+            box-shadow: var(--shadow-glow);
         }
         
-        .pay-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            margin-top: 15px;
         }
         
-        .pay-btn.loading::after {
-            content: '';
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .message.success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--success);
+        }
+        
+        .message.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--danger);
+        }
+        
+        .message.info {
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: var(--accent);
+        }
+        
+        .loader {
+            display: inline-block;
             width: 20px;
             height: 20px;
-            border: 2px solid #fff;
+            border: 3px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 1s linear infinite;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
         }
         
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
         
-        /* Сообщения */
-        .message {
+        .payment-note {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 12px;
             padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: none;
-        }
-        
-        .success {
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            color: #22c55e;
-        }
-        
-        .error {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
-        }
-        
-        /* Лоадер */
-        .loader {
-            display: none;
+            margin-top: 20px;
             text-align: center;
-            margin: 30px 0;
-        }
-        
-        .loader-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(59, 130, 246, 0.3);
-            border-radius: 50%;
-            border-top-color: #3b82f6;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-        
-        .loader-text {
-            color: #a0a0b0;
+            color: var(--warning);
             font-size: 14px;
         }
         
-        /* Инфо */
-        .info-box {
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 30px;
-            text-align: center;
-        }
-        
-        .info-box p {
-            color: #a0a0b0;
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            color: var(--gray);
             font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 10px;
-            }
-            
-            .order-info, .payment-methods {
-                padding: 20px;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="logo">ShadowBoost</div>
-        <a href="tariffs.html" class="back-btn">← Выбрать другой тариф</a>
         
-        <h1>Оплата тарифа</h1>
-        <p class="subtitle">
-            Безопасная оплата через ЮKassa. Картой, СБП, ЮMoney или другими способами.
-        </p>
-        
-        <div id="message" class="message"></div>
-        
-        <!-- Информация о заказе -->
-        <div class="order-info">
-            <div class="info-row">
-                <span class="info-label">Тариф:</span>
-                <span class="info-value" id="tariffName">—</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">Визитов в месяц:</span>
-                <span class="info-value" id="tariffVisits">—</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">Ваш сайт:</span>
-                <span class="info-value" id="siteUrl">—</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">ID Яндекс.Метрики:</span>
-                <span class="info-value" id="yandexId">—</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">Сумма к оплате:</span>
-                <span class="info-value tariff-price" id="tariffPrice">—</span>
-            </div>
-        </div>
-        
-        <!-- Платежные методы -->
-        <div class="payment-methods">
-            <div class="payment-title">Способы оплаты:</div>
-            <div class="payment-icons">
-                <div class="payment-icon">💳</div>
-                <div class="payment-icon">🏦</div>
-                <div class="payment-icon">🤝</div>
-                <div class="payment-icon">💰</div>
-                <div class="payment-icon">📱</div>
+        <div class="payment-card">
+            <div class="payment-header">
+                <h1 class="payment-title">Оплата тарифа</h1>
+                <p class="payment-subtitle">Безопасный платеж через ЮKassa</p>
             </div>
             
-            <button id="payButton" class="pay-btn" onclick="createPayment()">
-                💳 Перейти к оплате
+            <div id="message" class="message"></div>
+            
+            <div class="order-info" id="orderInfo">
+                <!-- Данные заказа будут загружены динамически -->
+            </div>
+            
+            <div class="payment-methods">
+                <div class="methods-title">Доступные способы оплаты:</div>
+                <div class="methods-list">
+                    <div class="method">
+                        <div class="method-icon">💳</div>
+                        <div class="method-name">Карты</div>
+                    </div>
+                    <div class="method">
+                        <div class="method-icon">📱</div>
+                        <div class="method-name">ЮMoney</div>
+                    </div>
+                    <div class="method">
+                        <div class="method-icon">🏦</div>
+                        <div class="method-name">СБП</div>
+                    </div>
+                    <div class="method">
+                        <div class="method-icon">🤖</div>
+                        <div class="method-name">QIWI</div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn" id="payButton" onclick="redirectToPayment()">
+                <span class="btn-icon">🔒</span>
+                Перейти к оплате
             </button>
             
-            <div class="loader" id="loader">
-                <div class="loader-spinner"></div>
-                <div class="loader-text">Создаем платеж...</div>
+            <button class="btn btn-secondary" onclick="checkPaymentStatus()" id="checkButton">
+                <span class="btn-icon">🔄</span>
+                Проверить статус оплаты
+            </button>
+            
+            <div class="payment-note">
+                ⚡ После успешной оплаты работа начнётся автоматически в течение 5 минут
             </div>
             
-            <div class="info-box">
-                <p>
-                    💡 После успешной оплаты система автоматически запустится.<br>
-                    Визиты начнутся в течение часа.
-                </p>
+            <div class="secure-badge">
+                <span>🔐</span>
+                <span>Платеж защищён ЮKassa</span>
             </div>
         </div>
     </div>
-    
+
     <script>
-        // Конфигурация ЮKassa
-        const YOOKASSA_CONFIG = {
-            shopId: '1256818',
-            secretKey: 'live_cQ08CM2pew_mp5eFgigDtmvoO-guM_QHyU1FvyuoMVg',
-            apiUrl: 'https://api.yookassa.ru/v3/payments'
-        };
+        let paymentData = null;
+        let paymentId = null;
         
-        // Данные тарифов
-        const TARIFFS = {
-            basic: { name: 'Базовый', price: 2000, visits: 1500 },
-            optimal: { name: 'Оптима', price: 5000, visits: 4000 },
-            pro: { name: 'Профи', price: 10000, visits: 8000 }
-        };
-        
-        // Загрузка данных
-        function loadOrderData() {
+        // Загрузка данных платежа
+        async function loadPaymentData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            paymentId = urlParams.get('payment_id');
+            
+            if (!paymentId) {
+                // Пробуем получить из localStorage
+                const pending = localStorage.getItem('pending_payment');
+                if (pending) {
+                    paymentData = JSON.parse(pending);
+                    paymentId = paymentData.payment_id;
+                } else {
+                    showMessage('❌ Данные платежа не найдены', 'error');
+                    return;
+                }
+            }
+            
             try {
-                // Получаем выбранный тариф из URL
-                const urlParams = new URLSearchParams(window.location.search);
-                const tariffType = urlParams.get('tariff') || 'basic';
+                // Запрашиваем информацию о платеже
+                const response = await fetch('api/yookassa.php?action=check', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ payment_id: paymentId })
+                });
                 
-                // Получаем данные пользователя
-                const user = JSON.parse(localStorage.getItem('shadowboost_user'));
-                const site = JSON.parse(localStorage.getItem('shadowboost_current_site'));
-                const tariff = TARIFFS[tariffType];
+                const result = await response.json();
                 
-                if (!user || !site || !tariff) {
-                    throw new Error('Недостаточно данных для оплаты');
+                if (result.success) {
+                    paymentData = {
+                        ...result.metadata,
+                        amount: result.amount,
+                        status: result.status
+                    };
+                    
+                    updateOrderInfo();
+                    
+                    if (result.status === 'succeeded') {
+                        // Платеж уже оплачен
+                        showMessage('✅ Платеж уже оплачен! Перенаправляем...', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'success.html?payment_id=' + paymentId;
+                        }, 2000);
+                    } else if (result.status === 'canceled') {
+                        showMessage('❌ Платеж отменен', 'error');
+                    }
+                    
+                } else {
+                    showMessage('❌ Ошибка загрузки данных платежа', 'error');
                 }
                 
-                // Сохраняем данные для платежа
-                localStorage.setItem('shadowboost_payment_data', JSON.stringify({
-                    tariff: tariff,
-                    site: site,
-                    user: user
-                }));
+            } catch (error) {
+                console.error('Load payment error:', error);
+                showMessage('❌ Ошибка соединения с сервером', 'error');
+            }
+        }
+        
+        // Обновление информации о заказе
+        function updateOrderInfo() {
+            if (!paymentData) return;
+            
+            const tariffs = {
+                basic: { name: 'Базовый', visits: 1500 },
+                optimal: { name: 'Оптима', visits: 4000 },
+                pro: { name: 'Профи', visits: 8000 }
+            };
+            
+            const tariff = tariffs[paymentData.tariff] || tariffs.optimal;
+            
+            document.getElementById('orderInfo').innerHTML = `
+                <div class="info-item">
+                    <span class="info-label">Сайт:</span>
+                    <span class="info-value highlight">${paymentData.site_url || 'Не указан'}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Тариф:</span>
+                    <span class="info-value highlight">${tariff.name}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Визитов в месяц:</span>
+                    <span class="info-value">${tariff.visits.toLocaleString()}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value">${paymentData.email || 'Не указан'}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Сумма к оплате:</span>
+                    <span class="info-value amount">${paymentData.amount || '0'} ₽</span>
+                </div>
+            `;
+        }
+        
+        // Перенаправление на оплату
+        async function redirectToPayment() {
+            if (!paymentId) {
+                showMessage('❌ Данные платежа не загружены', 'error');
+                return;
+            }
+            
+            const payButton = document.getElementById('payButton');
+            payButton.disabled = true;
+            payButton.innerHTML = '<span class="loader"></span> Подготовка...';
+            
+            try {
+                // Получаем URL для оплаты
+                const response = await fetch('api/yookassa.php?action=check', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ payment_id: paymentId })
+                });
                 
-                // Отображаем информацию
-                document.getElementById('tariffName').textContent = tariff.name;
-                document.getElementById('tariffVisits').textContent = tariff.visits.toLocaleString('ru-RU');
-                document.getElementById('tariffPrice').textContent = tariff.price.toLocaleString('ru-RU') + ' ₽';
-                document.getElementById('siteUrl').textContent = site.url;
-                document.getElementById('yandexId').textContent = site.yandexId;
+                const result = await response.json();
+                
+                if (result.success && result.confirmation_url) {
+                    // Перенаправляем на страницу оплаты
+                    window.location.href = result.confirmation_url;
+                } else {
+                    showMessage('❌ Не удалось получить ссылку для оплаты', 'error');
+                    payButton.disabled = false;
+                    payButton.innerHTML = '<span class="btn-icon">🔒</span> Перейти к оплате';
+                }
                 
             } catch (error) {
-                showMessage(`❌ Ошибка: ${error.message}`, 'error');
-                setTimeout(() => {
-                    window.location.href = 'add-site.html';
-                }, 2000);
+                console.error('Redirect error:', error);
+                showMessage('❌ Ошибка соединения с сервером', 'error');
+                payButton.disabled = false;
+                payButton.innerHTML = '<span class="btn-icon">🔒</span> Перейти к оплате';
+            }
+        }
+        
+        // Проверка статуса платежа
+        async function checkPaymentStatus() {
+            if (!paymentId) {
+                showMessage('❌ Данные платежа не загружены', 'error');
+                return;
+            }
+            
+            const checkButton = document.getElementById('checkButton');
+            checkButton.disabled = true;
+            checkButton.innerHTML = '<span class="loader"></span> Проверяем...';
+            
+            try {
+                const response = await fetch('api/yookassa.php?action=check', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ payment_id: paymentId })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    if (result.status === 'succeeded') {
+                        showMessage('✅ Платеж успешно оплачен! Перенаправляем...', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'success.html?payment_id=' + paymentId;
+                        }, 2000);
+                    } else if (result.status === 'pending') {
+                        showMessage('🔄 Платеж в обработке', 'info');
+                    } else if (result.status === 'canceled') {
+                        showMessage('❌ Платеж отменен', 'error');
+                    }
+                } else {
+                    showMessage('❌ Ошибка проверки статуса', 'error');
+                }
+                
+            } catch (error) {
+                console.error('Check status error:', error);
+                showMessage('❌ Ошибка соединения с сервером', 'error');
+            } finally {
+                checkButton.disabled = false;
+                checkButton.innerHTML = '<span class="btn-icon">🔄</span> Проверить статус оплаты';
             }
         }
         
@@ -369,249 +517,12 @@
             }, 5000);
         }
         
-        // Создание платежа напрямую через API ЮKassa
-        async function createPayment() {
-            const payButton = document.getElementById('payButton');
-            const loader = document.getElementById('loader');
-            
-            // Блокируем кнопку и показываем лоадер
-            payButton.disabled = true;
-            payButton.innerHTML = '⏳ Создаем платеж...';
-            loader.style.display = 'block';
-            
-            try {
-                // Получаем данные для платежа
-                const paymentData = JSON.parse(localStorage.getItem('shadowboost_payment_data'));
-                if (!paymentData) {
-                    throw new Error('Данные платежа не найдены');
-                }
-                
-                const { tariff, site, user } = paymentData;
-                
-                // Генерируем уникальный ключ идемпотентности
-                const idempotenceKey = 'idemp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                
-                // Формируем данные для ЮKassa согласно документации
-                const paymentPayload = {
-                    amount: {
-                        value: tariff.price.toFixed(2),
-                        currency: 'RUB'
-                    },
-                    confirmation: {
-                        type: 'redirect',
-                        return_url: window.location.origin + '/payment-success.html'
-                    },
-                    capture: true,
-                    description: `Тариф ${tariff.name} - ${tariff.visits} визитов в месяц`,
-                    metadata: {
-                        user_id: user.id,
-                        user_email: user.email,
-                        tariff: tariff.name,
-                        tariff_type: Object.keys(TARIFFS).find(key => TARIFFS[key].name === tariff.name),
-                        site_url: site.url,
-                        yandex_id: site.yandexId,
-                        order_id: 'shadowboost_' + Date.now()
-                    }
-                };
-                
-                console.log('Отправка в ЮKassa:', paymentPayload);
-                
-                // Прямой запрос к API ЮKassa с Basic Auth
-                const response = await fetch(YOOKASSA_CONFIG.apiUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'Idempotence-Key': idempotenceKey,
-                        'Authorization': 'Basic ' + btoa(YOOKASSA_CONFIG.shopId + ':' + YOOKASSA_CONFIG.secretKey)
-                    },
-                    body: JSON.stringify(paymentPayload)
-                });
-                
-                // Проверяем статус ответа
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error('Ошибка ЮKassa:', response.status, errorText);
-                    
-                    // Пытаемся распарсить ошибку
-                    try {
-                        const errorJson = JSON.parse(errorText);
-                        const errorCode = errorJson.code || 'unknown';
-                        const errorDescription = errorJson.description || 'Неизвестная ошибка';
-                        
-                        // Преобразуем код ошибки в понятное сообщение
-                        let userMessage = '';
-                        switch(errorCode) {
-                            case 'invalid_request':
-                                userMessage = 'Неверный запрос к платежной системе';
-                                break;
-                            case 'invalid_credentials':
-                                userMessage = 'Неверные данные магазина. Проверьте Shop ID и Secret Key';
-                                break;
-                            case 'payment_method_not_allowed':
-                                userMessage = 'Метод оплаты не разрешен для вашего магазина';
-                                break;
-                            case 'amount_too_small':
-                                userMessage = 'Сумма платежа слишком мала';
-                                break;
-                            case 'amount_too_large':
-                                userMessage = 'Сумма платежа слишком велика';
-                                break;
-                            case 'insufficient_funds':
-                                userMessage = 'Недостаточно средств на счете магазина';
-                                break;
-                            default:
-                                userMessage = errorDescription;
-                        }
-                        
-                        throw new Error(`Ошибка ЮKassa: ${userMessage}`);
-                    } catch (e) {
-                        // Если не JSON, показываем текст ошибки
-                        throw new Error(`Ошибка ${response.status}: ${errorText.substring(0, 100)}...`);
-                    }
-                }
-                
-                const result = await response.json();
-                console.log('Ответ ЮKassa:', result);
-                
-                // Проверяем ответ ЮKassa
-                if (result.id && result.confirmation && result.confirmation.confirmation_url) {
-                    // Сохраняем информацию о платеже в localStorage
-                    localStorage.setItem('shadowboost_payment_info', JSON.stringify({
-                        payment_id: result.id,
-                        status: result.status,
-                        amount: result.amount.value,
-                        tariff: tariff.name,
-                        created_at: new Date().toISOString(),
-                        confirmation_url: result.confirmation.confirmation_url
-                    }));
-                    
-                    // Сохраняем ID платежа
-                    localStorage.setItem('shadowboost_payment_id', result.id);
-                    
-                    // Показываем успешное сообщение
-                    showMessage('✅ Платеж создан! Перенаправляем на страницу оплаты...', 'success');
-                    
-                    // Через 1.5 секунды перенаправляем на страницу оплаты ЮKassa
-                    setTimeout(() => {
-                        window.location.href = result.confirmation.confirmation_url;
-                    }, 1500);
-                    
-                } else {
-                    throw new Error('Некорректный ответ от платежной системы');
-                }
-                
-            } catch (error) {
-                console.error('Payment error:', error);
-                
-                // Детальный лог ошибки
-                const debugInfo = {
-                    error: error.message,
-                    timestamp: new Date().toISOString(),
-                    userAgent: navigator.userAgent,
-                    shopId: YOOKASSA_CONFIG.shopId ? 'установлен' : 'отсутствует',
-                    secretKey: YOOKASSA_CONFIG.secretKey ? 'установлен' : 'отсутствует'
-                };
-                console.log('Debug info:', debugInfo);
-                
-                // Показываем понятное сообщение об ошибке
-                let errorMessage = error.message;
-                
-                // Если это ошибка CORS или сети
-                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
-                    errorMessage = 'Ошибка сети. Проверьте подключение к интернету.';
-                }
-                
-                // Если ошибка связана с авторизацией
-                if (error.message.includes('401') || error.message.includes('неверные данные')) {
-                    errorMessage = 'Ошибка авторизации. Проверьте Shop ID и Secret Key в настройках магазина.';
-                }
-                
-                showMessage(`❌ ${errorMessage}`, 'error');
-                
-                // Разблокируем кнопку
-                payButton.disabled = false;
-                payButton.innerHTML = '💳 Перейти к оплате';
-                loader.style.display = 'none';
-                
-                // Добавляем кнопку для тестового режима
-                if (error.message.includes('авторизации') || error.message.includes('401')) {
-                    const testModeBtn = document.createElement('button');
-                    testModeBtn.className = 'pay-btn';
-                    testModeBtn.style.background = 'linear-gradient(90deg, #f59e0b, #d97706)';
-                    testModeBtn.style.marginTop = '10px';
-                    testModeBtn.innerHTML = '🧪 Включить тестовый режим';
-                    testModeBtn.onclick = function() {
-                        enableTestMode();
-                    };
-                    
-                    const paymentMethods = document.querySelector('.payment-methods');
-                    const existingTestBtn = document.querySelector('.test-mode-btn');
-                    if (!existingTestBtn) {
-                        testModeBtn.classList.add('test-mode-btn');
-                        paymentMethods.appendChild(testModeBtn);
-                    }
-                }
-            }
-        }
-        
-        // Функция для включения тестового режима
-        function enableTestMode() {
-            localStorage.setItem('shadowboost_test_mode', 'true');
-            showMessage('✅ Включен тестовый режим. Платеж будет имитирован.', 'success');
-            
-            // Создаем тестовый платеж
-            setTimeout(() => {
-                const testPaymentId = 'test_payment_' + Date.now();
-                localStorage.setItem('shadowboost_payment_id', testPaymentId);
-                
-                // Сохраняем тестовую информацию
-                localStorage.setItem('shadowboost_payment_info', JSON.stringify({
-                    payment_id: testPaymentId,
-                    status: 'succeeded',
-                    amount: '2000.00',
-                    tariff: 'Базовый',
-                    created_at: new Date().toISOString(),
-                    test_mode: true
-                }));
-                
-                // Перенаправляем на страницу успеха
-                window.location.href = 'payment-success.html';
-            }, 1000);
-        }
-        
-        // Проверка тестового режима при загрузке
-        function checkTestMode() {
-            const testMode = localStorage.getItem('shadowboost_test_mode');
-            if (testMode === 'true') {
-                showMessage('⚠️ Включен тестовый режим. Платежи не будут реальными.', 'success');
-            }
-        }
-        
-        // Инициализация при загрузке
+        // Инициализация
         document.addEventListener('DOMContentLoaded', function() {
-            // Проверяем авторизацию
-            const user = localStorage.getItem('shadowboost_user');
-            if (!user) {
-                window.location.href = 'register-simple.html';
-                return;
-            }
+            loadPaymentData();
             
-            // Проверяем наличие сайта
-            const site = localStorage.getItem('shadowboost_current_site');
-            if (!site) {
-                window.location.href = 'add-site.html';
-                return;
-            }
-            
-            // Проверяем тестовый режим
-            checkTestMode();
-            
-            // Загружаем данные заказа
-            loadOrderData();
-            
-            // Показываем способ оплаты по умолчанию
-            showMessage('💡 Оплата через защищенный шлюз ЮKassa. Все данные защищены.', 'success');
+            // Автоматическая проверка статуса каждые 30 секунд
+            setInterval(checkPaymentStatus, 30000);
         });
     </script>
 </body>
