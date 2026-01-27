@@ -1,457 +1,75 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShadowBoost — Оплата тарифа</title>
+    <title>ShadowBoost - Оплата</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-        
-        body {
-            background: #0a0a0f;
-            color: white;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .logo {
-            text-align: center;
-            font-size: 36px;
-            font-weight: 800;
-            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 40px 0;
-        }
-        
-        .payment-box {
-            background: rgba(30, 30, 46, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 30px;
-        }
-        
-        h1 {
-            text-align: center;
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
-        
-        .subtitle {
-            text-align: center;
-            color: #a0a0b0;
-            margin-bottom: 30px;
-            font-size: 16px;
-        }
-        
-        .tariff-options {
-            margin: 30px 0;
-        }
-        
-        .tariff {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .tariff:hover {
-            border-color: #3b82f6;
-        }
-        
-        .tariff.selected {
-            border-color: #3b82f6;
-            background: rgba(59, 130, 246, 0.1);
-        }
-        
-        .tariff-name {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        .tariff-price {
-            font-size: 24px;
-            font-weight: 700;
-            color: #3b82f6;
-        }
-        
-        .tariff-desc {
-            color: #a0a0b0;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-        
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 20px;
-        }
-        
-        .btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
-        }
-        
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        .form-group {
-            margin: 20px 0;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #a0a0b0;
-            font-size: 14px;
-        }
-        
-        input {
-            width: 100%;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: white;
-            font-size: 16px;
-        }
-        
-        input:focus {
-            outline: none;
-            border-color: #3b82f6;
-        }
-        
-        .loading {
-            text-align: center;
-            margin: 20px 0;
-            display: none;
-        }
-        
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-top-color: #3b82f6;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 10px;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        .message {
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            text-align: center;
-            display: none;
-        }
-        
-        .error {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
-        }
-        
-        .success {
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            color: #22c55e;
-        }
-        
-        .footer {
-            text-align: center;
-            color: #666;
-            font-size: 12px;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
+        body { background: #0a0a0f; color: white; padding: 20px; }
+        .container { max-width: 500px; margin: 0 auto; }
+        .tariff { padding: 15px; margin: 10px 0; background: rgba(255,255,255,0.1); cursor: pointer; }
+        .selected { border: 2px solid #3b82f6; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">ShadowBoost</div>
+        <h1>ShadowBoost - Оплата</h1>
         
-        <div class="payment-box">
-            <h1>Оплата тарифа</h1>
-            <p class="subtitle">Выберите тариф и укажите данные</p>
-            
-            <div id="message" class="message"></div>
-            
-            <div class="tariff-options">
-                <div class="tariff" data-tariff="basic" data-price="2000" data-visits="1500">
-                    <div class="tariff-name">Базовый</div>
-                    <div class="tariff-price">2 000 ₽</div>
-                    <div class="tariff-desc">1 500 визитов в месяц</div>
-                </div>
-                
-                <div class="tariff selected" data-tariff="optimal" data-price="5000" data-visits="4000">
-                    <div class="tariff-name">Оптима</div>
-                    <div class="tariff-price">5 000 ₽</div>
-                    <div class="tariff-desc">4 000 визитов в месяц</div>
-                </div>
-                
-                <div class="tariff" data-tariff="pro" data-price="10000" data-visits="8000">
-                    <div class="tariff-name">Профи</div>
-                    <div class="tariff-price">10 000 ₽</div>
-                    <div class="tariff-desc">8 000 визитов в месяц</div>
-                </div>
-            </div>
-            
-            <form id="paymentForm">
-                <div class="form-group">
-                    <label for="email">Ваш email *</label>
-                    <input type="email" id="email" placeholder="ваш@email.com" required>
-                    <small style="color: #a0a0b0; font-size: 12px; display: block; margin-top: 5px;">
-                        На этот email придет доступ
-                    </small>
-                </div>
-                
-                <div class="form-group">
-                    <label for="site_url">URL вашего сайта *</label>
-                    <input type="url" id="site_url" placeholder="https://ваш-сайт.ru" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="yandex_id">ID Яндекс.Метрики *</label>
-                    <input type="text" id="yandex_id" placeholder="12345678" required>
-                    <small style="color: #a0a0b0; font-size: 12px; display: block; margin-top: 5px;">
-                        Только цифры из Яндекс.Метрики
-                    </small>
-                </div>
-                
-                <div id="loading" class="loading">
-                    <div class="spinner"></div>
-                    <p>Создаем платеж...</p>
-                </div>
-                
-                <button type="submit" class="btn" id="payButton">
-                    💳 Перейти к оплате
-                </button>
-            </form>
-            
-            <p style="text-align: center; color: #666; font-size: 12px; margin-top: 20px;">
-                После оплаты вы получите доступ к кабинету ShadowBoost
-            </p>
+        <div class="tariff selected" data-price="2000" data-tariff="basic">
+            Базовый - 2 000 ₽
         </div>
         
-        <div class="footer">
-            <p>© 2024 ShadowBoost. Все права защищены.</p>
-            <p>Поддержка: <a href="https://t.me/shadowboost_support" style="color: #3b82f6;">@shadowboost_support</a></p>
+        <div class="tariff" data-price="5000" data-tariff="optimal">
+            Оптима - 5 000 ₽
         </div>
+        
+        <input type="email" id="email" placeholder="Ваш email" style="width:100%;padding:10px;margin:10px 0;">
+        
+        <button onclick="createPayment()" style="width:100%;padding:15px;background:#3b82f6;color:white;border:none;">
+            💳 Оплатить
+        </button>
     </div>
 
     <script>
-        // =================== ВЫБОР ТАРИФА ===================
-        document.querySelectorAll('.tariff').forEach(tariff => {
-            tariff.addEventListener('click', function() {
-                document.querySelectorAll('.tariff').forEach(t => {
-                    t.classList.remove('selected');
-                });
-                this.classList.add('selected');
-            });
-        });
-        
-        // =================== ОБРАБОТКА ФОРМЫ ===================
-        document.getElementById('paymentForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value.trim();
-            const siteUrl = document.getElementById('site_url').value.trim();
-            const yandexId = document.getElementById('yandex_id').value.trim();
-            
-            const selectedTariff = document.querySelector('.tariff.selected');
-            const tariff = selectedTariff.dataset.tariff;
-            const price = selectedTariff.dataset.price;
-            const visits = selectedTariff.dataset.visits;
-            
-            // Валидация
-            if (!email || !email.includes('@')) {
-                showMessage('❌ Введите корректный email', 'error');
-                return;
-            }
-            
-            if (!siteUrl || !siteUrl.startsWith('http')) {
-                showMessage('❌ Введите корректный URL сайта (начинается с http:// или https://)', 'error');
-                return;
-            }
-            
-            if (!yandexId || !/^\d+$/.test(yandexId)) {
-                showMessage('❌ ID Яндекс.Метрики должен содержать только цифры', 'error');
-                return;
-            }
-            
-            // Показываем загрузку
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('payButton').disabled = true;
-            document.getElementById('payButton').textContent = 'Создание платежа...';
-            
-            try {
-                // Сохраняем данные пользователя
-                localStorage.setItem('shadowboost_user', JSON.stringify({
-                    email: email,
-                    siteUrl: siteUrl,
-                    yandexId: yandexId,
-                    tariff: tariff,
-                    price: price,
-                    visits: visits,
-                    date: new Date().toISOString(),
-                    status: 'pending'
-                }));
-                
-                // Создаем платеж через Beget прокси
-                const paymentUrl = await createYooKassaPayment(tariff, price, email, siteUrl, yandexId);
-                
-                // Перенаправляем на страницу оплаты ЮKassa
-                window.location.href = paymentUrl;
-                
-            } catch (error) {
-                showMessage('❌ Ошибка: ' + error.message, 'error');
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('payButton').disabled = false;
-                document.getElementById('payButton').textContent = '💳 Перейти к оплате';
-            }
-        });
-        
-        // =================== СОЗДАНИЕ ПЛАТЕЖА ЧЕРЕЗ BEGET ПРОКСИ ===================
-        async function createYooKassaPayment(tariff, amount, email, siteUrl, yandexId) {
-            // URL вашего прокси на Beget
-            const PROXY_URL = 'https://shadowboost.ru/api/payment.php';
-            
-            console.log('Отправляю в Beget прокси:', { tariff, amount, email, siteUrl, yandexId });
-            
-            const paymentData = {
-                tariff: tariff,
-                amount: parseFloat(amount),
-                email: email,
-                site_url: siteUrl,
-                yandex_id: yandexId
+        // Выбор тарифа
+        document.querySelectorAll('.tariff').forEach(t => {
+            t.onclick = () => {
+                document.querySelectorAll('.tariff').forEach(t2 => t2.classList.remove('selected'));
+                t.classList.add('selected');
             };
-            
-            // Отправляем запрос на Beget
-            const response = await fetch(PROXY_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(paymentData)
-            });
-            
-            console.log('Статус ответа Beget:', response.status);
-            
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error('Ошибка Beget:', errorText);
-                throw new Error('Ошибка сервера: ' + response.status);
-            }
-            
-            const data = await response.json();
-            console.log('Ответ Beget:', data);
-            
-            if (data.error) {
-                throw new Error(data.error);
-            }
-            
-            if (!data.confirmation_url) {
-                throw new Error('Не удалось получить ссылку для оплаты');
-            }
-            
-            return data.confirmation_url;
-        }
-        
-        // =================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===================
-        function showMessage(text, type) {
-            const messageDiv = document.getElementById('message');
-            messageDiv.textContent = text;
-            messageDiv.className = 'message ' + type;
-            messageDiv.style.display = 'block';
-            
-            setTimeout(() => {
-                messageDiv.style.display = 'none';
-            }, 5000);
-        }
-        
-        // =================== ИНИЦИАЛИЗАЦИЯ ===================
-        document.addEventListener('DOMContentLoaded', function() {
-            // Автозаполнение если есть сохраненные данные
-            const savedUser = localStorage.getItem('shadowboost_user');
-            if (savedUser) {
-                try {
-                    const user = JSON.parse(savedUser);
-                    if (user.email) document.getElementById('email').value = user.email;
-                    if (user.siteUrl) document.getElementById('site_url').value = user.siteUrl;
-                    if (user.yandexId) document.getElementById('yandex_id').value = user.yandexId;
-                } catch (e) {
-                    console.log('Нет сохраненных данных');
-                }
-            }
-            
-            // Фокус на поле email
-            document.getElementById('email').focus();
         });
-        
-        // =================== ТЕСТОВАЯ ФУНКЦИЯ ===================
-        window.testProxy = async function() {
-            console.log('Тестирую Beget прокси...');
+
+        async function createPayment() {
+            const email = document.getElementById('email').value;
+            const selected = document.querySelector('.tariff.selected');
+            const price = selected.dataset.price;
+            const tariff = selected.dataset.tariff;
+            
+            if (!email) return alert('Введите email');
             
             try {
-                const response = await fetch('https://shadowboost.ru/api/payment.php', {
+                // Отправляем на Beget прокси
+                const response = await fetch('https://shadowboost.ru/payment.php', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
-                        tariff: 'basic',
-                        amount: 10,
-                        email: 'test@example.com',
-                        site_url: 'https://test.ru',
-                        yandex_id: '12345678'
+                        amount: price,
+                        tariff: tariff,
+                        email: email
                     })
                 });
                 
                 const data = await response.json();
-                console.log('Тестовый ответ:', data);
                 
-                if (data.confirmation_url) {
-                    alert('Прокси работает! Ссылка: ' + data.confirmation_url);
+                if (data.confirmation && data.confirmation.confirmation_url) {
+                    // Перенаправляем на страницу оплаты ЮKassa
+                    window.location.href = data.confirmation.confirmation_url;
                 } else {
-                    alert('Ошибка: ' + (data.error || 'Неизвестная ошибка'));
+                    alert('Ошибка: ' + (data.description || 'Неизвестная ошибка'));
                 }
                 
             } catch (error) {
-                console.error('Тестовая ошибка:', error);
-                alert('Ошибка теста: ' + error.message);
+                alert('Ошибка сети: ' + error.message);
             }
-        };
+        }
     </script>
 </body>
 </html>
