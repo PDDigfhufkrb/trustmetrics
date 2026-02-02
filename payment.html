@@ -1,75 +1,243 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>ShadowBoost - Оплата</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оплата подписки - ShadowBoost</title>
+    <link rel="stylesheet" href="https://yookassa.ru/integration/simplepay/css/yookassa_construct_form.css?v=1.30.0">
     <style>
-        body { background: #0a0a0f; color: white; padding: 20px; }
-        .container { max-width: 500px; margin: 0 auto; }
-        .tariff { padding: 15px; margin: 10px 0; background: rgba(255,255,255,0.1); cursor: pointer; }
-        .selected { border: 2px solid #3b82f6; }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .tariffs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .tariff {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            flex: 1;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .tariff:hover {
+            border-color: #007bff;
+        }
+        .tariff.selected {
+            border-color: #007bff;
+            background-color: #f0f8ff;
+        }
+        .tariff h3 {
+            margin-top: 0;
+        }
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .visits {
+            color: #666;
+        }
+        .payment-form {
+            display: none;
+        }
+        .payment-form.active {
+            display: block;
+        }
+        .ym-btn-pay {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .ym-btn-pay:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>ShadowBoost - Оплата</h1>
-        
-        <div class="tariff selected" data-price="2000" data-tariff="basic">
-            Базовый - 2 000 ₽
+    <h1>Выберите тариф ShadowBoost</h1>
+    <p>После оплаты подписка активируется автоматически в течение 15 минут.</p>
+
+    <div class="tariffs">
+        <div class="tariff" data-tariff="basic" data-price="990">
+            <h3>Базовый</h3>
+            <p class="price">990 ₽</p>
+            <p class="visits">350 визитов в неделю</p>
+            <p>Подходит для небольших сайтов</p>
         </div>
-        
-        <div class="tariff" data-price="5000" data-tariff="optimal">
-            Оптима - 5 000 ₽
+        <div class="tariff" data-tariff="pro" data-price="1890">
+            <h3>Профессиональный</h3>
+            <p class="price">1 890 ₽</p>
+            <p class="visits">700 визитов в неделю</p>
+            <p>Для растущих проектов</p>
         </div>
-        
-        <input type="email" id="email" placeholder="Ваш email" style="width:100%;padding:10px;margin:10px 0;">
-        
-        <button onclick="createPayment()" style="width:100%;padding:15px;background:#3b82f6;color:white;border:none;">
-            💳 Оплатить
-        </button>
+        <div class="tariff" data-tariff="business" data-price="3490">
+            <h3>Бизнес</h3>
+            <p class="price">3 490 ₽</p>
+            <p class="visits">1400 визитов в неделю</p>
+            <p>Максимальная видимость</p>
+        </div>
+    </div>
+
+    <!-- Форма для базового тарифа -->
+    <div id="form-basic" class="payment-form">
+        <h2>Оплата тарифа "Базовый"</h2>
+        <form target="_blank" class="yoomoney-payment-form" action="https://yookassa.ru/integration/simplepay/payment" method="post" accept-charset="utf-8">
+            <div class="ym-products ym-display-none">
+                <div class="ym-block-title ym-products-title">Товары</div>
+                <div class="ym-product">
+                    <div class="ym-product-line">
+                        <span class="ym-product-description"><span class="ym-product-count">1×</span>ShadowBoost: Базовый тариф (350 визитов/неделя)</span>
+                        <span class="ym-product-price" data-price="990" data-id="1" data-count="1">990,00&nbsp;₽</span>
+                    </div>
+                    <input disabled type="hidden" name="text" value="ShadowBoost: Базовый тариф (350 визитов/неделя)">
+                    <input disabled type="hidden" name="price" value="990">
+                    <input disabled type="hidden" name="quantity" value="1">
+                    <input disabled type="hidden" name="paymentSubjectType" value="service">
+                    <input disabled type="hidden" name="paymentMethodType" value="full_prepayment">
+                    <input disabled type="hidden" name="tax" value="1">
+                </div>
+            </div>
+            <input value="" type="hidden" name="ym_merchant_receipt">
+            <div class="ym-customer-info">
+                <div class="ym-block-title">О покупателе</div>
+                <input class="ym-input" name="email" placeholder="Email для чека" type="email" required>
+            </div>
+            <div class="ym-hidden-inputs">
+                <input name="shopSuccessURL" type="hidden" value="https://shadowboost.ru/success.html">
+            </div>
+            <div class="ym-payment-btn-block ym-before-line ym-align-space-between">
+                <div class="ym-input-icon-rub ym-display-none">
+                    <input name="sum" placeholder="0.00" class="ym-input ym-sum-input ym-required-input" type="number" step="any" value="990">
+                </div>
+                <button data-text="Заплатить" class="ym-btn-pay ym-result-price">
+                    <span class="ym-text-crop">Заплатить</span> <span class="ym-price-output">990,00&nbsp;₽</span>
+                </button>
+                <img src="https://yookassa.ru/integration/simplepay/img/iokassa-gray.svg?v=1.30.0" class="ym-logo" width="114" height="27" alt="ЮKassa">
+            </div>
+            <input name="shopId" type="hidden" value="1256818">
+        </form>
+    </div>
+
+    <!-- Форма для профессионального тарифа -->
+    <div id="form-pro" class="payment-form">
+        <h2>Оплата тарифа "Профессиональный"</h2>
+        <form target="_blank" class="yoomoney-payment-form" action="https://yookassa.ru/integration/simplepay/payment" method="post" accept-charset="utf-8">
+            <div class="ym-products ym-display-none">
+                <div class="ym-block-title ym-products-title">Товары</div>
+                <div class="ym-product">
+                    <div class="ym-product-line">
+                        <span class="ym-product-description"><span class="ym-product-count">1×</span>ShadowBoost: Профессиональный тариф (700 визитов/неделя)</span>
+                        <span class="ym-product-price" data-price="1890" data-id="2" data-count="1">1 890,00&nbsp;₽</span>
+                    </div>
+                    <input disabled type="hidden" name="text" value="ShadowBoost: Профессиональный тариф (700 визитов/неделя)">
+                    <input disabled type="hidden" name="price" value="1890">
+                    <input disabled type="hidden" name="quantity" value="1">
+                    <input disabled type="hidden" name="paymentSubjectType" value="service">
+                    <input disabled type="hidden" name="paymentMethodType" value="full_prepayment">
+                    <input disabled type="hidden" name="tax" value="1">
+                </div>
+            </div>
+            <input value="" type="hidden" name="ym_merchant_receipt">
+            <div class="ym-customer-info">
+                <div class="ym-block-title">О покупателе</div>
+                <input class="ym-input" name="email" placeholder="Email для чека" type="email" required>
+            </div>
+            <div class="ym-hidden-inputs">
+                <input name="shopSuccessURL" type="hidden" value="https://shadowboost.ru/success.html">
+            </div>
+            <div class="ym-payment-btn-block ym-before-line ym-align-space-between">
+                <div class="ym-input-icon-rub ym-display-none">
+                    <input name="sum" placeholder="0.00" class="ym-input ym-sum-input ym-required-input" type="number" step="any" value="1890">
+                </div>
+                <button data-text="Заплатить" class="ym-btn-pay ym-result-price">
+                    <span class="ym-text-crop">Заплатить</span> <span class="ym-price-output">1 890,00&nbsp;₽</span>
+                </button>
+                <img src="https://yookassa.ru/integration/simplepay/img/iokassa-gray.svg?v=1.30.0" class="ym-logo" width="114" height="27" alt="ЮKassa">
+            </div>
+            <input name="shopId" type="hidden" value="1256818">
+        </form>
+    </div>
+
+    <!-- Форма для бизнес тарифа -->
+    <div id="form-business" class="payment-form">
+        <h2>Оплата тарифа "Бизнес"</h2>
+        <form target="_blank" class="yoomoney-payment-form" action="https://yookassa.ru/integration/simplepay/payment" method="post" accept-charset="utf-8">
+            <div class="ym-products ym-display-none">
+                <div class="ym-block-title ym-products-title">Товары</div>
+                <div class="ym-product">
+                    <div class="ym-product-line">
+                        <span class="ym-product-description"><span class="ym-product-count">1×</span>ShadowBoost: Бизнес тариф (1400 визитов/неделя)</span>
+                        <span class="ym-product-price" data-price="3490" data-id="3" data-count="1">3 490,00&nbsp;₽</span>
+                    </div>
+                    <input disabled type="hidden" name="text" value="ShadowBoost: Бизнес тариф (1400 визитов/неделя)">
+                    <input disabled type="hidden" name="price" value="3490">
+                    <input disabled type="hidden" name="quantity" value="1">
+                    <input disabled type="hidden" name="paymentSubjectType" value="service">
+                    <input disabled type="hidden" name="paymentMethodType" value="full_prepayment">
+                    <input disabled type="hidden" name="tax" value="1">
+                </div>
+            </div>
+            <input value="" type="hidden" name="ym_merchant_receipt">
+            <div class="ym-customer-info">
+                <div class="ym-block-title">О покупателе</div>
+                <input class="ym-input" name="email" placeholder="Email для чека" type="email" required>
+            </div>
+            <div class="ym-hidden-inputs">
+                <input name="shopSuccessURL" type="hidden" value="https://shadowboost.ru/success.html">
+            </div>
+            <div class="ym-payment-btn-block ym-before-line ym-align-space-between">
+                <div class="ym-input-icon-rub ym-display-none">
+                    <input name="sum" placeholder="0.00" class="ym-input ym-sum-input ym-required-input" type="number" step="any" value="3490">
+                </div>
+                <button data-text="Заплатить" class="ym-btn-pay ym-result-price">
+                    <span class="ym-text-crop">Заплатить</span> <span class="ym-price-output">3 490,00&nbsp;₽</span>
+                </button>
+                <img src="https://yookassa.ru/integration/simplepay/img/iokassa-gray.svg?v=1.30.0" class="ym-logo" width="114" height="27" alt="ЮKassa">
+            </div>
+            <input name="shopId" type="hidden" value="1256818">
+        </form>
     </div>
 
     <script>
-        // Выбор тарифа
-        document.querySelectorAll('.tariff').forEach(t => {
-            t.onclick = () => {
-                document.querySelectorAll('.tariff').forEach(t2 => t2.classList.remove('selected'));
-                t.classList.add('selected');
-            };
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const tariffs = document.querySelectorAll('.tariff');
+            const forms = document.querySelectorAll('.payment-form');
 
-        async function createPayment() {
-            const email = document.getElementById('email').value;
-            const selected = document.querySelector('.tariff.selected');
-            const price = selected.dataset.price;
-            const tariff = selected.dataset.tariff;
-            
-            if (!email) return alert('Введите email');
-            
-            try {
-                // Отправляем на Beget прокси
-                const response = await fetch('https://shadowboost.ru/payment.php', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        amount: price,
-                        tariff: tariff,
-                        email: email
-                    })
+            tariffs.forEach(tariff => {
+                tariff.addEventListener('click', function() {
+                    // Убираем класс selected у всех тарифов
+                    tariffs.forEach(t => t.classList.remove('selected'));
+                    // Добавляем класс selected к выбранному тарифу
+                    this.classList.add('selected');
+
+                    // Скрываем все формы
+                    forms.forEach(form => form.classList.remove('active'));
+
+                    // Показываем форму, соответствующую выбранному тарифу
+                    const tariffType = this.getAttribute('data-tariff');
+                    const formToShow = document.getElementById(`form-${tariffType}`);
+                    if (formToShow) {
+                        formToShow.classList.add('active');
+                    }
                 });
-                
-                const data = await response.json();
-                
-                if (data.confirmation && data.confirmation.confirmation_url) {
-                    // Перенаправляем на страницу оплаты ЮKassa
-                    window.location.href = data.confirmation.confirmation_url;
-                } else {
-                    alert('Ошибка: ' + (data.description || 'Неизвестная ошибка'));
-                }
-                
-            } catch (error) {
-                alert('Ошибка сети: ' + error.message);
+            });
+
+            // По умолчанию выбираем первый тариф
+            if (tariffs.length > 0) {
+                tariffs[0].click();
             }
-        }
+        });
     </script>
+    <script src="https://yookassa.ru/integration/simplepay/js/yookassa_construct_form.js?v=1.30.0"></script>
 </body>
 </html>
