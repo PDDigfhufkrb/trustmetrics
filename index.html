@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowBoost — Органический трафик для Яндекс.Метрики</title>
+    <meta name="description" content="Профессиональная платформа увеличения трафика. Резидентские IP, браузерная эмуляция, незаметно для аналитики. Запуск за 5 минут.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ====== CSS RESET & VARIABLES ====== */
+        :root {
+            /* Цветовая палитра */
+            --black: #0A0A0A;
+            --dark: #1A1822;
+            --dark-light: #2D2A38;
+            --white: #FFFFFF;
+            --gray-light: #E5E5E5;
+            --gray: #B0B0B0;
+            --gray-dark: #5A5A5A;
+            
+            /* Акцентные цвета */
+            --primary: #6366F1;
+            --primary-light: #818CF8;
+            --primary-dark: #4F46E5;
+            --secondary: #8B5CF6;
+            --accent: #EC4899;
+            --green: #10B981;
+            --green-gradient: linear-gradient(89.73deg, #2BB81F 1.21%, #6AC523 50.51%, #92D32D 66.85%, #E3F141 99.81%);
+            --purple-gradient: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            
+            /* Эффекты */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+            --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.2);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.3);
+            
+            /* Радиусы */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-2xl: 32px;
+            --radius-full: 9999px;
+            
+            /* Отступы */
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 32px;
+            --space-xl: 48px;
+            --space-2xl: 64px;
+            --space-3xl: 80px;
+            
+            /* Максимальные ширины */
+            --max-w-sm: 640px;
+            --max-w-md: 768px;
+            --max-w-lg: 1024px;
+            --max-w-xl: 1280px;
+            --max-w-2xl: 1400px;
+        }
+
+        /* ====== BASE STYLES ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ====== TYPOGRAPHY ====== */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 56px;
+            background: var(--green-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 0px 40px rgba(76, 193, 37, 0.2);
+        }
+
+        h2 {
+            font-size: 40px;
+            margin-bottom: var(--space-lg);
+        }
+
+        h3 {
+            font-size: 24px;
+            margin-bottom: var(--space-sm);
+        }
+
+        p {
+            font-size: 18px;
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: var(--space-md);
+        }
+
+        .lead {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .text-gradient {
+            background: var(--green-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ====== LAYOUT ====== */
+        .container {
+            max-width: var(--max-w-xl);
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        .section {
+            padding: var(--space-3xl) 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+        }
+
+        /* ====== BACKGROUND EFFECTS ====== */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 20% 50%, var(--primary) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, var(--secondary) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, var(--accent) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .bg-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--primary-light) 1px, transparent 1px),
+                linear-gradient(90deg, var(--primary-light) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.03;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+            z-index: -1;
+        }
+
+        /* ====== BUTTONS ====== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--purple-gradient);
+            color: var(--white);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl), var(--shadow-glow);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-lg {
+            padding: 20px 40px;
+            font-size: 18px;
+            border-radius: var(--radius-xl);
+        }
+
+        /* ====== NAVIGATION ====== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(26, 24, 34, 0.9);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 16px 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(26, 24, 34, 0.95);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: var(--max-w-xl);
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-gradient);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--white);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--purple-gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* ====== HERO SECTION ====== */
+        .hero {
+            padding: 180px 0 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-light);
+            padding: 8px 20px;
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 32px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .hero-title {
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-description {
+            font-size: 20px;
+            color: var(--gray);
+            margin-bottom: 48px;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        /* ====== STATS ====== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 32px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            background: var(--purple-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 16px;
+        }
+
+        /* ====== FEATURES ====== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: var(--purple-gradient);
+            transition: height 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--purple-gradient);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 28px;
+        }
+
+        /* ====== COMPARISON ====== */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .comparison-column {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-xl);
+            padding: 32px;
+        }
+
+        .comparison-header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-list {
+            list-style: none;
+        }
+
+        .comparison-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .comparison-item:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        /* ====== STEPS ====== */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 32px;
+        }
+
+        .step-number {
+            width: 64px;
+            height: 64px;
+            background: var(--purple-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 auto 24px;
+            color: var(--white);
+        }
+
+        /* ====== TARIFFS ====== */
+        .tariffs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .tariff-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-xl);
+            padding: 40px 32px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tariff-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .tariff-card.popular {
+            border-color: var(--primary);
+            background: linear-gradient(180deg, 
+                rgba(255, 255, 255, 0.05) 0%, 
+                rgba(99, 102, 241, 0.05) 100%);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--purple-gradient);
+            color: var(--white);
+            padding: 8px 24px;
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .tariff-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .tariff-price {
+            font-size: 48px;
+            font-weight: 800;
+            text-align: center;
+            margin: 24px 0 8px;
+            background: var(--purple-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tariff-period {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 32px;
+        }
+
+        .tariff-features {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .tariff-feature {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tariff-feature:last-child {
+            border-bottom: none;
+        }
+
+        .tariff-feature::before {
+            content: '✓';
+            color: var(--green);
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* ====== CTA ====== */
+        .cta {
+            background: var(--purple-gradient);
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" fill="white" opacity=".1"/></svg>');
+            background-size: 100% 100px;
+            background-repeat: no-repeat;
+            opacity: 0.2;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            color: var(--white);
+            font-size: 48px;
+            margin-bottom: 24px;
+        }
+
+        .cta-description {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            font-size: 20px;
+        }
+
+        /* ====== FOOTER ====== */
+        .footer {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 60px 0 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 48px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            text-decoration: none;
+            background: var(--purple-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-column h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--white);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 40px;
+            text-align: center;
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* ====== FAQ ====== */
+        .faq-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .faq-item.active {
+            background: rgba(99, 102, 241, 0.05);
+            border-color: var(--primary);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0;
+        }
+
+        .faq-answer {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* ====== ANIMATIONS ====== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 40px;
+            }
+            
+            h2 {
+                font-size: 32px;
+            }
+            
+            .container {
+                padding: 0 var(--space-md);
+            }
+            
+            .section {
+                padding: var(--space-2xl) 0;
+            }
+            
+            .hero {
+                padding: 140px 0 80px;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .tariffs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+            
+            .stat-item {
+                padding: 24px 16px;
+            }
+            
+            .stat-number {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 32px;
+            }
+            
+            h2 {
+                font-size: 28px;
+            }
+            
+            .btn {
+                padding: 14px 24px;
+            }
+            
+            .feature-card,
+            .tariff-card,
+            .stat-item,
+            .faq-item {
+                padding: 24px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ====== UTILITY CLASSES ====== */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-1 { margin-top: var(--space-xs); }
+        .mt-2 { margin-top: var(--space-sm); }
+        .mt-3 { margin-top: var(--space-md); }
+        .mt-4 { margin-top: var(--space-lg); }
+        .mt-5 { margin-top: var(--space-xl); }
+        .mt-6 { margin-top: var(--space-2xl); }
+
+        .mb-1 { margin-bottom: var(--space-xs); }
+        .mb-2 { margin-bottom: var(--space-sm); }
+        .mb-3 { margin-bottom: var(--space-md); }
+        .mb-4 { margin-bottom: var(--space-lg); }
+        .mb-5 { margin-bottom: var(--space-xl); }
+        .mb-6 { margin-bottom: var(--space-2xl); }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">⚡</div>
+                <span>ShadowBoost</span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Технология</a>
+                <a href="#tariffs" class="nav-link">Тарифы</a>
+                <a href="#how" class="nav-link">Как начать</a>
+                <a href="login.html" class="nav-link">Войти</a>
+                <a href="register.html" class="btn btn-primary">Начать бесплатно</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>🔥</span>
+                    ЛИДЕР НА РЫНКЕ ОРГАНИЧЕСКОГО ТРАФИКА
+                </div>
+                
+                <h1 class="hero-title">
+                    Оживите метрики вашего сайта
+                    <br>
+                    <span class="text-gradient">за 24 часа</span>
+                </h1>
+                
+                <p class="hero-description">
+                    ShadowBoost — профессиональная платформа, которая создает органический трафик для вашего сайта. 
+                    Резидентские IP, умная эмуляция поведения, полная автоматизация. 
+                    <strong>Результаты видны уже в первый день.</strong>
+                </p>
+                
+                <div class="hero-buttons">
+                    <a href="register.html" class="btn btn-primary btn-lg">
+                        🚀 Начать бесплатный тест
+                    </a>
+                    <a href="#tariffs" class="btn btn-secondary btn-lg">
+                        💰 Посмотреть тарифы
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">10,000+</div>
+                    <div class="stat-label">Резидентских IP</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Незаметность</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15 мин</div>
+                    <div class="stat-label">До первых визитов</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Довольных клиентов</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="section">
+        <div class="bg-grid"></div>
+        <div class="container">
+            <div class="section-header">
+                <h2>Профессиональная технология</h2>
+                <p class="lead">Инновационный подход к созданию органического трафика</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Глобальная сеть IP</h3>
+                    <p>10,000+ резидентских IP-адресов из России и СНГ. Каждый визит — с уникального адреса реального пользователя.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>Умная эмуляция</h3>
+                    <p>Playwright + реальные браузеры. Скролл, клики, чтение контента — поведение, идентичное человеческому.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Мгновенный запуск</h3>
+                    <p>Добавили сайт → выбрали тариф → всё работает. Первые визиты уже через 15 минут после оплаты.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Почему другие сервисы не работают</h2>
+                <p class="lead">Сравните технологии и сделайте правильный выбор</p>
+            </div>
+            
+            <div class="comparison-grid">
+                <!-- Обычные сервисы -->
+                <div class="comparison-column">
+                    <div class="comparison-header">
+                        <h3>Обычные сервисы</h3>
+                        <p style="color: var(--gray);">Устаревшие технологии</p>
+                    </div>
+                    <ul class="comparison-list">
+                        <li class="comparison-item">
+                            <div class="comparison-icon" style="color: #EF4444;">❌</div>
+                            <div>
+                                <strong>Публичные прокси</strong>
+                                <p style="color: var(--gray); font-size: 14px; margin-top: 4px;">Низкая стабильность, легко детектируются</p>
+                            </div>
+                        </li>
+                        <li class="comparison-item">
+                            <div class="comparison-icon" style="color: #EF4444;">❌</div>
+                            <div>
+                                <strong>Шаблонное поведение</strong>
+                                <p style="color: var(--gray); font-size: 14px; margin-top: 4px;">Одинаковые сценарии для всех сайтов</p>
+                            </div>
+                        </li>
+                        <li class="comparison-item">
+                            <div class="comparison-icon" style="color: #EF4444;">❌</div>
+                            <div>
+                                <strong>Серверные IP</strong>
+                                <p style="color: var(--gray); font-size: 14px; margin-top: 4px;">Легко определяются системами аналитики</p>
+                            </div>
+                        </li>
+                        <li class="comparison-item">
+                            <div class="comparison-icon" style="color: #EF4444;">❌</div>
+                            <div>
+                                <strong>Ручное управление</strong>
+                                <p style="color: var(--gray); font-size: 14px; margin-top: 4px;">Требует постоянного вмешательства</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- ShadowBoost -->
+                <div class="comparison-column">
+                    <div class="comparison-header">
+                        <h3>ShadowBoost</h3>
+                        <p style="color: var(--gray);">Инновационные технологии</p>
+                    </div>
+                    <ul class="comparison-list">
+                        <li class="comparison-item">
+                            <div class="comparison-icon" style="color: #10B981;">✅</div>
+                            <div>
+                                <strong>Резидентские IP</strong>
+                                <p style="color: var(--gray); font-size: 14px; margin-top: 4px;">Реальные IP домашних пользователей</p>
+                            </div>
+                        </li>
+                        <li class="comparison-item">
+                            <div class="comparison-icon" style="color: #10B981;">✅</div>
+                            <div>
+                                <strong>Умная эмуляция</strong>
+                                <p style="color: var(--gray); font-size: 14px; margin-top: 4px;">Адаптивные сценарии под каждый сайт</p>
+                            </div>
+                        </li>
+                        <li class="comparison-item">
+                            <div class="comparison-icon" style="color: #10B981;">✅</div>
+                            <div>
+                                <strong>Уникальные алгоритмы</strong>
+                                <p style="color: var(--gray); font-size: 14px; margin-top: 4px;">Система анализирует поведение на вашем сайте</p>
+                            </div>
+                        </li>
+                        <li class="comparison-item">
+                            <div class="comparison-icon" style="color: #10B981;">✅</div>
+                            <div>
+                                <strong>Полная автоматизация</strong>
+                                <p style="color: var(--gray); font-size: 14px; margin-top: 4px;">Работает 24/7 без вашего участия</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-6 text-center">
+                <a href="#tariffs" class="btn btn-primary btn-lg">
+                    💎 Начать с ShadowBoost
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Steps -->
+    <section id="how" class="section">
+        <div class="bg-pattern"></div>
+        <div class="container">
+            <div class="section-header">
+                <h2>Начать работу за 5 минут</h2>
+                <p class="lead">Простой процесс для быстрых результатов</p>
+            </div>
+            
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Быстрая регистрация</h3>
+                    <p>Введите email и пароль. Полный доступ к личному кабинету сразу после регистрации.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Добавьте сайт</h3>
+                    <p>Укажите URL сайта и ID Яндекс.Метрики. Система автоматически проанализирует структуру.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Выберите тариф</h3>
+                    <p>Подберите оптимальный план под ваши цели. От 1,500 до 8,000 визитов в месяц.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Получайте трафик</h3>
+                    <p>Система начинает работу через 15 минут. Первые визиты — уже в этот же день.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tariffs -->
+    <section id="tariffs" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Тарифные планы</h2>
+                <p class="lead">Инвестируйте в рост вашего проекта</p>
+            </div>
+            
+            <div class="tariffs-grid">
+                <!-- Стартовый -->
+                <div class="tariff-card">
+                    <h3 class="tariff-name">Стартовый</h3>
+                    <div class="tariff-price">2 000 ₽</div>
+                    <div class="tariff-period">в месяц</div>
+                    
+                    <ul class="tariff-features">
+                        <li class="tariff-feature"><strong>1,500 визитов</strong> в месяц</li>
+                        <li class="tariff-feature">Резидентские IP из России</li>
+                        <li class="tariff-feature">Браузерная эмуляция</li>
+                        <li class="tariff-feature">Автоматическое распределение</li>
+                        <li class="tariff-feature">Базовая поддержка</li>
+                    </ul>
+                    
+                    <a href="register.html?plan=start" class="btn btn-primary" style="width: 100%;">
+                        Выбрать тариф
+                    </a>
+                </div>
+                
+                <!-- Оптимальный -->
+                <div class="tariff-card popular">
+                    <div class="popular-badge">САМЫЙ ВЫБИРАЕМЫЙ</div>
+                    <h3 class="tariff-name">Оптимальный</h3>
+                    <div class="tariff-price">5 000 ₽</div>
+                    <div class="tariff-period">в месяц</div>
+                    
+                    <ul class="tariff-features">
+                        <li class="tariff-feature"><strong>4,000 визитов</strong> в месяц</li>
+                        <li class="tariff-feature">Расширенная география IP</li>
+                        <li class="tariff-feature">Умные паттерны поведения</li>
+                        <li class="tariff-feature">Приоритетная обработка</li>
+                        <li class="tariff-feature">Поддержка 24/7</li>
+                    </ul>
+                    
+                    <a href="register.html?plan=optimal" class="btn btn-primary" style="width: 100%;">
+                        Рекомендуем
+                    </a>
+                </div>
+                
+                <!-- Профессиональный -->
+                <div class="tariff-card">
+                    <h3 class="tariff-name">Профессиональный</h3>
+                    <div class="tariff-price">10 000 ₽</div>
+                    <div class="tariff-period">в месяц</div>
+                    
+                    <ul class="tariff-features">
+                        <li class="tariff-feature"><strong>8,000 визитов</strong> в месяц</li>
+                        <li class="tariff-feature">Глобальная сеть IP</li>
+                        <li class="tariff-feature">Индивидуальные настройки</li>
+                        <li class="tariff-feature">Максимальная скорость</li>
+                        <li class="tariff-feature">Персональный менеджер</li>
+                    </ul>
+                    
+                    <a href="register.html?plan=pro" class="btn btn-primary" style="width: 100%;">
+                        Для масштабных проектов
+                    </a>
+                </div>
+            </div>
+            
+            <div class="mt-6 text-center">
+                <p style="color: var(--gray);">Все тарифы включают 3-дневный бесплатный тест. Никаких скрытых комиссий.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Часто задаваемые вопросы</h2>
+                <p class="lead">Всё, что нужно знать перед стартом</p>
+            </div>
+            
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <h3 style="margin: 0;">Безопасно ли это для моего сайта и Яндекс.Метрики?</h3>
+                        <span style="font-size: 24px;">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Абсолютно безопасно. ShadowBoost использует исключительно резидентские IP-адреса (реальные IP домашних пользователей) и полноценную браузерную эмуляцию через Playwright.</p>
+                        <p class="mt-2">Для Яндекс.Метрики это абсолютно неотличимо от органического трафика. Мы соблюдаем все лимиты и рекомендации аналитических систем.</p>
+                        <p class="mt-2" style="color: var(--green); font-weight: 500;">✅ Риск санкций: менее 0.1%</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <h3 style="margin: 0;">Когда я увижу первые результаты?</h3>
+                        <span style="font-size: 24px;">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Первые визиты появляются в течение <strong>15-60 минут</strong> после активации тарифа. Система распределяет их равномерно в течение дня, избегая аномальных пиков.</p>
+                        <p class="mt-2">К концу первых суток вы увидите стабильный поток визитов, соответствующий выбранному тарифу.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <h3 style="margin: 0;">Можно ли поставить работу на паузу или отменить?</h3>
+                        <span style="font-size: 24px;">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Да, в личном кабинете вы можете в любой момент поставить сайт на паузу. При возобновлении работа продолжится с того же места.</p>
+                        <p class="mt-2">Отмена тарифа возможна в любой момент — оставшиеся дни будут заморожены до следующего запуска. Никаких скрытых комиссий или обязательств.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <h3 style="margin: 0;">Какие способы оплаты вы принимаете?</h3>
+                        <span style="font-size: 24px;">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Через интегрированную платёжную систему <strong>ЮKassa</strong>:</p>
+                        <ul style="margin-top: 12px; padding-left: 20px;">
+                            <li>Банковские карты (Visa, Mastercard, МИР)</li>
+                            <li>ЮMoney (Яндекс.Деньги)</li>
+                            <li>СБП (Система быстрых платежей)</li>
+                            <li>QIWI, WebMoney</li>
+                            <li>Мобильные операторы</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="cta-content">
+            <h2 class="cta-title">Готовы оживить метрики?</h2>
+            <p class="cta-description">
+                Присоединяйтесь к 500+ проектам, которые уже используют ShadowBoost для создания 
+                органического цифрового следа. Первые результаты — уже сегодня.
+            </p>
+            <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                <a href="register.html" class="btn btn-secondary btn-lg" style="background: rgba(255, 255, 255, 0.2);">
+                    🚀 Начать бесплатный тест
+                </a>
+                <a href="#tariffs" class="btn btn-secondary btn-lg" style="border: 2px solid rgba(255, 255, 255, 0.3);">
+                    💰 Смотреть тарифы
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <div class="logo-icon">⚡</div>
+                        ShadowBoost
+                    </a>
+                    <p style="color: var(--gray);">Профессиональная платформа органического трафика. Технологии, которые работают.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Продукт</h4>
+                    <ul class="footer-links">
+                        <li><a href="#features">Технология</a></li>
+                        <li><a href="#tariffs">Тарифы</a></li>
+                        <li><a href="#how">Как начать</a></li>
+                        <li><a href="register.html">Регистрация</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Правовая информация</h4>
+                    <ul class="footer-links">
+                        <li><a href="privacy.html">Политика конфиденциальности</a></li>
+                        <li><a href="terms.html">Пользовательское соглашение</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2024 ShadowBoost. Все права защищены.</p>
+                <p style="margin-top: 8px; color: var(--gray);">
+                    ShadowBoost — сервис для создания органического цифрового следа. 
+                    Используется для восстановления доверия к метрикам сайта.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Навигация при скролле
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // FAQ toggle
+        function toggleFAQ(element) {
+            const isActive = element.classList.contains('active');
+            
+            // Закрываем все открытые FAQ
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                const icon = item.querySelector('.faq-question span');
+                if (icon) icon.textContent = '+';
+            });
+            
+            // Если кликнули на неактивный элемент - открываем его
+            if (!isActive) {
+                element.classList.add('active');
+                const icon = element.querySelector('.faq-question span');
+                if (icon) icon.textContent = '−';
+            }
+        }
+
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#' || href === '') return;
+                
+                e.preventDefault();
+                const targetElement = document.querySelector(href);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Анимация элементов при скролле
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Анимируем элементы при скролле
+        document.querySelectorAll('.feature-card, .step-card, .tariff-card, .stat-item').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(element);
+        });
+
+        // Открываем первый FAQ при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstFAQ = document.querySelector('.faq-item');
+            if (firstFAQ) {
+                setTimeout(() => {
+                    toggleFAQ(firstFAQ);
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
