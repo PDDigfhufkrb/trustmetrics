@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowBoost — Оплата Профессионального тарифа</title>
+    <link rel="stylesheet" href="https://yookassa.ru/integration/simplepay/css/yookassa_construct_form.css?v=1.33.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            background: #0a0a0f;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        
+        .tariff-info {
+            background: rgba(30, 30, 46, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px solid #f59e0b;
+        }
+        
+        .tariff-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .tariff-price {
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+        
+        .tariff-period {
+            color: #a0a0b0;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .tariff-features {
+            list-style: none;
+            text-align: left;
+            margin: 20px 0;
+        }
+        
+        .tariff-features li {
+            padding: 8px 0;
+            color: #a0a0b0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .tariff-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .tariff-features li:before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .payment-form-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #8b5cf6;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">ShadowBoost</div>
+        
+        <div class="tariff-info">
+            <div class="tariff-name">Профессиональный тариф</div>
+            <div class="tariff-price">10 000 ₽</div>
+            <div class="tariff-period">в месяц · ~8,000 визитов</div>
+            
+            <ul class="tariff-features">
+                <li>8,000 визитов в месяц</li>
+                <li>Глобальная сеть IP</li>
+                <li>Индивидуальные настройки</li>
+                <li>Максимальная скорость</li>
+                <li>Персональный менеджер</li>
+            </ul>
+            
+            <p style="color: #a0a0b0; font-size: 14px; margin-top: 20px;">
+                💡 Для серьёзных проектов, которым нужен максимальный результат
+            </p>
+        </div>
+        
+        <div class="payment-form-container">
+            <form target="_blank" class="yoomoney-payment-form" action="https://yookassa.ru/integration/simplepay/payment" method="post" accept-charset="utf-8">
+                <div class="ym-customer-info">
+                    <div class="ym-block-title">О покупателе</div>
+                    <input name="cps_email" class="ym-input" placeholder="Email" type="text" value="" required>
+                </div>
+
+                <div class="ym-hidden-inputs">
+                   <input name="shopSuccessURL" type="hidden" value="https://shadowboost.ru/success.html">
+                </div>
+
+                <input name="customerNumber" type="hidden" value="Профессиональный тариф">
+                
+                <div class="ym-payment-btn-block ym-before-line ym-align-space-between">
+                    <div class="ym-input-icon-rub ym-display-none">
+                        <input name="sum" placeholder="0.00" class="ym-input ym-sum-input ym-required-input" type="number" step="any" value="10000" readonly>
+                    </div>
+                    <button data-text="Оплатить" class="ym-btn-pay ym-result-price">
+                        <span class="ym-text-crop">Оплатить</span> 
+                        <span class="ym-price-output"> 10&nbsp;000,00&nbsp;₽</span>
+                    </button>
+                    <img src="https://yookassa.ru/integration/simplepay/img/iokassa-gray.svg?v=1.33.0" class="ym-logo" width="114" height="27" alt="ЮKassa">
+                </div>
+                <input name="shopId" type="hidden" value="1256818">
+            </form>
+        </div>
+        
+        <a href="add-site.html" class="back-link">← Вернуться к выбору тарифа</a>
+    </div>
+    
+    <script src="https://yookassa.ru/integration/simplepay/js/yookassa_construct_form.js?v=1.33.0"></script>
+    <script>
+        // Автозаполнение email из localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const userEmail = localStorage.getItem('shadowboost_email');
+            if (userEmail) {
+                const emailInput = document.querySelector('input[name="cps_email"]');
+                if (emailInput) {
+                    emailInput.value = userEmail;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
