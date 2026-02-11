@@ -110,6 +110,16 @@
         .back-link:hover {
             text-decoration: underline;
         }
+        
+        .test-badge {
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 14px;
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
@@ -117,9 +127,9 @@
         <div class="logo">ShadowBoost</div>
         
         <div class="tariff-info">
-            <div class="tariff-name">Базовый тариф</div>
-            <div class="tariff-price">2 000 ₽</div>
-            <div class="tariff-period">в месяц · ~1,500 визитов</div>
+            <div class="tariff-name">Базовый тариф (ТЕСТ)</div>
+            <div class="tariff-price">10 ₽</div>
+            <div class="tariff-period">тестовый · ~1,500 визитов</div>
             
             <ul class="tariff-features">
                 <li>1,500 визитов в месяц</li>
@@ -132,6 +142,10 @@
             <p style="color: #a0a0b0; font-size: 14px; margin-top: 20px;">
                 💡 После оплаты система начнёт работать автоматически
             </p>
+            
+            <div class="test-badge">
+                🔧 ТЕСТОВЫЙ РЕЖИМ — реальная цена 2 000₽
+            </div>
         </div>
         
         <div class="payment-form-container">
@@ -145,15 +159,15 @@
                     <input name="shopSuccessURL" type="hidden" value="https://shadowboost.ru/payment-success.html?from=basic">
                 </div>
 
-                <input name="customerNumber" type="hidden" value="Базовый тариф">
+                <input name="customerNumber" type="hidden" value="Базовый тариф (тест)">
                 
                 <div class="ym-payment-btn-block ym-before-line ym-align-space-between">
                     <div class="ym-input-icon-rub ym-display-none">
-                        <input name="sum" placeholder="0.00" class="ym-input ym-sum-input ym-required-input" type="number" step="any" value="2000" readonly>
+                        <input name="sum" placeholder="0.00" class="ym-input ym-sum-input ym-required-input" type="number" step="any" value="10" readonly>
                     </div>
                     <button data-text="Оплатить" class="ym-btn-pay ym-result-price">
                         <span class="ym-text-crop">Оплатить</span> 
-                        <span class="ym-price-output"> 2&nbsp;000,00&nbsp;₽</span>
+                        <span class="ym-price-output"> 10,00&nbsp;₽</span>
                     </button>
                     <img src="https://yookassa.ru/integration/simplepay/img/iokassa-gray.svg?v=1.33.0" class="ym-logo" width="114" height="27" alt="ЮKassa">
                 </div>
@@ -299,7 +313,7 @@
                 }
             }
             
-            console.log('🚀 ShadowBoost: интеграция с оплатой активна');
+            console.log('🚀 ShadowBoost: интеграция с оплатой активна (БАЗОВЫЙ ТАРИФ, 10₽)');
         })();
     </script>
     <!-- =========================================== -->
