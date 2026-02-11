@@ -3,373 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShadowBoost — Оплата успешна!</title>
+    <title>ShadowBoost — Оплата успешна</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         
         body {
             background: #0a0a0f;
-            color: #fff;
+            color: white;
+            font-family: 'Inter', sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
         
         .container {
             max-width: 600px;
-            width: 100%;
+            padding: 40px 20px;
             text-align: center;
         }
         
-        .logo {
-            font-size: 32px;
-            font-weight: 800;
-            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 30px;
-        }
-        
-        .success-card {
-            background: rgba(30, 30, 46, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 50px;
-        }
-        
         .success-icon {
-            font-size: 80px;
-            margin-bottom: 30px;
-            animation: bounce 2s infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 40px;
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
         }
         
         h1 {
             font-size: 32px;
-            margin-bottom: 20px;
-            color: #22c55e;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
-        .message {
-            color: #a0a0b0;
+        .subtitle {
+            color: #94a3b8;
             font-size: 18px;
-            line-height: 1.6;
             margin-bottom: 30px;
         }
         
-        .details {
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            border-radius: 15px;
-            padding: 25px;
+        .info-box {
+            background: rgba(30, 30, 46, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
             margin-bottom: 30px;
-            text-align: left;
+            backdrop-filter: blur(20px);
         }
         
-        .detail-row {
+        .info-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
+            padding: 12px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         
-        .detail-row:last-child {
-            border-bottom: none;
+        .info-label {
+            color: #94a3b8;
         }
         
-        .detail-label {
-            color: #a0a0b0;
-        }
-        
-        .detail-value {
+        .info-value {
             font-weight: 600;
+            color: white;
+        }
+        
+        .status {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            color: #10b981;
+            font-weight: 500;
         }
         
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 18px 40px;
-            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            display: inline-block;
+            padding: 16px 32px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
             color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
             text-decoration: none;
-            gap: 10px;
-            margin: 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
         
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
         }
         
-        .btn-secondary {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .info-box {
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 30px;
-            text-align: center;
-        }
-        
-        .info-box p {
-            color: #a0a0b0;
+        .timer {
+            color: #f59e0b;
+            margin-top: 20px;
             font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        .loader {
-            display: none;
-            margin: 20px 0;
-        }
-        
-        .loader-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(59, 130, 246, 0.3);
-            border-radius: 50%;
-            border-top-color: #3b82f6;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        @media (max-width: 768px) {
-            .success-card {
-                padding: 30px;
-            }
-            
-            .success-icon {
-                font-size: 60px;
-            }
-            
-            h1 {
-                font-size: 24px;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">ShadowBoost</div>
+        <div class="success-icon">✅</div>
         
-        <div class="success-card">
-            <div class="success-icon">🎉</div>
-            
-            <h1>Оплата успешно завершена!</h1>
-            <p class="message">
-                Спасибо за выбор ShadowBoost! Система автоматически запущена для вашего сайта.
-            </p>
-            
-            <div class="details" id="paymentDetails">
-                <!-- Детали будут заполнены JavaScript -->
+        <h1>Оплата прошла успешно!</h1>
+        <p class="subtitle">Спасибо, что выбрали ShadowBoost</p>
+        
+        <div class="info-box">
+            <div id="siteInfo" class="info-row">
+                <span class="info-label">Сайт:</span>
+                <span class="info-value" id="siteUrlDisplay">загрузка...</span>
             </div>
-            
-            <div class="loader" id="loader">
-                <div class="loader-spinner"></div>
-                <p>Запускаем систему...</p>
+            <div class="info-row">
+                <span class="info-label">Тариф:</span>
+                <span class="info-value" id="tariffDisplay">загрузка...</span>
             </div>
-            
-            <div class="buttons">
-                <a href="cabinet.html" class="btn" id="cabinetBtn">
-                    📊 Перейти в личный кабинет
-                </a>
-                <a href="index.html" class="btn btn-secondary">
-                    ← На главную
-                </a>
-            </div>
-            
-            <div class="info-box">
-                <p>
-                    ⏱️ <strong>Визиты начнутся в течение часа</strong><br>
-                    📈 Статистика будет отображаться в Яндекс.Метрике<br>
-                    📧 Инструкция отправлена на вашу почту
-                </p>
+            <div class="info-row">
+                <span class="info-label">Дата запуска:</span>
+                <span class="info-value" id="dateDisplay">сегодня</span>
             </div>
         </div>
+        
+        <div id="statusMessage" class="status">
+            ⚙️ Передаём задачу в систему...
+        </div>
+        
+        <a href="dashboard.html" class="btn">Перейти в кабинет</a>
+        <div class="timer" id="progressTimer"></div>
     </div>
-    
+
     <script>
-        // Функция для получения деталей платежа
-        async function loadPaymentDetails() {
-            try {
-                // Пытаемся получить данные из localStorage
-                const paymentData = localStorage.getItem('shadowboost_payment_data');
-                const paymentId = localStorage.getItem('shadowboost_payment_id');
-                
-                if (!paymentData || !paymentId) {
-                    throw new Error('Данные платежа не найдены');
-                }
-                
-                const data = JSON.parse(paymentData);
-                const { tariff, site } = data;
-                
-                // Обновляем данные пользователя
-                const user = JSON.parse(localStorage.getItem('shadowboost_user'));
-                if (user) {
-                    // Активируем сайт
-                    if (user.sites && user.sites.length > 0) {
-                        user.sites[0].status = 'active';
-                        user.sites[0].tariff = tariff.name;
-                        user.sites[0].activated_at = new Date().toISOString();
-                        localStorage.setItem('shadowboost_user', JSON.stringify(user));
-                    }
-                    
-                    // Сохраняем активный тариф
-                    localStorage.setItem('shadowboost_active_tariff', JSON.stringify(tariff));
-                }
-                
-                // Заполняем детали платежа
-                const detailsHtml = `
-                    <div class="detail-row">
-                        <span class="detail-label">Тариф:</span>
-                        <span class="detail-value">${tariff.name}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Визитов в месяц:</span>
-                        <span class="detail-value">${tariff.visits.toLocaleString('ru-RU')}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Ваш сайт:</span>
-                        <span class="detail-value">${site.url}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">ID Яндекс.Метрики:</span>
-                        <span class="detail-value">${site.yandexId}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Сумма:</span>
-                        <span class="detail-value">${tariff.price.toLocaleString('ru-RU')} ₽</span>
-                    </div>
-                `;
-                
-                document.getElementById('paymentDetails').innerHTML = detailsHtml;
-                
-                // Показываем лоадер
-                const loader = document.getElementById('loader');
-                const cabinetBtn = document.getElementById('cabinetBtn');
-                
-                loader.style.display = 'block';
-                cabinetBtn.style.display = 'none';
-                
-                // Имитируем запуск системы (в реальности здесь будет API запрос)
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    cabinetBtn.style.display = 'inline-flex';
-                    
-                    // Показываем сообщение о успешном запуске
-                    const infoBox = document.querySelector('.info-box');
-                    infoBox.innerHTML += `
-                        <p style="color: #22c55e; margin-top: 10px;">
-                            ✅ Система успешно запущена! Первые визиты появятся в течение часа.
-                        </p>
-                    `;
-                    
-                    // Отправляем данные на сервер для запуска воркера
-                    startWorkerSystem();
-                    
-                }, 3000);
-                
-            } catch (error) {
-                console.error('Error loading payment details:', error);
-                
-                document.getElementById('paymentDetails').innerHTML = `
-                    <div style="text-align: center; color: #a0a0b0;">
-                        <p>Детали платежа временно недоступны</p>
-                        <p style="font-size: 12px;">Вы можете проверить статус в личном кабинете</p>
-                    </div>
-                `;
-            }
-        }
+        // ===========================================
+        // МАКСИМАЛЬНО ТУПОЙ СКРИПТ
+        // Просто отправляет данные в add_task.php
+        // ===========================================
         
-        // Функция для запуска системы на сервере
-        async function startWorkerSystem() {
-            try {
-                // Получаем данные пользователя
-                const user = JSON.parse(localStorage.getItem('shadowboost_user'));
-                const site = JSON.parse(localStorage.getItem('shadowboost_current_site'));
-                const tariff = JSON.parse(localStorage.getItem('shadowboost_active_tariff'));
+        // Получаем данные из URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const paymentId = urlParams.get('payment_id') || 'неизвестно';
+        
+        // Получаем данные из localStorage
+        const siteUrl = localStorage.getItem('last_site_url') || 'не указан';
+        const userEmail = localStorage.getItem('shadowboost_email') || 'не указан';
+        
+        // Определяем тариф по URL страницы
+        let tariff = 'optimal'; // по умолчанию
+        if (window.location.href.includes('basic')) tariff = 'basic';
+        if (window.location.href.includes('pro')) tariff = 'pro';
+        
+        // Отображаем информацию
+        document.getElementById('siteUrlDisplay').textContent = siteUrl;
+        
+        let tariffName = 'Оптима (5 000 ₽)';
+        if (tariff === 'basic') tariffName = 'Базовый (2 000 ₽)';
+        if (tariff === 'pro') tariffName = 'Профи (10 000 ₽)';
+        document.getElementById('tariffDisplay').textContent = tariffName;
+        
+        // ===========================================
+        // ГЛАВНОЕ: ОТПРАВЛЯЕМ ЗАДАЧУ В add_task.php
+        // ===========================================
+        fetch('add_task.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `site=${encodeURIComponent(siteUrl)}&tariff=${encodeURIComponent(tariff)}&email=${encodeURIComponent(userEmail)}`
+        })
+        .then(response => response.text())
+        .then(result => {
+            console.log('✅ Ответ от сервера:', result);
+            
+            if (result === 'OK') {
+                // Всё отлично
+                document.getElementById('statusMessage').innerHTML = '✅ Задача создана! Запуск в течение 5-10 минут.';
+                document.getElementById('statusMessage').style.background = 'rgba(16, 185, 129, 0.1)';
+                document.getElementById('statusMessage').style.borderColor = 'rgba(16, 185, 129, 0.3)';
+                document.getElementById('statusMessage').style.color = '#10b981';
                 
-                if (!user || !site || !tariff) {
-                    return;
-                }
-                
-                // Отправляем данные на сервер для запуска воркера
-                const response = await fetch('api/start-worker.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        user_id: user.id,
-                        user_email: user.email,
-                        site_url: site.url,
-                        yandex_id: site.yandexId,
-                        tariff: tariff.name,
-                        tariff_type: Object.keys({
-                            basic: { name: 'Базовый' },
-                            optimal: { name: 'Оптима' },
-                            pro: { name: 'Профи' }
-                        }).find(key => {
-                            const tariffs = { basic: 'Базовый', optimal: 'Оптима', pro: 'Профи' };
-                            return tariffs[key] === tariff.name;
-                        })
-                    })
+                // Сохраняем в историю
+                let payments = JSON.parse(localStorage.getItem('shadowboost_payments') || '[]');
+                payments.push({
+                    id: paymentId,
+                    site: siteUrl,
+                    tariff: tariff,
+                    date: new Date().toISOString(),
+                    status: 'active'
                 });
+                localStorage.setItem('shadowboost_payments', JSON.stringify(payments));
                 
-                const result = await response.json();
-                console.log('Worker started:', result);
-                
-            } catch (error) {
-                console.error('Error starting worker:', error);
+            } else {
+                // Ошибка
+                document.getElementById('statusMessage').innerHTML = '⚠️ Задача создана, но сервер вернул странный ответ. Мы уже чиним.';
+                document.getElementById('statusMessage').style.background = 'rgba(245, 158, 11, 0.1)';
+                document.getElementById('statusMessage').style.borderColor = 'rgba(245, 158, 11, 0.3)';
+                document.getElementById('statusMessage').style.color = '#f59e0b';
             }
-        }
-        
-        // Загружаем детали при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            // Проверяем, пришли ли мы с ЮKassa
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('payment_id')) {
-                const paymentId = urlParams.get('payment_id');
-                localStorage.setItem('shadowboost_payment_id', paymentId);
-            }
+        })
+        .catch(error => {
+            console.error('❌ Ошибка:', error);
             
-            loadPaymentDetails();
-            
-            // Очищаем историю платежей через 5 секунд
-            setTimeout(() => {
-                localStorage.removeItem('shadowboost_payment_data');
-            }, 5000);
+            // Даже если ошибка - всё равно задача могла создаться
+            document.getElementById('statusMessage').innerHTML = '⚠️ Задача отправлена. Проверьте статус в личном кабинете.';
+            document.getElementById('statusMessage').style.background = 'rgba(245, 158, 11, 0.1)';
+            document.getElementById('statusMessage').style.borderColor = 'rgba(245, 158, 11, 0.3)';
+            document.getElementById('statusMessage').style.color = '#f59e0b';
         });
+        
+        // Таймер для красоты
+        let seconds = 0;
+        setInterval(() => {
+            seconds++;
+            document.getElementById('progressTimer').textContent = `⏱️ Прошло: ${seconds} сек. Задача в очереди...`;
+        }, 1000);
     </script>
 </body>
 </html>
