@@ -109,10 +109,31 @@
             box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
         }
         
-        .timer {
-            color: #f59e0b;
+        .admin-link {
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .admin-link a {
+            color: #8b5cf6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .admin-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .sheet-link {
             margin-top: 20px;
-            font-size: 14px;
+            padding: 20px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            word-break: break-all;
         }
     </style>
 </head>
@@ -139,31 +160,37 @@
         </div>
         
         <div id="statusMessage" class="status">
-            ⚙️ Передаём задачу в систему...
+            ⚙️ Передаём задачу в Google Таблицу...
         </div>
         
-        <a href="dashboard.html" class="btn">Перейти в кабинет</a>
-        <div class="timer" id="progressTimer"></div>
+        <div class="sheet-link">
+            📊 <strong>Google Таблица с заказами:</strong><br>
+            <a href="https://docs.google.com/spreadsheets/d/1L0RgBp0SP9yXbWS9pR1OVc34h1Y4JXJ3YwT1iV1k2xM/edit?usp=sharing" target="_blank" style="color: #8b5cf6;">
+                Открыть таблицу ShadowBoost Заказы
+            </a>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <a href="add-site.html" class="btn">➕ Добавить ещё сайт</a>
+        </div>
     </div>
 
     <script>
         // ===========================================
-        // МАКСИМАЛЬНО ТУПОЙ СКРИПТ
-        // Просто отправляет данные в add_task.php
+        // SHADOWBOOST - ОТПРАВКА В GOOGLE ТАБЛИЦУ
         // ===========================================
+        
+        // ⚠️ ТВОЯ ССЫЛКА НА GOOGLE APPS SCRIPT
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbycaWOq-aWTTG1NvJ-_pamXvuicHozRBuVpI_j0Wa2J9ib7IiapL_T2-5n2kSr2p-Q/exec';
         
         // Получаем данные из URL
         const urlParams = new URLSearchParams(window.location.search);
-        const paymentId = urlParams.get('payment_id') || 'неизвестно';
+        const paymentId = urlParams.get('payment_id') || 'payment_' + Date.now();
+        const tariff = urlParams.get('tariff') || 'basic';
         
         // Получаем данные из localStorage
         const siteUrl = localStorage.getItem('last_site_url') || 'не указан';
         const userEmail = localStorage.getItem('shadowboost_email') || 'не указан';
-        
-        // Определяем тариф по URL страницы
-        let tariff = 'optimal'; // по умолчанию
-        if (window.location.href.includes('basic')) tariff = 'basic';
-        if (window.location.href.includes('pro')) tariff = 'pro';
         
         // Отображаем информацию
         document.getElementById('siteUrlDisplay').textContent = siteUrl;
@@ -174,61 +201,48 @@
         document.getElementById('tariffDisplay').textContent = tariffName;
         
         // ===========================================
-        // ГЛАВНОЕ: ОТПРАВЛЯЕМ ЗАДАЧУ В add_task.php
+        // ОТПРАВЛЯЕМ В GOOGLE ТАБЛИЦУ
         // ===========================================
-        fetch('add_task.php', {
+        fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
+            mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `site=${encodeURIComponent(siteUrl)}&tariff=${encodeURIComponent(tariff)}&email=${encodeURIComponent(userEmail)}`
+            body: new URLSearchParams({
+                site: siteUrl,
+                tariff: tariff,
+                email: userEmail,
+                payment_id: paymentId
+            })
         })
-        .then(response => response.text())
-        .then(result => {
-            console.log('✅ Ответ от сервера:', result);
+        .then(() => {
+            // Успех (при no-cors мы не видим ответ)
+            document.getElementById('statusMessage').innerHTML = '✅ Заタスク создана! Заказ появится в Google Таблице через 1-2 минуты.';
+            document.getElementById('statusMessage').style.background = 'rgba(16, 185, 129, 0.1)';
+            document.getElementById('statusMessage').style.borderColor = 'rgba(16, 185, 129, 0.3)';
+            document.getElementById('statusMessage').style.color = '#10b981';
             
-            if (result === 'OK') {
-                // Всё отлично
-                document.getElementById('statusMessage').innerHTML = '✅ Задача создана! Запуск в течение 5-10 минут.';
-                document.getElementById('statusMessage').style.background = 'rgba(16, 185, 129, 0.1)';
-                document.getElementById('statusMessage').style.borderColor = 'rgba(16, 185, 129, 0.3)';
-                document.getElementById('statusMessage').style.color = '#10b981';
-                
-                // Сохраняем в историю
-                let payments = JSON.parse(localStorage.getItem('shadowboost_payments') || '[]');
-                payments.push({
-                    id: paymentId,
-                    site: siteUrl,
-                    tariff: tariff,
-                    date: new Date().toISOString(),
-                    status: 'active'
-                });
-                localStorage.setItem('shadowboost_payments', JSON.stringify(payments));
-                
-            } else {
-                // Ошибка
-                document.getElementById('statusMessage').innerHTML = '⚠️ Задача создана, но сервер вернул странный ответ. Мы уже чиним.';
-                document.getElementById('statusMessage').style.background = 'rgba(245, 158, 11, 0.1)';
-                document.getElementById('statusMessage').style.borderColor = 'rgba(245, 158, 11, 0.3)';
-                document.getElementById('statusMessage').style.color = '#f59e0b';
-            }
+            // Сохраняем в историю
+            let payments = JSON.parse(localStorage.getItem('shadowboost_payments') || '[]');
+            payments.push({
+                id: paymentId,
+                site: siteUrl,
+                tariff: tariff,
+                date: new Date().toISOString(),
+                status: 'active'
+            });
+            localStorage.setItem('shadowboost_payments', JSON.stringify(payments));
+            
+            console.log('✅ Задача отправлена в Google Таблицу');
         })
         .catch(error => {
             console.error('❌ Ошибка:', error);
-            
-            // Даже если ошибка - всё равно задача могла создаться
-            document.getElementById('statusMessage').innerHTML = '⚠️ Задача отправлена. Проверьте статус в личном кабинете.';
+            document.getElementById('statusMessage').innerHTML = '⚠️ Задача отправлена, но сервер вернул ошибку. Проверь таблицу через 1-2 минуты.';
             document.getElementById('statusMessage').style.background = 'rgba(245, 158, 11, 0.1)';
             document.getElementById('statusMessage').style.borderColor = 'rgba(245, 158, 11, 0.3)';
             document.getElementById('statusMessage').style.color = '#f59e0b';
         });
-        
-        // Таймер для красоты
-        let seconds = 0;
-        setInterval(() => {
-            seconds++;
-            document.getElementById('progressTimer').textContent = `⏱️ Прошло: ${seconds} сек. Задача в очереди...`;
-        }, 1000);
     </script>
 </body>
 </html>
