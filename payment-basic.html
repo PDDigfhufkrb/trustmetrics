@@ -180,144 +180,26 @@
     
     <script src="https://yookassa.ru/integration/simplepay/js/yookassa_construct_form.js?v=1.33.0"></script>
     
-    <!-- =========================================== -->
-    <!-- SHADOWBOOST - ИНТЕГРАЦИЯ С ЮKASSA           -->
-    <!-- =========================================== -->
     <script>
-        (function() {
-            // ===========================================
-            // 1. СОХРАНЯЕМ ДАННЫЕ ПЕРЕД ОПЛАТОЙ
-            // ===========================================
-            
-            // Автозаполнение email из localStorage
-            document.addEventListener('DOMContentLoaded', function() {
-                const userEmail = localStorage.getItem('shadowboost_email');
-                if (userEmail) {
-                    const emailInput = document.querySelector('input[name="cps_email"]');
-                    if (emailInput) {
-                        emailInput.value = userEmail;
-                    }
-                }
-                
-                // Проверяем, есть ли у нас сайт для оплаты
-                const siteUrl = localStorage.getItem('last_site_url');
-                if (!siteUrl) {
-                    console.log('⚠️ Нет сайта в localStorage, пробуем восстановить...');
-                    
-                    // Пробуем восстановить из истории
-                    const sites = JSON.parse(localStorage.getItem('shadowboost_sites') || '[]');
-                    if (sites.length > 0) {
-                        const lastSite = sites[sites.length - 1];
-                        localStorage.setItem('last_site_url', lastSite.url);
-                        console.log('✅ Восстановлен сайт:', lastSite.url);
-                    } else {
-                        console.warn('❌ Нет ни одного сайта!');
-                    }
-                }
-            });
-            
-            // ===========================================
-            // 2. ПЕРЕХВАТЫВАЕМ КНОПКУ ОПЛАТЫ
-            // ===========================================
-            
-            // Ждём, пока загрузится форма ЮKassa
-            function initPaymentHandler() {
-                const payButton = document.querySelector('.ym-btn-pay');
-                const form = document.querySelector('form.yoomoney-payment-form');
-                
-                if (payButton && form) {
-                    console.log('✅ Форма ЮKassa загружена');
-                    
-                    // Добавляем дополнительный обработчик на форму
-                    form.addEventListener('submit', function(e) {
-                        // Сохраняем тариф
-                        localStorage.setItem('last_tariff', 'basic');
-                        
-                        // Ещё раз проверяем сайт
-                        const siteUrl = localStorage.getItem('last_site_url');
-                        if (!siteUrl) {
-                            console.error('❌ Нет сайта! Оплата возможна, но задача не создастся');
-                            
-                            // Показываем предупреждение
-                            const warning = document.createElement('div');
-                            warning.style.cssText = 'position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#ef4444; color:white; padding:15px 25px; border-radius:12px; font-weight:600; z-index:9999;';
-                            warning.textContent = '⚠️ Ошибка: не выбран сайт. Вернитесь к добавлению сайта!';
-                            document.body.appendChild(warning);
-                            
-                            setTimeout(() => warning.remove(), 5000);
-                            
-                            // Не отменяем оплату, но предупреждаем
-                        }
-                        
-                        console.log('💳 Переход к оплате. Тариф: basic, Сайт:', localStorage.getItem('last_site_url'));
-                    });
-                    
-                } else {
-                    // Если кнопка ещё не загрузилась, ждём
-                    setTimeout(initPaymentHandler, 500);
+        document.addEventListener('DOMContentLoaded', function() {
+            // Автозаполнение email
+            const userEmail = localStorage.getItem('shadowboost_email');
+            if (userEmail) {
+                const emailInput = document.querySelector('input[name="cps_email"]');
+                if (emailInput) {
+                    emailInput.value = userEmail;
                 }
             }
             
-            // Запускаем обработчик после загрузки страницы
-            document.addEventListener('DOMContentLoaded', initPaymentHandler);
+            // Сохраняем тариф перед оплатой
+            localStorage.setItem('last_tariff', 'basic');
             
-            // ===========================================
-            // 3. ОБРАБОТКА ВОЗВРАТА ИЗ ЮKASSA
-            // ===========================================
-            
-            // Проверяем URL при загрузке страницы
-            function checkUrlForPaymentSuccess() {
-                const urlParams = new URLSearchParams(window.location.search);
-                
-                // ЮKassa может вернуть разные параметры
-                const hasSuccess = urlParams.has('success') || 
-                                 urlParams.has('payment_id') || 
-                                 window.location.href.includes('payment_id=');
-                
-                if (hasSuccess) {
-                    console.log('✅ Обнаружен успешный платёж!');
-                    
-                    const paymentId = urlParams.get('payment_id') || 
-                                     urlParams.get('order_id') || 
-                                     'success_' + Date.now();
-                    
-                    // Определяем тариф
-                    const tariff = 'basic';
-                    localStorage.setItem('last_tariff', tariff);
-                    
-                    // Перенаправляем на страницу успеха
-                    window.location.href = 'payment-success.html?payment_id=' + paymentId + '&tariff=basic';
-                }
+            // Проверяем сайт
+            const siteUrl = localStorage.getItem('last_site_url');
+            if (!siteUrl) {
+                console.warn('Нет сайта!');
             }
-            
-            // Запускаем проверку
-            document.addEventListener('DOMContentLoaded', checkUrlForPaymentSuccess);
-            
-            // ===========================================
-            // 4. ЭКСТРЕННЫЙ ВАРИАНТ: если ЮKassa редиректит на success.html
-            // ===========================================
-            
-            // Если вы настроили shopSuccessURL = success.html, 
-            // этот код сработает там
-            if (window.location.pathname.includes('success.html') || 
-                window.location.pathname.includes('payment-success')) {
-                
-                console.log('✅ Перенаправление на payment-success.html');
-                
-                const urlParams = new URLSearchParams(window.location.search);
-                const paymentId = urlParams.get('payment_id') || 'payment_' + Date.now();
-                
-                // Если мы уже не на правильной странице
-                if (!window.location.href.includes('payment-success.html')) {
-                    window.location.href = 'payment-success.html?payment_id=' + paymentId + '&tariff=basic';
-                }
-            }
-            
-            console.log('🚀 ShadowBoost: интеграция с оплатой активна (БАЗОВЫЙ ТАРИФ, 10₽)');
-        })();
+        });
     </script>
-    <!-- =========================================== -->
-    <!-- КОНЕЦ ИНТЕГРАЦИИ                           -->
-    <!-- =========================================== -->
 </body>
 </html>
