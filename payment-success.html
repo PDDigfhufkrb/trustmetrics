@@ -109,31 +109,25 @@
             box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
         }
         
-        .admin-link {
-            margin-top: 30px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .admin-link a {
-            color: #8b5cf6;
-            text-decoration: none;
-            font-weight: 600;
-        }
-        
-        .admin-link a:hover {
-            text-decoration: underline;
-        }
-        
-        .sheet-link {
+        .timer {
+            color: #f59e0b;
             margin-top: 20px;
-            padding: 20px;
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.3);
+            font-size: 14px;
+        }
+        
+        .data-list {
+            text-align: left;
+            margin-top: 20px;
+            background: rgba(0,0,0,0.3);
             border-radius: 12px;
-            word-break: break-all;
+            padding: 15px;
+        }
+        
+        .data-item {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-family: monospace;
+            color: #94a3b8;
         }
     </style>
 </head>
@@ -154,95 +148,185 @@
                 <span class="info-value" id="tariffDisplay">загрузка...</span>
             </div>
             <div class="info-row">
-                <span class="info-label">Дата запуска:</span>
-                <span class="info-value" id="dateDisplay">сегодня</span>
+                <span class="info-label">Email:</span>
+                <span class="info-value" id="emailDisplay">загрузка...</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Дата:</span>
+                <span class="info-value" id="dateDisplay">загрузка...</span>
             </div>
         </div>
         
         <div id="statusMessage" class="status">
-            ⚙️ Передаём задачу в Google Таблицу...
+            ⚙️ Сохраняем задачу...
         </div>
         
-        <div class="sheet-link">
-            📊 <strong>Google Таблица с заказами:</strong><br>
-            <a href="https://docs.google.com/spreadsheets/d/1L0RgBp0SP9yXbWS9pR1OVc34h1Y4JXJ3YwT1iV1k2xM/edit?usp=sharing" target="_blank" style="color: #8b5cf6;">
-                Открыть таблицу ShadowBoost Заказы
-            </a>
+        <div id="dataPreview" class="data-list" style="display: none;">
+            <div style="color: #6366f1; margin-bottom: 10px;">📋 Сохранённые данные:</div>
+            <div id="dataContent"></div>
         </div>
         
-        <div style="margin-top: 20px;">
-            <a href="add-site.html" class="btn">➕ Добавить ещё сайт</a>
-        </div>
+        <a href="add-site.html" class="btn">➕ Добавить ещё сайт</a>
+        <div class="timer" id="progressTimer"></div>
     </div>
 
     <script>
         // ===========================================
-        // SHADOWBOOST - ОТПРАВКА В GOOGLE ТАБЛИЦУ
+        // ShadowBoost - СОХРАНЕНИЕ ЗАДАЧ В GITHUB
         // ===========================================
         
-        // ⚠️ ТВОЯ ССЫЛКА НА GOOGLE APPS SCRIPT
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbycaWOq-aWTTG1NvJ-_pamXvuicHozRBuVpI_j0Wa2J9ib7IiapL_T2-5n2kSr2p-Q/exec';
+        // НАСТРОЙКИ - ТВОИ ДАННЫЕ
+        const GITHUB_TOKEN = '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';
+        const GITHUB_USER = 'PDDigfhufkrb';
+        const GITHUB_REPO = 'trustmetrics';
         
-        // Получаем данные из URL
+        // Получаем данные из URL и localStorage
         const urlParams = new URLSearchParams(window.location.search);
         const paymentId = urlParams.get('payment_id') || 'payment_' + Date.now();
-        const tariff = urlParams.get('tariff') || 'basic';
+        const fromTariff = urlParams.get('tariff') || 'basic';
         
         // Получаем данные из localStorage
-        const siteUrl = localStorage.getItem('last_site_url') || 'не указан';
-        const userEmail = localStorage.getItem('shadowboost_email') || 'не указан';
+        let siteUrl = localStorage.getItem('last_site_url') || 'не указан';
+        let userEmail = localStorage.getItem('shadowboost_email') || 'не указан';
+        let userTariff = localStorage.getItem('last_tariff') || fromTariff;
+        
+        // Определяем название тарифа
+        let tariffName = 'Оптима (5 000 ₽)';
+        if (userTariff === 'basic') tariffName = 'Базовый (2 000 ₽)';
+        if (userTariff === 'pro') tariffName = 'Профи (10 000 ₽)';
+        
+        // Форматируем дату
+        const now = new Date();
+        const dateStr = now.toLocaleString('ru-RU');
         
         // Отображаем информацию
         document.getElementById('siteUrlDisplay').textContent = siteUrl;
-        
-        let tariffName = 'Оптима (5 000 ₽)';
-        if (tariff === 'basic') tariffName = 'Базовый (2 000 ₽)';
-        if (tariff === 'pro') tariffName = 'Профи (10 000 ₽)';
         document.getElementById('tariffDisplay').textContent = tariffName;
+        document.getElementById('emailDisplay').textContent = userEmail;
+        document.getElementById('dateDisplay').textContent = dateStr;
         
         // ===========================================
-        // ОТПРАВЛЯЕМ В GOOGLE ТАБЛИЦУ
+        // ГЛАВНОЕ: СОХРАНЯЕМ В ФАЙЛ НА GITHUB
         // ===========================================
-        fetch(GOOGLE_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                site: siteUrl,
-                tariff: tariff,
-                email: userEmail,
-                payment_id: paymentId
-            })
-        })
-        .then(() => {
-            // Успех (при no-cors мы не видим ответ)
-            document.getElementById('statusMessage').innerHTML = '✅ Заタスク создана! Заказ появится в Google Таблице через 1-2 минуты.';
-            document.getElementById('statusMessage').style.background = 'rgba(16, 185, 129, 0.1)';
-            document.getElementById('statusMessage').style.borderColor = 'rgba(16, 185, 129, 0.3)';
-            document.getElementById('statusMessage').style.color = '#10b981';
-            
-            // Сохраняем в историю
-            let payments = JSON.parse(localStorage.getItem('shadowboost_payments') || '[]');
-            payments.push({
-                id: paymentId,
-                site: siteUrl,
-                tariff: tariff,
-                date: new Date().toISOString(),
-                status: 'active'
-            });
-            localStorage.setItem('shadowboost_payments', JSON.stringify(payments));
-            
-            console.log('✅ Задача отправлена в Google Таблицу');
-        })
-        .catch(error => {
-            console.error('❌ Ошибка:', error);
-            document.getElementById('statusMessage').innerHTML = '⚠️ Задача отправлена, но сервер вернул ошибку. Проверь таблицу через 1-2 минуты.';
-            document.getElementById('statusMessage').style.background = 'rgba(245, 158, 11, 0.1)';
-            document.getElementById('statusMessage').style.borderColor = 'rgba(245, 158, 11, 0.3)';
-            document.getElementById('statusMessage').style.color = '#f59e0b';
-        });
+        
+        // Формируем данные задачи
+        const taskData = {
+            id: paymentId,
+            date: dateStr,
+            timestamp: Date.now(),
+            site: siteUrl,
+            tariff: userTariff,
+            tariff_name: tariffName,
+            email: userEmail,
+            status: 'new'
+        };
+        
+        console.log('📦 Данные задачи:', taskData);
+        
+        // Функция для сохранения в GitHub
+        async function saveToGitHub() {
+            try {
+                // Сначала получаем текущий список задач
+                const getUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/tasks.json`;
+                
+                let sha = null;
+                let existingTasks = [];
+                
+                try {
+                    const getResponse = await fetch(getUrl, {
+                        headers: {
+                            'Authorization': `token ${GITHUB_TOKEN}`
+                        }
+                    });
+                    
+                    if (getResponse.ok) {
+                        const fileData = await getResponse.json();
+                        sha = fileData.sha;
+                        const content = atob(fileData.content);
+                        existingTasks = JSON.parse(content);
+                        console.log('📂 Существующие задачи загружены');
+                    }
+                } catch (e) {
+                    console.log('📁 Файла пока нет, создаём новый');
+                }
+                
+                // Добавляем новую задачу
+                existingTasks.push(taskData);
+                
+                // Сохраняем обратно
+                const saveResponse = await fetch(getUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${GITHUB_TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: `Новая задача от ${dateStr}`,
+                        content: btoa(JSON.stringify(existingTasks, null, 2)),
+                        sha: sha
+                    })
+                });
+                
+                if (saveResponse.ok) {
+                    // Показываем успех
+                    document.getElementById('statusMessage').innerHTML = '✅ Задача сохранена в GitHub!';
+                    document.getElementById('statusMessage').style.background = 'rgba(16, 185, 129, 0.1)';
+                    document.getElementById('statusMessage').style.borderColor = 'rgba(16, 185, 129, 0.3)';
+                    document.getElementById('statusMessage').style.color = '#10b981';
+                    
+                    // Показываем превью данных
+                    document.getElementById('dataPreview').style.display = 'block';
+                    document.getElementById('dataContent').innerHTML = `
+                        <div class="data-item">📌 ID: ${taskData.id}</div>
+                        <div class="data-item">🌐 Сайт: ${taskData.site}</div>
+                        <div class="data-item">📊 Тариф: ${taskData.tariff_name}</div>
+                        <div class="data-item">📧 Email: ${taskData.email}</div>
+                        <div class="data-item">🕐 ${taskData.date}</div>
+                    `;
+                    
+                    // Сохраняем в историю браузера
+                    let payments = JSON.parse(localStorage.getItem('shadowboost_payments') || '[]');
+                    payments.push({
+                        id: paymentId,
+                        site: siteUrl,
+                        tariff: userTariff,
+                        date: dateStr,
+                        status: 'active'
+                    });
+                    localStorage.setItem('shadowboost_payments', JSON.stringify(payments));
+                    
+                } else {
+                    throw new Error('Ошибка сохранения');
+                }
+                
+            } catch (error) {
+                console.error('❌ Ошибка GitHub:', error);
+                
+                document.getElementById('statusMessage').innerHTML = '⚠️ Не удалось сохранить в GitHub. Данные сохранены локально.';
+                document.getElementById('statusMessage').style.background = 'rgba(245, 158, 11, 0.1)';
+                document.getElementById('statusMessage').style.borderColor = 'rgba(245, 158, 11, 0.3)';
+                document.getElementById('statusMessage').style.color = '#f59e0b';
+                
+                // Сохраняем в localStorage как запасной вариант
+                let pendingTasks = JSON.parse(localStorage.getItem('shadowboost_pending') || '[]');
+                pendingTasks.push(taskData);
+                localStorage.setItem('shadowboost_pending', JSON.stringify(pendingTasks));
+            }
+        }
+        
+        // Запускаем сохранение
+        saveToGitHub();
+        
+        // Таймер для красоты
+        let seconds = 0;
+        setInterval(() => {
+            seconds++;
+            document.getElementById('progressTimer').textContent = `⏱️ Прошло: ${seconds} сек. Данные сохранены.`;
+        }, 1000);
+        
+        // Очищаем временные данные
+        localStorage.removeItem('last_site_url');
+        localStorage.removeItem('last_tariff');
     </script>
 </body>
 </html>
