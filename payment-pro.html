@@ -143,7 +143,8 @@
                 </div>
 
                 <div class="ym-hidden-inputs">
-                   <input name="shopSuccessURL" type="hidden" value="https://shadowboost.ru/success.html">
+                    <!-- ИСПРАВЛЕНО: правильный URL с параметром from=pro -->
+                    <input name="shopSuccessURL" type="hidden" value="https://shadowboost.ru/payment-success.html?from=pro">
                 </div>
 
                 <input name="customerNumber" type="hidden" value="Профессиональный тариф">
@@ -167,8 +168,8 @@
     
     <script src="https://yookassa.ru/integration/simplepay/js/yookassa_construct_form.js?v=1.33.0"></script>
     <script>
-        // Автозаполнение email из localStorage
         document.addEventListener('DOMContentLoaded', function() {
+            // Автозаполнение email из localStorage
             const userEmail = localStorage.getItem('shadowboost_email');
             if (userEmail) {
                 const emailInput = document.querySelector('input[name="cps_email"]');
@@ -176,6 +177,9 @@
                     emailInput.value = userEmail;
                 }
             }
+            
+            // ДОБАВЛЕНО: сохраняем выбранный тариф
+            localStorage.setItem('last_tariff', 'pro');
         });
     </script>
 </body>
