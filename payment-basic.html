@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShadowBoost — Оплата Профи тарифа</title>
+    <title>ShadowBoost — Оплата Базового тарифа</title>
     <link rel="stylesheet" href="https://yookassa.ru/integration/simplepay/css/yookassa_construct_form.css?v=1.33.0">
     <style>
         * {
@@ -110,6 +110,8 @@
         .back-link:hover {
             text-decoration: underline;
         }
+        
+        /* Убираем тестовый стиль */
     </style>
 </head>
 <body>
@@ -117,18 +119,23 @@
         <div class="logo">ShadowBoost</div>
         
         <div class="tariff-info">
-            <div class="tariff-name">Профи тариф</div>
-            <div class="tariff-price">10 000 ₽</div>
-            <div class="tariff-period">в месяц · 8,000 визитов</div>
+            <div class="tariff-name">Базовый тариф</div>
+            <div class="tariff-price">2 000 ₽</div> <!-- ЦЕНА ИСПРАВЛЕНА -->
+            <div class="tariff-period">в месяц · ~1,500 визитов</div>
             
             <ul class="tariff-features">
-                <li>8,000 визитов в месяц</li>
+                <li>1,500 визитов в месяц</li>
                 <li>Резидентские IP (Россия/СНГ)</li>
-                <li>Индивидуальные настройки</li>
-                <li>Персональный менеджер</li>
-                <li>Приоритетная поддержка</li>
+                <li>Браузерная эмуляция Playwright</li>
+                <li>Автоматическое распределение</li>
+                <li>Поддержка 24/7</li>
             </ul>
             
+            <p style="color: #a0a0b0; font-size: 14px; margin-top: 20px;">
+                💡 После оплаты система начнёт работать автоматически
+            </p>
+            
+            <!-- ТЕСТОВЫЙ БЕЙДЖ УДАЛЕН -->
         </div>
         
         <div class="payment-form-container">
@@ -139,18 +146,18 @@
                 </div>
 
                 <div class="ym-hidden-inputs">
-                    <input name="shopSuccessURL" type="hidden" value="https://shadowboost.ru/payment-success.html?from=pro">
+                    <input name="shopSuccessURL" type="hidden" value="https://shadowboost.ru/payment-success.html?from=basic">
                 </div>
 
-                <input name="customerNumber" type="hidden" value="Профи тариф">
+                <input name="customerNumber" type="hidden" value="Базовый тариф">
                 
                 <div class="ym-payment-btn-block ym-before-line ym-align-space-between">
                     <div class="ym-input-icon-rub ym-display-none">
-                        <input name="sum" placeholder="0.00" class="ym-input ym-sum-input ym-required-input" type="number" step="any" value="10000" readonly>
+                        <input name="sum" placeholder="0.00" class="ym-input ym-sum-input ym-required-input" type="number" step="any" value="2000" readonly>
                     </div>
                     <button data-text="Оплатить" class="ym-btn-pay ym-result-price">
                         <span class="ym-text-crop">Оплатить</span> 
-                        <span class="ym-price-output"> 10&nbsp;000,00&nbsp;₽</span>
+                        <span class="ym-price-output"> 2&nbsp;000,00&nbsp;₽</span>
                     </button>
                     <img src="https://yookassa.ru/integration/simplepay/img/iokassa-gray.svg?v=1.33.0" class="ym-logo" width="114" height="27" alt="ЮKassa">
                 </div>
@@ -175,7 +182,7 @@
             }
             
             // Сохраняем тариф перед оплатой
-            localStorage.setItem('last_tariff', 'pro');
+            localStorage.setItem('last_tariff', 'basic');
         });
     </script>
 </body>
