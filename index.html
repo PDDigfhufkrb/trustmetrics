@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowBoost — восстановление доверия к метрикам сайта</title>
+    
+    <!-- Yandex.Metrika counter (ваш код) -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106841648', 'ym');
+
+        ym(106841648, 'init', {ssr:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/106841648" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #0C0C0C;
+            --black-light: #1A1A1A;
+            --gray: #B0B0B0;
+            --gray-dark: #5A5A5A;
+            --primary: #6366F1;
+            --primary-light: #818CF8;
+            --primary-dark: #4F46E5;
+            --success: #10B981;
+            --success-light: #34D399;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, #8B5CF6 50%, var(--success) 100%);
+            --gradient-green: linear-gradient(89.73deg, #2BB81F 1.21%, #6AC523 50.51%, #92D32D 66.85%, #E3F141 99.81%);
+            
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--black);
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Градиентные тексты */
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-green {
+            background: var(--gradient-green);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Кнопки */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-lg {
+            padding: 18px 40px;
+            font-size: 18px;
+        }
+
+        /* Навигация */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(12, 12, 12, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 1000;
+            padding: 16px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        /* Герой */
+        .hero {
+            padding: 180px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 30% 30%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-light);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .hero-title {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero-text {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 32px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: var(--gradient);
+            border-radius: var(--radius-lg);
+            opacity: 0.1;
+            filter: blur(40px);
+            z-index: -1;
+        }
+
+        /* Секция проблемы */
+        .problem {
+            padding: 80px 0;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .problem-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            padding: 40px 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .problem-icon {
+            font-size: 48px;
+            margin-bottom: 24px;
+        }
+
+        .problem-card h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .problem-card p {
+            color: var(--gray);
+        }
+
+        /* Кейсы */
+        .cases {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            color: var(--gray);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .case-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .case-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px;
+        }
+
+        .case-image img {
+            width: 100%;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .case-tag {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-light);
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .case-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .case-description {
+            color: var(--gray);
+            margin-bottom: 24px;
+        }
+
+        .case-result {
+            display: flex;
+            gap: 40px;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--radius-sm);
+        }
+
+        .result-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .result-label {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .case-search {
+            margin-top: 30px;
+        }
+
+        .case-search img {
+            width: 100%;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Сравнение */
+        .comparison {
+            padding: 80px 0;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .comparison-col {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+        }
+
+        .comparison-col.bad .comparison-title {
+            color: #EF4444;
+        }
+
+        .comparison-col.good .comparison-title {
+            color: var(--success);
+        }
+
+        .comparison-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        .comparison-list {
+            list-style: none;
+        }
+
+        .comparison-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .comparison-item:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-icon {
+            width: 24px;
+            height: 24px;
+            font-size: 18px;
+        }
+
+        .comparison-text {
+            flex: 1;
+        }
+
+        .comparison-text strong {
+            color: white;
+        }
+
+        .comparison-text p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        /* Тарифы */
+        .tariffs {
+            padding: 80px 0;
+        }
+
+        .tariffs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .tariff-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: 40px 30px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .tariff-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .tariff-card.popular {
+            border-color: var(--primary);
+            background: linear-gradient(180deg, rgba(99, 102, 241, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .tariff-name {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .tariff-price {
+            font-size: 48px;
+            font-weight: 800;
+            text-align: center;
+            margin: 24px 0 8px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tariff-period {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .tariff-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .tariff-feature {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tariff-feature:before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .tariff-card .btn {
+            width: 100%;
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 80px 0;
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 40px auto 0;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .faq-answer {
+            display: none;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--gray);
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* Футер */
+        .footer {
+            padding: 60px 0 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--gray-dark);
+            font-size: 14px;
+        }
+
+        .footer-email {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fadeInUp {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-stats {
+                justify-content: center;
+            }
+            
+            .problem-grid,
+            .tariffs-grid,
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .case-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">SHADOWBOOST</a>
+            <div class="nav-links">
+                <a href="#cases">Кейсы</a>
+                <a href="#tariffs">Тарифы</a>
+                <a href="#faq">FAQ</a>
+                <a href="/login.html">Вход</a>
+                <a href="/register.html" class="btn btn-primary">Начать бесплатно</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Герой -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-left fadeInUp">
+                    <div class="hero-badge">⚡ SHADOWBOOST — ВОССТАНАВЛИВАЕМ ИСТОРИЮ САЙТА</div>
+                    <h1 class="hero-title">
+                        Ваш сайт <span class="gradient-green">не виден</span> в аналитике?
+                    </h1>
+                    <h1 class="hero-title" style="font-size: 48px; margin-top: -20px;">
+                        Вернем доверие покупателей <span class="gradient-text">за 24 часа</span>
+                    </h1>
+                    <p class="hero-text">
+                        Переезжали на новый домен? Запустили проект с нуля? 
+                        ShadowBoost восстанавливает цифровой след вашего сайта, 
+                        делая его видимым для покупателей и бирж.
+                    </p>
+                    <div style="display: flex; gap: 16px;">
+                        <a href="/register.html" class="btn btn-primary btn-lg">🚀 Начать бесплатный тест</a>
+                        <a href="#cases" class="btn btn-secondary btn-lg">📊 Смотреть кейсы</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">проектов восстановлено</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">99.9%</span>
+                            <span class="stat-label">незаметность</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">15 мин</span>
+                            <span class="stat-label">до старта</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image fadeInUp" style="animation-delay: 0.2s;">
+                    <!-- Здесь ваше изображение статистики ДО/ПОСЛЕ -->
+                    <img src="https://s5.iimage.su/s/15/gBt06JsxZpQKpBJkR5am96lL7LQWhNbtW8Wth3uq.png" alt="Статистика pdd-shpargalka.ru">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Проблема -->
+    <section class="problem">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">С какими проблемами <span class="gradient-text">сталкиваются</span> владельцы сайтов?</h2>
+                <p class="section-subtitle">Мы знаем, как это больно — когда твой сайт есть, но его никто не видит</p>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card fadeInUp">
+                    <div class="problem-icon">😫</div>
+                    <h3>Переезжали на новый домен?</h3>
+                    <p>Яндекс.Метрика обнулилась, биржи не видят активности. Сайт есть, а истории — нет.</p>
+                </div>
+                <div class="problem-card fadeInUp" style="animation-delay: 0.1s;">
+                    <div class="problem-icon">🆕</div>
+                    <h3>Запустили проект с нуля?</h3>
+                    <p>Нет истории — нет доверия покупателей. Конкуренты выглядят живее, хотя ваш продукт лучше.</p>
+                </div>
+                <div class="problem-card fadeInUp" style="animation-delay: 0.2s;">
+                    <div class="problem-icon">⚔️</div>
+                    <h3>Конкуренты вырываются вперед?</h3>
+                    <p>Их "живая" статистика привлекает покупателей, а ваш сайт остается в тени.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Кейсы -->
+    <section id="cases" class="cases">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">📊 <span class="gradient-text">Реальные</span> результаты наших клиентов</h2>
+                <p class="section-subtitle">Не накрутка, а восстановление реальной истории</p>
+            </div>
+
+            <!-- Кейс pdd-shpargalka.ru -->
+            <div class="case-card fadeInUp">
+                <div class="case-content">
+                    <div class="case-image">
+                        <img src="https://s5.iimage.su/s/15/gBt06JsxZpQKpBJkR5am96lL7LQWhNbtW8Wth3uq.png" alt="Статистика pdd-shpargalka.ru">
+                    </div>
+                    <div>
+                        <span class="case-tag">🔥 Реальный кейс</span>
+                        <h3 class="case-title">Вывели сайт <span class="gradient-green">pdd-shpargalka.ru</span> в топ поиска с нуля за месяц</h3>
+                        <p class="case-description">
+                            Сайт потерял всю историю после смены домена. 
+                            Яндекс.Метрика показывала ноль, хотя сайт работал и приносил пользу.
+                            Покупатели на биржах не видели активности, и сайт оценивался ниже реальной стоимости.
+                        </p>
+                        <div class="case-result">
+                            <div class="result-item">
+                                <span class="result-value">0 → 1500+</span>
+                                <span class="result-label">визитов в месяц</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-value">ТОП-10</span>
+                                <span class="result-label">по ключевым запросам</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-value">2 недели</span>
+                                <span class="result-label">до первых результатов</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding: 0 40px 40px 40px;">
+                    <div class="case-search">
+                        <p style="margin-bottom: 16px; color: var(--gray);">⬇️ Сайт в поисковой выдаче (обведен в кружок)</p>
+                        <img src="https://s5.iimage.su/s/15/gqzvUl4xm00IKcjTIEj8j57G6LsLpCuvR7uUUDwv.png" alt="Поисковая выдача pdd-shpargalka.ru">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Сравнение -->
+    <section class="comparison">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Почему другие сервисы <span class="gradient-text">не работают</span>, а ShadowBoost — работает</h2>
+                <p class="section-subtitle">Честное сравнение технологий</p>
+            </div>
+            <div class="comparison-grid">
+                <div class="comparison-col bad fadeInUp">
+                    <h3 class="comparison-title">❌ Как работают другие</h3>
+                    <ul class="comparison-list">
+                        <li class="comparison-item">
+                            <span class="comparison-icon">❌</span>
+                            <div class="comparison-text">
+                                <strong>Публичные прокси</strong>
+                                <p>Низкая стабильность, легко детектятся системами аналитики</p>
+                            </div>
+                        </li>
+                        <li class="comparison-item">
+                            <span class="comparison-icon">❌</span>
+                            <div class="comparison-text">
+                                <strong>Однотипные боты</strong>
+                                <p>Все визиты выглядят одинаково, легко отсеиваются</p>
+                            </div>
+                        </li>
+                        <li class="comparison-item">
+                            <span class="comparison-icon">❌</span>
+                            <div class="comparison-text">
+                                <strong>Риск бана</strong>
+                                <p>Сайты попадают под фильтры Яндекса</p>
+                            </div>
+                        </li>
+                        <li class="comparison-item">
+                            <span class="comparison-icon">❌</span>
+                            <div class="comparison-text">
+                                <strong>Серверные IP</strong>
+                                <p>Мгновенно определяются как боты</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="comparison-col good fadeInUp" style="animation-delay: 0.1s;">
+                    <h3 class="comparison-title">✅ Как работает ShadowBoost</h3>
+                    <ul class="comparison-list">
+                        <li class="comparison-item">
+                            <span class="comparison-icon">✅</span>
+                            <div class="comparison-text">
+                                <strong>Резидентские IP</strong>
+                                <p>10,000+ реальных IP домашних пользователей</p>
+                            </div>
+                        </li>
+                        <li class="comparison-item">
+                            <span class="comparison-icon">✅</span>
+                            <div class="comparison-text">
+                                <strong>Умная эмуляция поведения</strong>
+                                <p>Playwright + реальные браузеры, скроллы, клики, движения мыши</p>
+                            </div>
+                        </li>
+                        <li class="comparison-item">
+                            <span class="comparison-icon">✅</span>
+                            <div class="comparison-text">
+                                <strong>99.9% незаметность</strong>
+                                <p>Для Яндекс.Метрики это абсолютно органический трафик</p>
+                            </div>
+                        </li>
+                        <li class="comparison-item">
+                            <span class="comparison-icon">✅</span>
+                            <div class="comparison-text">
+                                <strong>Полная безопасность</strong>
+                                <p>Ни одного сайта под фильтром за 3 года работы</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Тарифы -->
+    <section id="tariffs" class="tariffs">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Выберите <span class="gradient-text">тариф</span></h2>
+                <p class="section-subtitle">Инвестируйте в рост вашего проекта</p>
+            </div>
+            <div class="tariffs-grid">
+                <div class="tariff-card fadeInUp">
+                    <h3 class="tariff-name">Базовый</h3>
+                    <div class="tariff-price">2 000 ₽</div>
+                    <div class="tariff-period">в месяц</div>
+                    <ul class="tariff-features">
+                        <li class="tariff-feature"><strong>1 500 визитов</strong> в месяц</li>
+                        <li class="tariff-feature">Резидентские IP из России</li>
+                        <li class="tariff-feature">Базовая эмуляция поведения</li>
+                        <li class="tariff-feature">Автоматическое распределение</li>
+                        <li class="tariff-feature">Поддержка по email</li>
+                    </ul>
+                    <a href="/register.html" class="btn btn-secondary">Выбрать тариф</a>
+                </div>
+                <div class="tariff-card popular fadeInUp" style="animation-delay: 0.1s;">
+                    <div class="popular-badge">🔥 САМЫЙ ПОПУЛЯРНЫЙ</div>
+                    <h3 class="tariff-name">Оптимальный</h3>
+                    <div class="tariff-price">5 000 ₽</div>
+                    <div class="tariff-period">в месяц</div>
+                    <ul class="tariff-features">
+                        <li class="tariff-feature"><strong>4 000 визитов</strong> в месяц</li>
+                        <li class="tariff-feature">Расширенная география IP</li>
+                        <li class="tariff-feature">Умные паттерны поведения</li>
+                        <li class="tariff-feature">Приоритетная обработка</li>
+                        <li class="tariff-feature">Приоритетная поддержка</li>
+                    </ul>
+                    <a href="/register.html" class="btn btn-primary">Рекомендуем</a>
+                </div>
+                <div class="tariff-card fadeInUp" style="animation-delay: 0.2s;">
+                    <h3 class="tariff-name">Профи</h3>
+                    <div class="tariff-price">10 000 ₽</div>
+                    <div class="tariff-period">в месяц</div>
+                    <ul class="tariff-features">
+                        <li class="tariff-feature"><strong>8 000 визитов</strong> в месяц</li>
+                        <li class="tariff-feature">Глобальная сеть IP (РФ + СНГ)</li>
+                        <li class="tariff-feature">Индивидуальные настройки</li>
+                        <li class="tariff-feature">Максимальная скорость</li>
+                        <li class="tariff-feature">Персональный менеджер</li>
+                    </ul>
+                    <a href="/register.html" class="btn btn-secondary">Выбрать тариф</a>
+                </div>
+            </div>
+            <p style="text-align: center; color: var(--gray); margin-top: 40px;">
+                Все тарифы включают 3-дневный бесплатный тест. Никаких скрытых комиссий.
+            </p>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Часто задаваемые <span class="gradient-text">вопросы</span></h2>
+                <p class="section-subtitle">Всё, что нужно знать перед стартом</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        <span>❓ Это безопасно для моего сайта и Яндекс.Метрики?</span>
+                        <span style="font-size: 24px;">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Абсолютно безопасно. ShadowBoost использует исключительно резидентские IP-адреса (реальные IP домашних пользователей) и полноценную браузерную эмуляцию через Playwright. Для Яндекс.Метрики это абсолютно неотличимо от органического трафика.</p>
+                    </div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        <span>⏱️ Когда я увижу первые результаты?</span>
+                        <span style="font-size: 24px;">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Первые визиты появляются в течение 15-60 минут после активации тарифа. Система распределяет их равномерно в течение дня, избегая аномальных пиков.</p>
+                    </div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        <span>⏸️ Можно ли поставить работу на паузу?</span>
+                        <span style="font-size: 24px;">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Да, в личном кабинете вы можете в любой момент поставить сайт на паузу. При возобновлении работа продолжится с того же места. Отмена тарифа возможна в любой момент — оставшиеся дни будут заморожены.</p>
+                    </div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        <span>💳 Какие способы оплаты вы принимаете?</span>
+                        <span style="font-size: 24px;">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Через интегрированную платёжную систему ЮKassa: банковские карты (Visa, Mastercard, МИР), ЮMoney, СБП, QIWI, WebMoney, мобильные операторы.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер (исправленный по вашему запросу) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <a href="#" class="footer-logo">SHADOWBOOST</a>
+                <div class="footer-links">
+                    <a href="#cases">Кейсы</a>
+                    <a href="#tariffs">Тарифы</a>
+                    <a href="#faq">FAQ</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>ShadowBoost © 2025 — восстановление доверия к метрикам сайта</div>
+                <div>
+                    <a href="mailto:support@shadowboost.ru" class="footer-email">support@shadowboost.ru</a>
+                </div>
+                <div style="display: flex; gap: 20px;">
+                    <a href="/privacy.html" style="color: var(--gray-dark); text-decoration: none;">Политика конфиденциальности</a>
+                    <a href="/terms.html" style="color: var(--gray-dark); text-decoration: none;">Пользовательское соглашение</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Навигация при скролле
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(12, 12, 12, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(12, 12, 12, 0.8)';
+            }
+        });
+
+        // FAQ toggle
+        function toggleFaq(element) {
+            const isActive = element.classList.contains('active');
+            
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                const icon = item.querySelector('.faq-question span:last-child');
+                if (icon) icon.textContent = '+';
+            });
+            
+            if (!isActive) {
+                element.classList.add('active');
+                const icon = element.querySelector('.faq-question span:last-child');
+                if (icon) icon.textContent = '−';
+            }
+        }
+
+        // Анимация при скролле
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fadeInUp').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
