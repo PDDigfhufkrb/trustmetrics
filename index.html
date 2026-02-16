@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowBoost — Органический трафик для Яндекс.Метрики</title>
+    <meta name="description" content="Профессиональная платформа увеличения трафика. Резидентские IP, браузерная эмуляция, незаметно для аналитики. Запуск за 5 минут.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106841648', 'ym');
+
+        ym(106841648, 'init', {ssr:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/106841648" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+    
+    <style>
+        /* ====== CSS RESET & VARIABLES ====== */
+        :root {
+            --black: #0A0A0A;
+            --dark: #1A1822;
+            --dark-light: #2D2A38;
+            --white: #FFFFFF;
+            --gray: #B0B0B0;
+            --primary: #6366F1;
+            --primary-light: #818CF8;
+            --green: #10B981;
+            --green-gradient: linear-gradient(89.73deg, #2BB81F 1.21%, #6AC523 50.51%, #92D32D 66.85%, #E3F141 99.81%);
+            --purple-gradient: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-2xl: 32px;
+            
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 32px;
+            --space-xl: 48px;
+            --space-2xl: 64px;
+            
+            --max-w-xl: 1280px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 52px;
+            background: var(--green-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 36px;
+            margin-bottom: var(--space-lg);
+        }
+
+        h2 span {
+            background: var(--purple-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            font-size: 16px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: var(--max-w-xl);
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        .section {
+            padding: var(--space-2xl) 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--purple-gradient);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-lg {
+            padding: 16px 36px;
+            font-size: 16px;
+        }
+
+        /* ====== HEADER ====== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(26, 24, 34, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 1000;
+            padding: 16px 0;
+        }
+
+        .header__container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: var(--max-w-xl);
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-gradient);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--white);
+        }
+
+        /* ====== HERO ====== */
+        .hero {
+            padding: 150px 0 80px;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-light);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .hero-title {
+            margin-bottom: 20px;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            margin-bottom: 35px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        /* ====== STATS ====== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            background: var(--purple-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* ====== FEATURES ====== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .feature-item h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .feature-item p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* ====== CASES (как у Manzadey) ====== */
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .case-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .case-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .case-image {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .case-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .case-content {
+            padding: 20px;
+        }
+
+        .case-category {
+            color: var(--primary-light);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .case-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+
+        .case-result {
+            font-size: 14px;
+            color: var(--green);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .case-stats {
+            display: flex;
+            gap: 15px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .case-stat {
+            flex: 1;
+        }
+
+        .case-stat-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--white);
+            display: block;
+        }
+
+        .case-stat-label {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        /* ====== TARIFFS ====== */
+        .tariffs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .tariff-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-xl);
+            padding: 30px 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tariff-card.popular {
+            border-color: var(--primary);
+            background: linear-gradient(180deg, 
+                rgba(255, 255, 255, 0.03) 0%, 
+                rgba(99, 102, 241, 0.05) 100%);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--purple-gradient);
+            color: var(--white);
+            padding: 5px 20px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .tariff-name {
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .tariff-price {
+            font-size: 42px;
+            font-weight: 800;
+            text-align: center;
+            margin: 15px 0 5px;
+            background: var(--purple-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tariff-period {
+            text-align: center;
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .tariff-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .tariff-feature {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--gray);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tariff-feature:last-child {
+            border-bottom: none;
+        }
+
+        .tariff-feature::before {
+            content: "✓";
+            color: var(--green);
+            font-weight: bold;
+        }
+
+        .tariff-card .btn {
+            width: 100%;
+        }
+
+        /* ====== WHY (как у Manzadey) ====== */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .why-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .why-icon {
+            flex-shrink: 0;
+            width: 60px;
+            height: 60px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .why-content h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .why-content p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* ====== FAQ ====== */
+        .faq-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: 20px 25px;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question h3 {
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .faq-answer {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-answer p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* ====== CTA ====== */
+        .cta {
+            background: var(--purple-gradient);
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .cta h2 {
+            color: var(--white);
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 25px;
+        }
+
+        .cta .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* ====== FOOTER ====== */
+        .footer {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 50px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--white);
+            margin-bottom: 15px;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        .footer-bottom a {
+            color: var(--gray);
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--white);
+        }
+
+        @media (max-width: 1024px) {
+            .features-grid,
+            .stats-grid,
+            .tariffs-grid,
+            .footer-grid,
+            .why-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+            
+            h2 {
+                font-size: 28px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .features-grid,
+            .stats-grid,
+            .tariffs-grid,
+            .footer-grid,
+            .why-grid,
+            .cases-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .footer-bottom a {
+                margin: 0 10px;
+            }
+            
+            .why-item {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header__container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">⚡</div>
+                <span>ShadowBoost</span>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="#technology" class="nav-link">Технология</a>
+                <a href="#cases" class="nav-link">Кейсы</a>
+                <a href="#tariffs" class="nav-link">Тарифы</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="login.html" class="nav-link">Вход</a>
+                <a href="register.html" class="btn btn-primary">Начать бесплатно</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    🔥 ПРОВЕРЕННАЯ ТЕХНОЛОГИЯ
+                </div>
+                
+                <h1 class="hero-title">
+                    Оживите метрики<br>вашего сайта за 24 часа
+                </h1>
+                
+                <p class="hero-description">
+                    ShadowBoost — автоматическая платформа для создания органического трафика. 
+                    Резидентские IP, браузерная эмуляция, полная незаметность для Яндекса и Google.
+                </p>
+                
+                <div class="hero-buttons">
+                    <a href="register.html" class="btn btn-primary btn-lg">
+                        Начать бесплатный тест
+                    </a>
+                    <a href="#tariffs" class="btn btn-secondary btn-lg">
+                        Выбрать тариф
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">10 000+</div>
+                    <div class="stat-label">резидентских IP</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">незаметность</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15 мин</div>
+                    <div class="stat-label">до старта</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">проектов</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="technology" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Как это <span>работает</span></h2>
+                <p>Технологии, которые дают результат</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Резидентские IP</h3>
+                    <p>Реальные IP-адреса домашних пользователей по всей России</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🖥️</div>
+                    <h3>Браузерная эмуляция</h3>
+                    <p>Playwright + реальные браузеры. Поведение как у живого человека</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Автоматизация</h3>
+                    <p>Добавили сайт — выбрали тариф — всё работает само</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Анти-детект</h3>
+                    <p>Система неотличима от органического трафика для Яндекса</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us (как у Manzadey) -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Почему нас <span>выбирают</span></h2>
+                <p>5 лет опыта и 500+ успешных проектов</p>
+            </div>
+            
+            <div class="why-grid">
+                <div class="why-item">
+                    <div class="why-icon">📊</div>
+                    <div class="why-content">
+                        <h3>Реальные результаты</h3>
+                        <p>Средний рост трафика — 320% за первый месяц</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🔒</div>
+                    <div class="why-content">
+                        <h3>Полная безопасность</h3>
+                        <p>0 сайтов под санкциями за всё время работы</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">⚡</div>
+                    <div class="why-content">
+                        <h3>Мгновенный старт</h3>
+                        <p>Первые визиты через 15 минут после запуска</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">💬</div>
+                    <div class="why-content">
+                        <h3>Поддержка 24/7</h3>
+                        <p>Отвечаем в течение 5 минут в любое время</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real Cases (с изображениями ПДД Шпаргалки) -->
+    <section id="cases" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Реальные <span>кейсы</span></h2>
+                <p>Примеры роста наших клиентов</p>
+            </div>
+            
+            <div class="cases-grid">
+                <!-- Кейс 1: Статистика роста -->
+                <a href="#" class="case-card">
+                    <div class="case-image">
+                        <img src="https://s5.iimage.su/s/15/gqzvUl4xm00IKcjTIEj8j57G6LsLpCuvR7uUUDwv.png" alt="Статистика роста ПДД Шпаргалка">
+                    </div>
+                    <div class="case-content">
+                        <div class="case-category">ПДД Шпаргалка</div>
+                        <div class="case-title">Рост трафика с 0 до 2500+ визитов</div>
+                        <div class="case-result">+320% за 2 недели</div>
+                        <div class="case-stats">
+                            <div class="case-stat">
+                                <span class="case-stat-value">2 500</span>
+                                <span class="case-stat-label">визитов/день</span>
+                            </div>
+                            <div class="case-stat">
+                                <span class="case-stat-value">320%</span>
+                                <span class="case-stat-label">рост</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Кейс 2: Позиции в поиске -->
+                <a href="#" class="case-card">
+                    <div class="case-image">
+                        <img src="https://s5.iimage.su/s/15/gBt06JsxZpQKpBJkR5am96lL7LQWhNbtW8Wth3uq.png" alt="Позиции ПДД Шпаргалка в поиске">
+                    </div>
+                    <div class="case-content">
+                        <div class="case-category">ПДД Шпаргалка</div>
+                        <div class="case-title">Вывели сайт в топ поиска с нуля</div>
+                        <div class="case-result">ТОП-3 по ключевым запросам</div>
+                        <div class="case-stats">
+                            <div class="case-stat">
+                                <span class="case-stat-value">ТОП-3</span>
+                                <span class="case-stat-label">Яндекс</span>
+                            </div>
+                            <div class="case-stat">
+                                <span class="case-stat-value">24</span>
+                                <span class="case-stat-label">запроса</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="#" class="btn btn-secondary">Все кейсы</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tariffs -->
+    <section id="tariffs" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Тарифные <span>планы</span></h2>
+                <p>Выберите подходящий объем</p>
+            </div>
+            
+            <div class="tariffs-grid">
+                <!-- Стартовый -->
+                <div class="tariff-card">
+                    <h3 class="tariff-name">Стартовый</h3>
+                    <div class="tariff-price">2 000 ₽</div>
+                    <div class="tariff-period">в месяц</div>
+                    
+                    <ul class="tariff-features">
+                        <li class="tariff-feature">1 500 визитов в месяц</li>
+                        <li class="tariff-feature">Резидентские IP</li>
+                        <li class="tariff-feature">Автоматический запуск</li>
+                        <li class="tariff-feature">Поддержка</li>
+                    </ul>
+                    
+                    <a href="register.html" class="btn btn-secondary">Выбрать</a>
+                </div>
+                
+                <!-- Оптимальный -->
+                <div class="tariff-card popular">
+                    <div class="popular-badge">🔥 САМЫЙ ПОПУЛЯРНЫЙ</div>
+                    <h3 class="tariff-name">Оптимальный</h3>
+                    <div class="tariff-price">5 000 ₽</div>
+                    <div class="tariff-period">в месяц</div>
+                    
+                    <ul class="tariff-features">
+                        <li class="tariff-feature">4 000 визитов в месяц</li>
+                        <li class="tariff-feature">Расширенная география IP</li>
+                        <li class="tariff-feature">Умные сценарии</li>
+                        <li class="tariff-feature">Приоритетная поддержка</li>
+                    </ul>
+                    
+                    <a href="register.html" class="btn btn-primary">Рекомендуем</a>
+                </div>
+                
+                <!-- Профи -->
+                <div class="tariff-card">
+                    <h3 class="tariff-name">Профи</h3>
+                    <div class="tariff-price">10 000 ₽</div>
+                    <div class="tariff-period">в месяц</div>
+                    
+                    <ul class="tariff-features">
+                        <li class="tariff-feature">8 000 визитов в месяц</li>
+                        <li class="tariff-feature">Глобальная сеть IP</li>
+                        <li class="tariff-feature">Индивидуальные настройки</li>
+                        <li class="tariff-feature">Персональный менеджер</li>
+                    </ul>
+                    
+                    <a href="register.html" class="btn btn-secondary">Выбрать</a>
+                </div>
+            </div>
+            
+            <div class="section-header" style="margin-top: 30px;">
+                <p style="color: var(--gray);">Все тарифы включают 3 дня бесплатного теста</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Часто задаваемые <span>вопросы</span></h2>
+            </div>
+            
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <h3>Это безопасно для моего сайта?</h3>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Да. Мы используем только резидентские IP и браузерную эмуляцию, что делает трафик неотличимым от реальных пользователей. Риск санкций минимален.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <h3>Когда будут первые результаты?</h3>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Первые визиты появляются через 15-30 минут после запуска. Стабильный результат виден уже в первый день.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <h3>Как начать бесплатный тест?</h3>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Достаточно зарегистрироваться и добавить сайт. 3 дня бесплатного доступа активируются автоматически.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <h3>Какие способы оплаты?</h3>
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Банковские карты, ЮMoney, СБП через платежную систему ЮKassa.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2>Готовы оживить метрики?</h2>
+            <p>Присоединяйтесь к 500+ проектам, которые уже используют ShadowBoost</p>
+            <a href="register.html" class="btn btn-secondary btn-lg">Начать бесплатный тест</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <a href="index.html" class="footer-logo">
+                        <div class="logo-icon">⚡</div>
+                        ShadowBoost
+                    </a>
+                    <p style="font-size: 14px;">Профессиональная платформа органического трафика</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Продукт</h4>
+                    <ul class="footer-links">
+                        <li><a href="#technology">Технология</a></li>
+                        <li><a href="#tariffs">Тарифы</a></li>
+                        <li><a href="#cases">Кейсы</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Документы</h4>
+                    <ul class="footer-links">
+                        <li><a href="privacy.html">Политика конфиденциальности</a></li>
+                        <li><a href="terms.html">Пользовательское соглашение</a></li>
+                        <li><a href="oferta.html">Публичная оферта</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Контакты</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:support@shadowboost.ru">support@shadowboost.ru</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2024 ShadowBoost. Все права защищены.</p>
+                <div>
+                    <a href="privacy.html">Политика</a>
+                    <a href="terms.html">Соглашение</a>
+                    <a href="oferta.html">Оферта</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Навигация при скролле
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(26, 24, 34, 0.95)';
+            } else {
+                header.style.background = 'rgba(26, 24, 34, 0.8)';
+            }
+        });
+
+        // FAQ toggle
+        function toggleFAQ(element) {
+            const isActive = element.classList.contains('active');
+            
+            // Закрываем все
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                const icon = item.querySelector('.faq-question span');
+                if (icon) icon.textContent = '+';
+            });
+            
+            // Если кликнули на закрытый - открываем
+            if (!isActive) {
+                element.classList.add('active');
+                const icon = element.querySelector('.faq-question span');
+                if (icon) icon.textContent = '−';
+            }
+        }
+
+        // Плавный скролл к якорям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#' || href === '') return;
+                
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Открываем первый FAQ
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstFAQ = document.querySelector('.faq-item');
+            if (firstFAQ) {
+                setTimeout(() => {
+                    toggleFAQ(firstFAQ);
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>
