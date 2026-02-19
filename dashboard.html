@@ -8,7 +8,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -18,42 +18,11 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: #0A0A0A;
             color: #FFFFFF;
             min-height: 100vh;
-            position: relative;
-        }
-
-        /* Неоновые фоновые элементы */
-        .neon-bg {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-
-        .neon-circle {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.1;
-        }
-
-        .circle-1 {
-            width: 600px;
-            height: 600px;
-            background: #6366F1;
-            top: -200px;
-            right: -200px;
-        }
-
-        .circle-2 {
-            width: 500px;
-            height: 500px;
-            background: #8B5CF6;
-            bottom: -200px;
-            left: -200px;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* Шапка */
@@ -62,133 +31,126 @@
             top: 0;
             left: 0;
             width: 100%;
-            background: rgba(26, 24, 34, 0.9);
+            background: rgba(10, 10, 10, 0.8);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid #2A2A2A;
             z-index: 100;
-            padding: 16px 0;
         }
 
         .header-container {
             max-width: 1280px;
             margin: 0 auto;
             padding: 0 24px;
+            height: 64px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
             text-decoration: none;
         }
 
         .logo-icon {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             background: linear-gradient(135deg, #6366F1, #8B5CF6);
-            border-radius: 8px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 14px;
+            font-weight: 600;
             color: white;
         }
 
         .logo-text {
             font-size: 18px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #6366F1, #8B5CF6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+            color: #FFFFFF;
         }
 
         .user-menu {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
         }
 
         .user-email {
-            color: #B0B0B0;
+            color: #8A8F98;
             font-size: 14px;
         }
 
         .logout-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #B0B0B0;
-            padding: 8px 16px;
-            border-radius: 8px;
+            background: none;
+            border: none;
+            color: #8A8F98;
             font-size: 14px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
         }
 
         .logout-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
+            color: #FFFFFF;
+            background: #1A1A1A;
         }
 
         /* Основной контент */
         .main {
-            position: relative;
-            z-index: 1;
             max-width: 1280px;
             margin: 0 auto;
-            padding: 100px 24px 40px;
+            padding: 96px 24px 48px;
         }
 
         /* Приветствие */
-        .welcome-section {
-            margin-bottom: 40px;
+        .welcome {
+            margin-bottom: 48px;
         }
 
         .welcome-title {
-            font-size: 32px;
-            font-weight: 700;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
             margin-bottom: 8px;
-            background: linear-gradient(135deg, #6366F1, #8B5CF6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFFFFF;
         }
 
         .welcome-subtitle {
-            color: #B0B0B0;
-            font-size: 16px;
+            color: #8A8F98;
+            font-size: 15px;
         }
 
         /* Сетка сайтов */
         .sites-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
             gap: 24px;
-            margin-bottom: 40px;
+            margin-bottom: 48px;
         }
 
+        /* Карточка сайта */
         .site-card {
-            background: rgba(26, 24, 34, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 24px;
-            transition: all 0.3s ease;
+            background: #141414;
+            border: 1px solid #2A2A2A;
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.2s ease;
             cursor: pointer;
         }
 
         .site-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(99, 102, 241, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: #404040;
+            background: #1A1A1A;
         }
 
         .site-card.active {
             border-color: #6366F1;
-            background: linear-gradient(180deg, 
-                rgba(99, 102, 241, 0.1) 0%, 
-                rgba(26, 24, 34, 0.7) 100%);
+            background: #1A1A2A;
         }
 
         .site-header {
@@ -199,9 +161,9 @@
         }
 
         .site-url {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
-            color: white;
+            color: #FFFFFF;
             text-decoration: none;
         }
 
@@ -209,38 +171,39 @@
             color: #6366F1;
         }
 
-        .site-status {
-            padding: 4px 12px;
-            border-radius: 50px;
+        /* Статус */
+        .status {
+            padding: 4px 10px;
+            border-radius: 20px;
             font-size: 12px;
             font-weight: 500;
+            background: #1E1E1E;
+            border: 1px solid #2A2A2A;
         }
 
         .status-draft {
-            background: rgba(255, 255, 255, 0.1);
-            color: #B0B0B0;
+            color: #8A8F98;
         }
 
         .status-moderation {
-            background: rgba(245, 158, 11, 0.1);
             color: #F59E0B;
-            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-color: rgba(245, 158, 11, 0.3);
         }
 
         .status-active {
-            background: rgba(16, 185, 129, 0.1);
             color: #10B981;
-            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.3);
         }
 
-        .site-stats {
+        /* Статистика */
+        .stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+            gap: 12px;
             margin: 20px 0;
             padding: 16px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid #2A2A2A;
+            border-bottom: 1px solid #2A2A2A;
         }
 
         .stat-item {
@@ -248,140 +211,140 @@
         }
 
         .stat-value {
-            font-size: 20px;
-            font-weight: 700;
-            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            color: #FFFFFF;
             margin-bottom: 4px;
         }
 
         .stat-label {
             font-size: 12px;
-            color: #B0B0B0;
+            color: #8A8F98;
         }
 
-        .site-actions {
+        /* Действия */
+        .actions {
             display: flex;
             gap: 12px;
         }
 
         .btn {
             flex: 1;
-            padding: 12px;
-            border-radius: 12px;
+            height: 40px;
+            border-radius: 10px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             border: none;
             text-align: center;
+            line-height: 40px;
             text-decoration: none;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            background: #6366F1;
             color: white;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+            background: #4F46E5;
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
+            background: #1E1E1E;
+            border: 1px solid #2A2A2A;
+            color: #FFFFFF;
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: #2A2A2A;
         }
 
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            pointer-events: none;
         }
 
-        /* Карточка добавления нового сайта */
+        /* Карточка добавления */
         .add-site-card {
-            background: rgba(26, 24, 34, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 24px;
-            padding: 24px;
+            background: #141414;
+            border: 1px dashed #2A2A2A;
+            border-radius: 16px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 200px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             text-decoration: none;
             color: inherit;
         }
 
         .add-site-card:hover {
             border-color: #6366F1;
-            background: rgba(99, 102, 241, 0.05);
+            background: #1A1A1A;
         }
 
         .add-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(255, 255, 255, 0.05);
+            width: 40px;
+            height: 40px;
+            background: #1E1E1E;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            margin-bottom: 16px;
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #8A8F98;
         }
 
         .add-text {
-            font-size: 16px;
-            font-weight: 500;
-            color: #B0B0B0;
+            font-size: 14px;
+            color: #8A8F98;
         }
 
-        /* Настройки сайта */
-        .settings-section {
-            background: rgba(26, 24, 34, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 32px;
+        /* Настройки */
+        .settings {
+            background: #141414;
+            border: 1px solid #2A2A2A;
+            border-radius: 16px;
+            padding: 24px;
             margin-top: 40px;
         }
 
         .settings-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+            color: #FFFFFF;
         }
 
         .keywords-input {
             width: 100%;
-            min-height: 150px;
+            min-height: 140px;
             padding: 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            color: white;
+            background: #1E1E1E;
+            border: 1px solid #2A2A2A;
+            border-radius: 12px;
+            color: #FFFFFF;
             font-size: 14px;
             line-height: 1.6;
-            margin-bottom: 16px;
+            font-family: 'Inter', monospace;
             resize: vertical;
+            margin-bottom: 16px;
         }
 
         .keywords-input:focus {
             outline: none;
             border-color: #6366F1;
-            background: rgba(99, 102, 241, 0.1);
+            background: #1A1A1A;
         }
 
         .keywords-hint {
-            color: #B0B0B0;
+            color: #8A8F98;
             font-size: 13px;
             margin-bottom: 24px;
         }
@@ -393,15 +356,16 @@
         }
 
         .launch-btn {
-            padding: 16px 32px;
-            background: linear-gradient(135deg, #10B981, #059669);
+            height: 48px;
+            padding: 0 32px;
+            background: #10B981;
             color: white;
             border: none;
             border-radius: 12px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background 0.2s ease;
             opacity: 0.5;
             pointer-events: none;
         }
@@ -412,16 +376,15 @@
         }
 
         .launch-btn.active:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+            background: #059669;
         }
 
-        .settings-saved {
+        .saved-status {
             color: #10B981;
+            font-size: 14px;
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 14px;
         }
 
         /* Модальное окно */
@@ -432,7 +395,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
             z-index: 1000;
             display: none;
             align-items: center;
@@ -444,62 +407,107 @@
         }
 
         .modal-content {
-            background: #1A1822;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 32px;
-            padding: 40px;
-            max-width: 500px;
+            background: #141414;
+            border: 1px solid #2A2A2A;
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 480px;
             width: 90%;
         }
 
         .modal-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 16px;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #FFFFFF;
         }
 
-        .modal-text {
-            color: #B0B0B0;
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 32px;
+        .modal-subtitle {
+            color: #8A8F98;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .tariff-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: #1E1E1E;
+            border: 1px solid #2A2A2A;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tariff-option:hover {
+            border-color: #6366F1;
+            background: #1A1A2A;
+        }
+
+        .tariff-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #6366F1;
+        }
+
+        .tariff-info {
+            flex: 1;
+        }
+
+        .tariff-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #FFFFFF;
+        }
+
+        .tariff-desc {
+            font-size: 13px;
+            color: #8A8F98;
         }
 
         .modal-actions {
             display: flex;
-            gap: 16px;
+            gap: 12px;
+            margin-top: 24px;
         }
 
         .modal-btn {
             flex: 1;
-            padding: 14px;
+            height: 48px;
             border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 15px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
             border: none;
-            text-align: center;
-            text-decoration: none;
         }
 
         .modal-btn-primary {
-            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            background: #6366F1;
             color: white;
         }
 
+        .modal-btn-primary:hover {
+            background: #4F46E5;
+        }
+
         .modal-btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
+            background: #1E1E1E;
+            border: 1px solid #2A2A2A;
+            color: #FFFFFF;
+        }
+
+        .modal-btn-secondary:hover {
+            background: #2A2A2A;
         }
 
         .close-modal {
             position: absolute;
             top: 20px;
             right: 20px;
-            font-size: 24px;
-            color: #B0B0B0;
+            font-size: 20px;
+            color: #8A8F98;
             cursor: pointer;
         }
 
@@ -520,12 +528,6 @@
     </style>
 </head>
 <body>
-    <!-- Неоновый фон -->
-    <div class="neon-bg">
-        <div class="neon-circle circle-1"></div>
-        <div class="neon-circle circle-2"></div>
-    </div>
-
     <!-- Шапка -->
     <header class="header">
         <div class="header-container">
@@ -535,7 +537,7 @@
             </a>
             
             <div class="user-menu">
-                <span class="user-email" id="userEmail">user@example.com</span>
+                <span class="user-email" id="userEmail">user@example.ru</span>
                 <button class="logout-btn" onclick="logout()">Выйти</button>
             </div>
         </div>
@@ -543,18 +545,16 @@
 
     <!-- Основной контент -->
     <main class="main">
-        <div class="welcome-section">
-            <h1 class="welcome-title" id="welcomeTitle">Добро пожаловать!</h1>
-            <p class="welcome-subtitle">Управляйте своими сайтами и настраивайте продвижение</p>
+        <div class="welcome">
+            <h1 class="welcome-title" id="welcomeTitle">Проекты</h1>
+            <p class="welcome-subtitle">Управляйте сайтами и настраивайте продвижение</p>
         </div>
 
         <!-- Список сайтов -->
-        <div class="sites-grid" id="sitesGrid">
-            <!-- Карточки сайтов будут добавляться динамически -->
-        </div>
+        <div class="sites-grid" id="sitesGrid"></div>
 
-        <!-- Настройки выбранного сайта -->
-        <div class="settings-section" id="settingsSection" style="display: none;">
+        <!-- Настройки сайта -->
+        <div class="settings" id="settings" style="display: none;">
             <h2 class="settings-title" id="currentSiteUrl"></h2>
             
             <textarea 
@@ -564,23 +564,19 @@
             ></textarea>
             
             <div class="keywords-hint">
-                Введите ключевые слова, по которым хотите продвигаться. Например:<br>
+                Например:<br>
                 билеты пдд<br>
                 экзамен пдд онлайн<br>
                 правила дорожного движения
             </div>
             
             <div class="settings-footer">
-                <button 
-                    class="launch-btn" 
-                    id="launchBtn"
-                    onclick="launchSite()"
-                >
-                    🚀 Запустить сайт в работу
+                <button class="launch-btn" id="launchBtn" onclick="showTariffModal()">
+                    Запустить сайт
                 </button>
                 
-                <div class="settings-saved" id="savedStatus">
-                    ✓ Изменения сохранены
+                <div class="saved-status" id="savedStatus" style="display: none;">
+                    ✓ Сохранено
                 </div>
             </div>
         </div>
@@ -588,71 +584,48 @@
 
     <!-- Модальное окно выбора тарифа -->
     <div class="modal" id="tariffModal">
+        <div class="close-modal" onclick="closeModal()">✕</div>
         <div class="modal-content">
-            <div class="close-modal" onclick="closeModal()">✕</div>
-            
             <h2 class="modal-title">Выберите тариф</h2>
-            <p class="modal-text">От выбранного тарифа зависит количество визитов в месяц</p>
+            <p class="modal-subtitle">От объема зависит количество визитов</p>
             
-            <div style="margin-bottom: 24px;">
-                <label style="display: block; margin-bottom: 12px; color: #B0B0B0;">Тариф:</label>
-                
-                <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <label style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 12px; cursor: pointer;">
-                        <input type="radio" name="tariff" value="basic" checked style="width: 18px; height: 18px;">
-                        <div>
-                            <div style="font-weight: 600;">Базовый</div>
-                            <div style="color: #B0B0B0; font-size: 14px;">1 500 визитов / 2 000 ₽ в месяц</div>
-                        </div>
-                    </label>
-                    
-                    <label style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 12px; cursor: pointer;">
-                        <input type="radio" name="tariff" value="optimal" style="width: 18px; height: 18px;">
-                        <div>
-                            <div style="font-weight: 600;">Оптимальный</div>
-                            <div style="color: #B0B0B0; font-size: 14px;">4 000 визитов / 5 000 ₽ в месяц</div>
-                        </div>
-                    </label>
-                    
-                    <label style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 12px; cursor: pointer;">
-                        <input type="radio" name="tariff" value="pro" style="width: 18px; height: 18px;">
-                        <div>
-                            <div style="font-weight: 600;">Профессиональный</div>
-                            <div style="color: #B0B0B0; font-size: 14px;">8 000 визитов / 10 000 ₽ в месяц</div>
-                        </div>
-                    </label>
+            <div class="tariff-option" onclick="selectTariff('basic')">
+                <input type="radio" name="tariff" value="basic" id="tariffBasic">
+                <div class="tariff-info">
+                    <div class="tariff-name">Базовый</div>
+                    <div class="tariff-desc">1 500 визитов · 2 000 ₽/мес</div>
+                </div>
+            </div>
+            
+            <div class="tariff-option" onclick="selectTariff('optimal')">
+                <input type="radio" name="tariff" value="optimal" id="tariffOptimal" checked>
+                <div class="tariff-info">
+                    <div class="tariff-name">Оптимальный</div>
+                    <div class="tariff-desc">4 000 визитов · 5 000 ₽/мес</div>
+                </div>
+            </div>
+            
+            <div class="tariff-option" onclick="selectTariff('pro')">
+                <input type="radio" name="tariff" value="pro" id="tariffPro">
+                <div class="tariff-info">
+                    <div class="tariff-name">Профессиональный</div>
+                    <div class="tariff-desc">8 000 визитов · 10 000 ₽/мес</div>
                 </div>
             </div>
             
             <div class="modal-actions">
                 <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Отмена</button>
-                <button class="modal-btn modal-btn-primary" onclick="goToPayment()">Перейти к оплате</button>
+                <button class="modal-btn modal-btn-primary" onclick="goToPayment()">К оплате</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Текущий выбранный сайт
         let currentSiteId = null;
-        
-        // Загрузка данных при открытии страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            loadUserData();
-            loadSites();
-            
-            // Проверяем, есть ли в URL параметр site
-            const urlParams = new URLSearchParams(window.location.search);
-            const siteId = urlParams.get('site');
-            if (siteId) {
-                selectSite(siteId);
-            }
-            
-            // Запускаем симуляцию визитов для активных сайтов
-            startVisitsSimulation();
-        });
+        let selectedTariff = 'optimal';
 
-        // Загрузка данных пользователя
-        function loadUserData() {
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
             const userEmail = localStorage.getItem('shadowboost_email');
             if (!userEmail) {
                 window.location.href = 'register.html';
@@ -660,31 +633,40 @@
             }
             
             document.getElementById('userEmail').textContent = userEmail;
-            document.getElementById('welcomeTitle').textContent = `Добро пожаловать, ${userEmail.split('@')[0]}!`;
-        }
+            document.getElementById('welcomeTitle').textContent = `Здравствуйте, ${userEmail.split('@')[0]}`;
+            
+            loadSites();
+            
+            // Проверяем, есть ли сайт в URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const siteId = urlParams.get('site');
+            if (siteId) {
+                selectSite(siteId);
+            }
+            
+            startVisitSimulation();
+        });
 
         // Загрузка сайтов
         function loadSites() {
             const sites = JSON.parse(localStorage.getItem('shadowboost_sites') || '[]');
-            const sitesGrid = document.getElementById('sitesGrid');
+            const grid = document.getElementById('sitesGrid');
             
-            sitesGrid.innerHTML = '';
+            grid.innerHTML = '';
             
-            // Добавляем карточки сайтов
             sites.forEach(site => {
-                const card = createSiteCard(site);
-                sitesGrid.appendChild(card);
+                grid.appendChild(createSiteCard(site));
             });
             
-            // Добавляем карточку добавления нового сайта
+            // Карточка добавления
             const addCard = document.createElement('a');
             addCard.href = 'add-site.html';
             addCard.className = 'add-site-card';
             addCard.innerHTML = `
                 <div class="add-icon">+</div>
-                <div class="add-text">Добавить новый сайт</div>
+                <div class="add-text">Добавить сайт</div>
             `;
-            sitesGrid.appendChild(addCard);
+            grid.appendChild(addCard);
         }
 
         // Создание карточки сайта
@@ -693,7 +675,6 @@
             card.className = `site-card ${currentSiteId === site.id ? 'active' : ''}`;
             card.onclick = () => selectSite(site.id);
             
-            // Определяем статус
             let statusClass = 'status-draft';
             let statusText = 'Черновик';
             
@@ -703,32 +684,24 @@
             } else if (site.status === 'active') {
                 statusClass = 'status-active';
                 statusText = 'Активен';
-            } else if (site.status === 'draft' && site.tariff) {
-                statusClass = 'status-moderation';
-                statusText = 'Ожидает запуска';
             }
             
-            // Статистика (для демо)
-            const stats = site.stats || {
-                today: 0,
-                week: 0,
-                total: 0
-            };
+            const stats = site.stats || { today: 0, week: 0, total: 0 };
             
             card.innerHTML = `
                 <div class="site-header">
-                    <a href="${site.url}" target="_blank" class="site-url">${site.url.replace('https://', '')}</a>
-                    <span class="site-status ${statusClass}">${statusText}</span>
+                    <span class="site-url">${site.url.replace('https://', '').replace('http://', '')}</span>
+                    <span class="status ${statusClass}">${statusText}</span>
                 </div>
                 
-                <div class="site-stats">
+                <div class="stats">
                     <div class="stat-item">
                         <div class="stat-value">${stats.today}</div>
                         <div class="stat-label">сегодня</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-value">${stats.week}</div>
-                        <div class="stat-label">за неделю</div>
+                        <div class="stat-label">неделя</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-value">${stats.total}</div>
@@ -736,12 +709,12 @@
                     </div>
                 </div>
                 
-                <div class="site-actions">
-                    ${site.status === 'active' ? 
-                        `<button class="btn btn-secondary" onclick="pauseSite('${site.id}', event)">⏸️ Пауза</button>` :
-                        site.status === 'moderation' ?
-                        `<button class="btn btn-secondary" disabled>⏳ Ожидание</button>` :
-                        `<button class="btn btn-primary" onclick="configureSite('${site.id}', event)">⚙️ Настроить</button>`
+                <div class="actions">
+                    ${site.status === 'active' 
+                        ? `<button class="btn btn-secondary" onclick="pauseSite('${site.id}', event)">Пауза</button>`
+                        : site.status === 'moderation'
+                        ? `<button class="btn btn-secondary" disabled>Ожидание</button>`
+                        : `<button class="btn btn-primary" onclick="configureSite('${site.id}', event)">Настроить</button>`
                     }
                 </div>
             `;
@@ -760,18 +733,14 @@
             if (site) {
                 document.getElementById('currentSiteUrl').textContent = site.url;
                 document.getElementById('keywordsInput').value = site.keywords || '';
-                document.getElementById('settingsSection').style.display = 'block';
+                document.getElementById('settings').style.display = 'block';
                 
-                // Активируем кнопку запуска, если есть ключевые слова
                 const launchBtn = document.getElementById('launchBtn');
                 if (site.keywords && site.keywords.trim() !== '') {
                     launchBtn.classList.add('active');
                 } else {
                     launchBtn.classList.remove('active');
                 }
-                
-                // Показываем статус сохранения
-                document.getElementById('savedStatus').style.display = 'flex';
                 
                 // Обновляем активный класс в карточках
                 loadSites();
@@ -780,81 +749,32 @@
 
         // Сохранение ключевых слов
         document.getElementById('keywordsInput').addEventListener('input', function() {
-            const keywords = this.value;
+            if (!currentSiteId) return;
             
-            if (currentSiteId) {
-                const sites = JSON.parse(localStorage.getItem('shadowboost_sites') || '[]');
-                const siteIndex = sites.findIndex(s => s.id === currentSiteId);
+            const keywords = this.value;
+            const sites = JSON.parse(localStorage.getItem('shadowboost_sites') || '[]');
+            const index = sites.findIndex(s => s.id === currentSiteId);
+            
+            if (index !== -1) {
+                sites[index].keywords = keywords;
+                localStorage.setItem('shadowboost_sites', JSON.stringify(sites));
                 
-                if (siteIndex !== -1) {
-                    sites[siteIndex].keywords = keywords;
-                    localStorage.setItem('shadowboost_sites', JSON.stringify(sites));
-                    
-                    // Активируем кнопку запуска
-                    const launchBtn = document.getElementById('launchBtn');
-                    if (keywords.trim() !== '') {
-                        launchBtn.classList.add('active');
-                    } else {
-                        launchBtn.classList.remove('active');
-                    }
-                    
-                    // Показываем статус сохранения
-                    document.getElementById('savedStatus').style.display = 'flex';
-                    setTimeout(() => {
-                        document.getElementById('savedStatus').style.display = 'none';
-                    }, 2000);
+                const launchBtn = document.getElementById('launchBtn');
+                if (keywords.trim() !== '') {
+                    launchBtn.classList.add('active');
+                } else {
+                    launchBtn.classList.remove('active');
                 }
+                
+                const savedStatus = document.getElementById('savedStatus');
+                savedStatus.style.display = 'flex';
+                setTimeout(() => {
+                    savedStatus.style.display = 'none';
+                }, 1500);
             }
         });
 
-        // Запуск сайта
-        function launchSite() {
-            if (!currentSiteId) return;
-            
-            const sites = JSON.parse(localStorage.getItem('shadowboost_sites') || '[]');
-            const site = sites.find(s => s.id === currentSiteId);
-            
-            if (!site.keywords || site.keywords.trim() === '') {
-                alert('Сначала добавьте ключевые слова');
-                return;
-            }
-            
-            // Открываем модальное окно выбора тарифа
-            document.getElementById('tariffModal').classList.add('active');
-        }
-
-        // Закрыть модальное окно
-        function closeModal() {
-            document.getElementById('tariffModal').classList.remove('active');
-        }
-
-        // Переход к оплате
-        function goToPayment() {
-            const selectedTariff = document.querySelector('input[name="tariff"]:checked').value;
-            
-            // Сохраняем выбранный тариф для сайта
-            if (currentSiteId) {
-                const sites = JSON.parse(localStorage.getItem('shadowboost_sites') || '[]');
-                const siteIndex = sites.findIndex(s => s.id === currentSiteId);
-                
-                if (siteIndex !== -1) {
-                    sites[siteIndex].tariff = selectedTariff;
-                    sites[siteIndex].status = 'moderation'; // Переводим в статус модерации
-                    localStorage.setItem('shadowboost_sites', JSON.stringify(sites));
-                }
-            }
-            
-            // Перенаправляем на соответствующую страницу оплаты
-            const paymentPages = {
-                'basic': 'payment-basic.html',
-                'optimal': 'payment-optimal.html',
-                'pro': 'payment-pro.html'
-            };
-            
-            window.location.href = paymentPages[selectedTariff];
-        }
-
-        // Настройка сайта (переход к настройкам)
+        // Настройка сайта
         function configureSite(siteId, event) {
             event.stopPropagation();
             selectSite(siteId);
@@ -865,17 +785,66 @@
             event.stopPropagation();
             
             const sites = JSON.parse(localStorage.getItem('shadowboost_sites') || '[]');
-            const siteIndex = sites.findIndex(s => s.id === siteId);
+            const index = sites.findIndex(s => s.id === siteId);
             
-            if (siteIndex !== -1) {
-                sites[siteIndex].status = 'draft';
+            if (index !== -1) {
+                sites[index].status = 'draft';
                 localStorage.setItem('shadowboost_sites', JSON.stringify(sites));
-                loadSites();
                 
                 if (currentSiteId === siteId) {
-                    document.getElementById('settingsSection').style.display = 'none';
+                    document.getElementById('settings').style.display = 'none';
+                    currentSiteId = null;
                 }
+                
+                loadSites();
             }
+        }
+
+        // Модальное окно
+        function showTariffModal() {
+            if (!currentSiteId) return;
+            
+            const sites = JSON.parse(localStorage.getItem('shadowboost_sites') || '[]');
+            const site = sites.find(s => s.id === currentSiteId);
+            
+            if (!site || !site.keywords || site.keywords.trim() === '') {
+                alert('Добавьте ключевые слова');
+                return;
+            }
+            
+            document.getElementById('tariffModal').classList.add('active');
+        }
+
+        function selectTariff(tariff) {
+            selectedTariff = tariff;
+            document.querySelectorAll('input[name="tariff"]').forEach(r => {
+                r.checked = r.value === tariff;
+            });
+        }
+
+        function closeModal() {
+            document.getElementById('tariffModal').classList.remove('active');
+        }
+
+        function goToPayment() {
+            if (!currentSiteId || !selectedTariff) return;
+            
+            const sites = JSON.parse(localStorage.getItem('shadowboost_sites') || '[]');
+            const index = sites.findIndex(s => s.id === currentSiteId);
+            
+            if (index !== -1) {
+                sites[index].tariff = selectedTariff;
+                sites[index].status = 'moderation';
+                localStorage.setItem('shadowboost_sites', JSON.stringify(sites));
+            }
+            
+            const pages = {
+                basic: 'payment-basic.html',
+                optimal: 'payment-optimal.html',
+                pro: 'payment-pro.html'
+            };
+            
+            window.location.href = pages[selectedTariff];
         }
 
         // Выход
@@ -887,7 +856,7 @@
         }
 
         // Симуляция визитов
-        function startVisitsSimulation() {
+        function startVisitSimulation() {
             setInterval(() => {
                 const sites = JSON.parse(localStorage.getItem('shadowboost_sites') || '[]');
                 let updated = false;
@@ -896,12 +865,9 @@
                     if (site.status === 'active') {
                         if (!site.stats) site.stats = { today: 0, week: 0, total: 0 };
                         
-                        // Случайное число визитов 1-3 каждые 1-5 минут
                         const visits = Math.floor(Math.random() * 3) + 1;
                         site.stats.today += visits;
                         site.stats.total += visits;
-                        
-                        // Обновляем недельную статистику (упрощенно)
                         site.stats.week = site.stats.total;
                         
                         updated = true;
@@ -910,54 +876,10 @@
                 
                 if (updated) {
                     localStorage.setItem('shadowboost_sites', JSON.stringify(sites));
-                    
-                    // Обновляем отображение если открыт этот сайт
-                    if (currentSiteId) {
-                        const currentSite = sites.find(s => s.id === currentSiteId);
-                        if (currentSite) {
-                            const card = document.querySelector(`.site-card[onclick*="'${currentSiteId}'"]`);
-                            if (card) {
-                                const statsDiv = card.querySelector('.site-stats');
-                                if (statsDiv && currentSite.stats) {
-                                    statsDiv.innerHTML = `
-                                        <div class="stat-item">
-                                            <div class="stat-value">${currentSite.stats.today}</div>
-                                            <div class="stat-label">сегодня</div>
-                                        </div>
-                                        <div class="stat-item">
-                                            <div class="stat-value">${currentSite.stats.week}</div>
-                                            <div class="stat-label">за неделю</div>
-                                        </div>
-                                        <div class="stat-item">
-                                            <div class="stat-value">${currentSite.stats.total}</div>
-                                            <div class="stat-label">всего</div>
-                                        </div>
-                                    `;
-                                }
-                            }
-                        }
-                    }
+                    loadSites();
                 }
-            }, Math.floor(Math.random() * 240000) + 60000); // Случайный интервал 1-5 минут
+            }, 120000 + Math.random() * 180000); // 2-5 минут
         }
-
-        // При загрузке страницы после оплаты проверяем статус
-        window.addEventListener('load', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const paymentSuccess = urlParams.get('payment_success');
-            
-            if (paymentSuccess === 'true') {
-                const sites = JSON.parse(localStorage.getItem('shadowboost_sites') || '[]');
-                sites.forEach(site => {
-                    if (site.status === 'moderation') {
-                        site.status = 'active';
-                        site.activationTime = Date.now();
-                    }
-                });
-                localStorage.setItem('shadowboost_sites', JSON.stringify(sites));
-                loadSites();
-            }
-        });
     </script>
 </body>
 </html>
