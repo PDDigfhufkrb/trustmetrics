@@ -1,1 +1,640 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="description" content="ХИМАЛК – официальный дистрибьютор бытовой химии, хозтоваров и средств гигиены. Прямые поставки от производителей, оптовые цены, индивидуальные условия для бизнеса.">
+  <meta name="keywords" content="бытовая химия оптом, хозтовары, средства гигиены, дистрибьютор, поставки, ХИМАЛК">
+  <title>ХИМАЛК – оптовые поставки бытовой химии и хозтоваров</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #1a2c3e;
+      line-height: 1.45;
+      overflow-x: hidden;
+    }
+    /* Анимации */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+    @keyframes ripple {
+      0% { transform: scale(1); opacity: 0.4; }
+      100% { transform: scale(2.5); opacity: 0; }
+    }
+    @keyframes shine {
+      0% { background-position: -100% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .animate-fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+    .animate-fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Контейнер */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    /* Шапка */
+    .header {
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 25px rgba(0,0,0,0.04);
+      z-index: 100;
+      border-bottom: 1px solid rgba(0,119,182,0.1);
+    }
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      flex-wrap: wrap;
+    }
+    .logo {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #0a2540, #0077b6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .logo span {
+      color: #0077b6;
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+    }
+    .logo .sub {
+      font-size: 11px;
+      font-weight: 400;
+      color: #5c6f87;
+      display: block;
+      letter-spacing: 0;
+    }
+    .nav {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    .nav a {
+      text-decoration: none;
+      color: #1e2f3e;
+      font-weight: 500;
+      transition: 0.2s;
+      position: relative;
+    }
+    .nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #0077b6;
+      transition: width 0.3s;
+    }
+    .nav a:hover::after, .nav a.active::after {
+      width: 100%;
+    }
+    .nav a:hover, .nav a.active {
+      color: #0077b6;
+    }
+    .btn-outline {
+      border: 1.5px solid #0077b6;
+      background: transparent;
+      padding: 8px 24px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: #0077b6;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-outline:hover {
+      background: #0077b6;
+      color: white;
+      transform: scale(1.02);
+    }
+    .btn-primary {
+      background: linear-gradient(95deg, #0077b6, #0096d6);
+      border: none;
+      padding: 12px 32px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-block;
+      box-shadow: 0 5px 15px rgba(0,119,182,0.2);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0,119,182,0.3);
+      background: linear-gradient(95deg, #0096d6, #0077b6);
+    }
+    .mobile-menu-btn { display: none; background: none; border: none; font-size: 26px; cursor: pointer; color: #1e2f3e; }
+    /* Hero */
+    .hero {
+      position: relative;
+      background: radial-gradient(circle at 10% 20%, rgba(0,119,182,0.03) 0%, rgba(255,255,255,0) 70%);
+      padding: 80px 0;
+      overflow: hidden;
+    }
+    .hero-bg-drops {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://i.imgur.com/yvLyX2a.png') repeat;
+      opacity: 0.05;
+      pointer-events: none;
+    }
+    .hero-grid {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+    .hero-content { flex: 1.2; }
+    .hero-content h1 {
+      font-size: 54px;
+      font-weight: 800;
+      line-height: 1.2;
+      background: linear-gradient(125deg, #0a2540, #0077b6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 24px;
+    }
+    .hero-content p {
+      font-size: 18px;
+      color: #2c3e50;
+      margin-bottom: 32px;
+      max-width: 550px;
+    }
+    .hero-stats {
+      flex: 0.8;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .stat-card {
+      background: white;
+      padding: 24px 20px;
+      border-radius: 28px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+      text-align: center;
+      transition: all 0.3s;
+      border: 1px solid rgba(0,119,182,0.1);
+    }
+    .stat-card:hover { transform: translateY(-8px); border-color: #0077b6; }
+    .stat-card .number { font-size: 40px; font-weight: 800; color: #0077b6; margin-bottom: 8px; }
+    /* Категории */
+    .categories-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .category-card {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 32px 20px;
+      text-align: center;
+      width: 210px;
+      transition: all 0.3s;
+      border: 1px solid #eef2f8;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+    }
+    .category-card i { font-size: 48px; color: #0077b6; margin-bottom: 20px; }
+    .category-card h3 { font-size: 20px; margin-bottom: 12px; }
+    .category-card:hover { transform: translateY(-10px); border-color: #0077b6; box-shadow: 0 20px 30px rgba(0,0,0,0.05); }
+    /* Блоки */
+    .section { padding: 90px 0; }
+    .section-title {
+      font-size: 42px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 20px;
+      background: linear-gradient(125deg, #0a2540, #0077b6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .section-sub { text-align: center; color: #5c6f87; margin-bottom: 55px; font-size: 18px; max-width: 700px; margin-left: auto; margin-right: auto; }
+    /* Карточки товаров (каталог) */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 32px;
+      margin-top: 40px;
+    }
+    .product-card {
+      background: #fff;
+      border-radius: 32px;
+      overflow: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+      border: 1px solid #edf2f7;
+    }
+    .product-card:hover { transform: translateY(-12px); box-shadow: 0 30px 40px rgba(0,0,0,0.08); border-color: #0077b6; }
+    .product-img {
+      height: 210px;
+      background: #f8fafd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+      color: #0077b6;
+    }
+    .product-info { padding: 24px; }
+    .product-title { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+    .product-price { font-weight: 800; color: #0077b6; font-size: 22px; margin: 12px 0; }
+    /* Преимущества */
+    .advantages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 40px;
+      margin-top: 30px;
+    }
+    .adv-item {
+      text-align: center;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 28px;
+      transition: 0.3s;
+    }
+    .adv-item i { font-size: 46px; color: #0077b6; margin-bottom: 20px; display: inline-block; }
+    .adv-item h3 { font-size: 22px; margin-bottom: 12px; }
+    /* Партнеры слайдер */
+    .partners-slider {
+      display: flex;
+      overflow-x: auto;
+      gap: 40px;
+      padding: 20px 0;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+    .partners-slider::-webkit-scrollbar { height: 5px; }
+    .partner-logo {
+      min-width: 150px;
+      text-align: center;
+      background: white;
+      padding: 20px;
+      border-radius: 24px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+    }
+    /* Отзывы слайдер (чистый CSS) */
+    .reviews-slider {
+      display: flex;
+      overflow-x: auto;
+      gap: 30px;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 20px;
+    }
+    .review-card {
+      min-width: 300px;
+      background: white;
+      border-radius: 28px;
+      padding: 28px;
+      scroll-snap-align: start;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+      border: 1px solid #eef2f8;
+    }
+    /* FAQ */
+    .faq-item {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #e0e9f0;
+      padding-bottom: 20px;
+    }
+    .faq-question {
+      font-size: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      color: #4a627a;
+    }
+    .faq-item.active .faq-answer { max-height: 200px; margin-top: 15px; }
+    /* Форма */
+    .contact-form {
+      background: #ffffff;
+      border-radius: 48px;
+      box-shadow: 0 30px 50px rgba(0,0,0,0.05);
+      padding: 50px;
+    }
+    .form-grid { display: flex; gap: 30px; flex-wrap: wrap; }
+    input, textarea {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 24px;
+      border: 1px solid #cdddee;
+      transition: 0.2s;
+      font-size: 16px;
+    }
+    input:focus, textarea:focus { border-color: #0077b6; outline: none; box-shadow: 0 0 0 3px rgba(0,119,182,0.1); }
+    /* Подвал */
+    .footer {
+      background: #0a1a2a;
+      color: #cbd5e6;
+      padding: 60px 0 30px;
+    }
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .social-icons a { font-size: 24px; margin-right: 20px; color: #cbd5e6; transition: 0.2s; }
+    .social-icons a:hover { color: white; transform: translateY(-3px); display: inline-block; }
+    /* Модалка */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(5px);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: white;
+      max-width: 500px;
+      width: 90%;
+      border-radius: 48px;
+      padding: 40px;
+      position: relative;
+    }
+    .close-modal { position: absolute; top: 24px; right: 28px; font-size: 28px; cursor: pointer; color: #888; }
+    /* Калькулятор */
+    .calc-row { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+    .calc-result { font-weight: 800; font-size: 26px; color: #0077b6; margin-top: 20px; }
+    /* Адаптивность */
+    @media (max-width: 900px) {
+      .nav { display: none; flex-direction: column; width: 100%; background: white; padding: 20px; gap: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+      .nav.open { display: flex; }
+      .mobile-menu-btn { display: block; }
+      .hero-content h1 { font-size: 38px; }
+      .section-title { font-size: 32px; }
+      .contact-form { padding: 30px; }
+    }
+    @media (max-width: 640px) {
+      .container { padding: 0 16px; }
+      .hero-stats { grid-template-columns: 1fr; }
+    }
+    .parallax {
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .clickable { cursor: pointer; }
+  </style>
+</head>
+<body>
+<div class="header">
+  <div class="container">
+    <div class="header-inner">
+      <div class="logo">ХИМАЛК<span>®</span><div class="sub">дистрибуция бытовой химии</div></div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+      <div class="nav" id="navMenu">
+        <a href="#" class="active">Главная</a><a href="#catalog">Каталог</a><a href="#about">О компании</a><a href="#partners">Партнёры</a><a href="#contacts">Контакты</a>
+        <button class="btn-outline" id="openModalBtn"><i class="fas fa-handshake"></i> Стать партнёром</button>
+      </div>
+    </div>
+  </div>
+</div>
 
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg-drops"></div>
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content animate-fade-up">
+          <h1>Прямые поставки бытовой химии <br>от европейских производителей</h1>
+          <p>ХИМАЛК — ваш надёжный партнёр в оптовых поставках средств гигиены, чистящих средств и хозтоваров. Собственные склады, гибкие цены, сертификаты качества.</p>
+          <button class="btn-primary" id="openModalBtn2"><i class="fas fa-file-invoice"></i> Получить КП</button>
+        </div>
+        <div class="hero-stats animate-fade-up">
+          <div class="stat-card"><div class="number">210+</div><div>брендов</div></div>
+          <div class="stat-card"><div class="number">12 500+</div><div>товаров</div></div>
+          <div class="stat-card"><div class="number">1 200+</div><div>партнёров</div></div>
+          <div class="stat-card"><div class="number">98%</div><div>довольных клиентов</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Категории -->
+  <section class="section">
+    <div class="container">
+      <div class="section-title animate-fade-up">Ключевые категории</div>
+      <div class="section-sub animate-fade-up">Широкий ассортимент для дома, клининга и промышленности</div>
+      <div class="categories-grid animate-fade-up">
+        <div class="category-card"><i class="fas fa-hand-sparkles"></i><h3>Бытовая химия</h3><div>порошки, гели, пятновыводители</div></div>
+        <div class="category-card"><i class="fas fa-pump-soap"></i><h3>Средства гигиены</h3><div>мыло, шампуни, гели</div></div>
+        <div class="category-card"><i class="fas fa-broom"></i><h3>Хозтовары</h3><div>губки, перчатки, мешки</div></div>
+        <div class="category-card"><i class="fas fa-wind"></i><h3>Для уборки</h3><div>концентраты, спреи</div></div>
+        <div class="category-card"><i class="fas fa-baby"></i><h3>Детская серия</h3><div>гипоаллергенно</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Каталог товаров (примеры) -->
+  <section id="catalog" class="section" style="background:#f9fbfe;">
+    <div class="container">
+      <div class="section-title animate-fade-up">Популярные товары</div>
+      <div class="section-sub animate-fade-up">Хиты продаж и новинки от ведущих брендов</div>
+      <div class="products-grid animate-fade-up">
+        <div class="product-card"><div class="product-img"><i class="fas fa-jug-detergent"></i></div><div class="product-info"><div class="product-title">Гель для стирки PowerWash</div><div class="product-price">от 890 ₽/шт</div><div>Концентрированный, 5 л, для цветного белья</div></div></div>
+        <div class="product-card"><div class="product-img"><i class="fas fa-pump-medical"></i></div><div class="product-info"><div class="product-title">Порошок OxyClean</div><div class="product-price">от 450 ₽/кг</div><div>Кислородный отбеливатель, без фосфатов</div></div></div>
+        <div class="product-card"><div class="product-img"><i class="fas fa-tshirt"></i></div><div class="product-info"><div class="product-title">Кондиционер Softness</div><div class="product-price">от 320 ₽/л</div><div>Антистатик, 100% биоразлагаемый</div></div></div>
+        <div class="product-card"><div class="product-img"><i class="fas fa-hand-holding-heart"></i></div><div class="product-info"><div class="product-title">Набор для клининга</div><div class="product-price">от 1250 ₽/компл</div><div>Салфетки микрофибра + чистящие спреи</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Преимущества -->
+  <section class="section" style="background: linear-gradient(120deg, #ffffff, #f2f8ff);">
+    <div class="container">
+      <div class="section-title animate-fade-up">Почему ХИМАЛК?</div>
+      <div class="advantages-grid animate-fade-up">
+        <div class="adv-item"><i class="fas fa-truck"></i><h3>Собственная логистика</h3><div>Доставка по всей РФ и СНГ</div></div>
+        <div class="adv-item"><i class="fas fa-chart-line"></i><h3>Гибкая система скидок</h3><div>Индивидуальные условия для опта</div></div>
+        <div class="adv-item"><i class="fas fa-clipboard-check"></i><h3>Сертификация</h3><div>Вся продукция имеет декларации и СГР</div></div>
+        <div class="adv-item"><i class="fas fa-headset"></i><h3>Персональный менеджер</h3><div>Поддержка 24/7</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- О компании и статистика -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="double-section" style="display: flex; flex-wrap: wrap; gap: 50px; align-items: center;">
+        <div class="double-text animate-fade-up" style="flex:1">
+          <div class="section-title" style="text-align:left">О компании</div>
+          <p style="font-size:1.1rem; margin-bottom:20px">ХИМАЛК работает на рынке дистрибуции бытовой химии и товаров для дома с 2004 года. Мы сотрудничаем с ведущими заводами Европы и Азии, обеспечивая стабильные поставки и конкурентные цены.</p>
+          <p>Наша миссия – сделать чистоту доступной и безопасной для каждого бизнеса. Складские комплексы в Москве, Санкт-Петербурге и Новосибирске позволяют отгружать заказы в день обращения.</p>
+        </div>
+        <div class="double-media animate-fade-up" style="flex:1; text-align:center">
+          <img src="https://i.imgur.com/y7QZlZK.jpg" alt="Склад" style="max-width:100%; border-radius: 32px; box-shadow: 0 20px 35px rgba(0,0,0,0.1);" onerror="this.src='https://via.placeholder.com/500x350?text=Современный+склад'">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Слайдер партнёров -->
+  <section id="partners" class="section" style="background:#f8fafd;">
+    <div class="container">
+      <div class="section-title animate-fade-up">Наши партнёры и бренды</div>
+      <div class="partners-slider animate-fade-up">
+        <div class="partner-logo"><i class="fas fa-industry fa-3x" style="color:#0077b6"></i><div>ZALCHEM</div></div>
+        <div class="partner-logo"><i class="fas fa-flask fa-3x" style="color:#0077b6"></i><div>CLOVIN</div></div>
+        <div class="partner-logo"><i class="fas fa-leaf fa-3x" style="color:#0077b6"></i><div>ECOVER</div></div>
+        <div class="partner-logo"><i class="fas fa-pump-soap fa-3x" style="color:#0077b6"></i><div>POWERWASH</div></div>
+        <div class="partner-logo"><i class="fas fa-recycle fa-3x" style="color:#0077b6"></i><div>WASCHKONIG</div></div>
+        <div class="partner-logo"><i class="fas fa-hand-sparkles fa-3x" style="color:#0077b6"></i><div>FROSCH</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Отзывы (слайдер) -->
+  <section class="section">
+    <div class="container">
+      <div class="section-title animate-fade-up">Клиенты о нас</div>
+      <div class="reviews-slider animate-fade-up">
+        <div class="review-card"><i class="fas fa-star" style="color:#f5b042"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><p style="margin-top:12px">"Стабильные поставки, всегда в наличии. Отличная служба поддержки."</p><strong>— ИП Петрова</strong></div>
+        <div class="review-card"><i class="fas fa-star" style="color:#f5b042"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><p>"Порадовала цена и ассортимент. Работаем уже 2 года, нареканий нет."</p><strong>— ТК "Чистый дом"</strong></div>
+        <div class="review-card"><i class="fas fa-star" style="color:#f5b042"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><p>"Доставка в регионы оперативная. Рекомендуем коллегам."</p><strong>— Сеть клининга "Альянс"</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Калькулятор доставки -->
+  <section class="section" style="background: linear-gradient(145deg, #eef5fc, #ffffff);">
+    <div class="container">
+      <div class="section-title animate-fade-up">Рассчитать стоимость доставки</div>
+      <div class="contact-form animate-fade-up" style="background:white; padding:35px">
+        <div class="calc-row"><input type="number" id="weight" placeholder="Вес (кг)" style="flex:1"><input type="text" id="cityFrom" placeholder="Город отправки (Москва)" value="Москва" style="flex:1"><input type="text" id="cityTo" placeholder="Город назначения" style="flex:1"></div>
+        <button class="btn-primary" id="calcBtn">Рассчитать</button>
+        <div class="calc-result" id="calcResult">Ожидание ввода данных</div>
+        <small>*Ориентировочная стоимость, точная цена после согласования</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-title animate-fade-up">Часто задаваемые вопросы</div>
+      <div class="faq-list animate-fade-up">
+        <div class="faq-item"><div class="faq-question">Как получить оптовый прайс?<i class="fas fa-chevron-down"></i></div><div class="faq-answer">Оставьте заявку через форму, и наш менеджер в течение часа вышлет актуальный прайс-лист.</div></div>
+        <div class="faq-item"><div class="faq-question">Какой минимальный заказ?<i class="fas fa-chevron-down"></i></div><div class="faq-answer">Минимальная сумма заказа для новой оптовой партии — 20 000 рублей, для постоянных клиентов — 10 000 рублей.</div></div>
+        <div class="faq-item"><div class="faq-question">Есть ли сертификаты?<i class="fas fa-chevron-down"></i></div><div class="faq-answer">Да, вся продукция сертифицирована, предоставляем декларации и СГР по запросу.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Карта и контакты -->
+  <section id="contacts" class="section" style="background:#f8fafd;">
+    <div class="container">
+      <div class="section-title animate-fade-up">Наши офисы и склады</div>
+      <div class="contact-form animate-fade-up">
+        <div class="form-grid">
+          <div class="form-left"><iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A5d8b3e0aae5d7c7e8f9c1e2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c&amp;source=constructor" width="100%" height="300" frameborder="0"></iframe></div>
+          <div class="form-right"><h3>Свяжитесь с нами</h3><p><i class="fas fa-map-marker-alt"></i> Москва, Дмитровское шоссе, 100с2</p><p><i class="fas fa-phone-alt"></i> +7 (495) 123-45-67</p><p><i class="fas fa-envelope"></i> info@himalk.ru</p><p><i class="fas fa-clock"></i> Пн-Пт 9:00–19:00, склад круглосуточно</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="logo" style="background:white; -webkit-background-clip:text; background-clip:text; color:white">ХИМАЛК®</div><p style="margin-top:15px">Надёжный дистрибьютор<br>с 2004 года</p></div>
+      <div><h4>Продукция</h4><div>Бытовая химия</div><div>Хозтовары</div><div>Средства гигиены</div><div>Клининг</div></div>
+      <div><h4>Помощь</h4><div>Доставка</div><div>Оплата</div><div>Возврат</div><div>Реквизиты</div></div>
+      <div><h4>Соцсети</h4><div class="social-icons"><a href="#"><i class="fab fa-telegram"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a><a href="#"><i class="fab fa-vk"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div></div>
+    </div>
+    <div class="copyright" style="margin-top:40px; text-align:center">© 2025 ХИМАЛК — оптовая торговля бытовой химией.</div>
+  </div>
+</footer>
+
+<div id="modalForm" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><h3>Оставить заявку</h3><form id="mainForm"><input type="text" placeholder="Ваше имя" required><input type="tel" placeholder="Телефон" required><input type="email" placeholder="E-mail"><textarea rows="3" placeholder="Комментарий"></textarea><button class="btn-primary" type="submit" style="width:100%">Отправить</button></form></div></div>
+
+<script>
+  // Мобильное меню
+  const mobBtn = document.getElementById('mobileMenuBtn'); const nav = document.getElementById('navMenu');
+  mobBtn.addEventListener('click', () => nav.classList.toggle('open'));
+
+  // Модальное окно
+  const modal = document.getElementById('modalForm'); const openBtns = document.querySelectorAll('#openModalBtn, #openModalBtn2'); const closeSpan = document.querySelector('.close-modal');
+  openBtns.forEach(btn => btn.addEventListener('click', () => modal.style.display = 'flex'));
+  closeSpan.addEventListener('click', () => modal.style.display = 'none');
+  window.addEventListener('click', e => { if(e.target === modal) modal.style.display = 'none'; });
+
+  // Форма
+  document.getElementById('mainForm').addEventListener('submit', (e) => { e.preventDefault(); alert('Спасибо! Менеджер свяжется с вами.'); modal.style.display = 'none'; e.target.reset(); });
+
+  // Калькулятор доставки
+  document.getElementById('calcBtn').addEventListener('click', () => {
+    let weight = parseFloat(document.getElementById('weight').value) || 0;
+    let cityTo = document.getElementById('cityTo').value.trim();
+    let base = 500;
+    if(weight > 0) base += weight * 45;
+    if(cityTo && cityTo.toLowerCase() !== 'москва') base += 800;
+    document.getElementById('calcResult').innerHTML = `Предварительная стоимость: ${Math.round(base)} руб. (доставка до пункта выдачи)`;
+  });
+
+  // Анимация появления
+  const faders = document.querySelectorAll('.animate-fade-up');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  faders.forEach(el => observer.observe(el));
+
+  // Аккордеон FAQ
+  document.querySelectorAll('.faq-question').forEach(q => {
+    q.addEventListener('click', () => {
+      const parent = q.closest('.faq-item');
+      parent.classList.toggle('active');
+    });
+  });
+</script>
+</body>
+</html>
