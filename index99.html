@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ХимАлк – дистрибьютор бытовой химии №1</title>
+    <!-- Meta tags -->
+    <meta name="description" content="ХимАлк – официальный поставщик бытовой химии, средств гигиены и хозтоваров оптом. Прямые контракты, сертификаты, доставка по РФ. Станьте партнёром!">
+    <meta name="keywords" content="бытовая химия оптом, дистрибьютор бытовой химии, средства гигиены оптом, хозтовары, поставщик, ХимАлк">
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Inter + Fallback -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        /* ---------- RESET & GLOBAL ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a2c3e;
+            overflow-x: hidden;
+            line-height: 1.45;
+            scroll-behavior: smooth;
+        }
+
+        /* Утилиты */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* глобальные анимации */
+        @keyframes fadeSlideUp {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scaleIn {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes ripple {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        @keyframes float3d {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ---------- HEADER (sticky, многослойный) ---------- */
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 105, 148, 0.12);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0f2f47, #0078b6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+        }
+
+        .logo span {
+            color: #0078b6;
+            background: none;
+        }
+
+        .logo small {
+            display: block;
+            font-size: 11px;
+            font-weight: 400;
+            background: none;
+            color: #5a6e82;
+            letter-spacing: 0;
+        }
+
+        .nav {
+            display: flex;
+            gap: 36px;
+            align-items: center;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #1e2f3e;
+            font-weight: 500;
+            transition: 0.2s;
+            position: relative;
+            font-size: 15px;
+        }
+
+        .nav a:hover {
+            color: #0078b6;
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #0078b6;
+            transition: width 0.3s;
+        }
+
+        .nav a:hover::after,
+        .nav a.active::after {
+            width: 100%;
+        }
+
+        .btn-outline {
+            border: 1.5px solid #0078b6;
+            background: transparent;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #0078b6;
+            transition: 0.25s;
+            cursor: pointer;
+        }
+
+        .btn-outline:hover {
+            background: #0078b6;
+            color: white;
+            transform: scale(1.03);
+            box-shadow: 0 6px 14px rgba(0, 120, 182, 0.2);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #1f3a4b;
+        }
+
+        /* ---------- HERO секция (с вашим изображением) ---------- */
+        .hero {
+            position: relative;
+            background: linear-gradient(112deg, #ffffff 30%, #f5faff 100%);
+            padding: 100px 0 80px;
+            overflow: hidden;
+        }
+
+        .hero-bg-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#c5e2ff 1.2px, transparent 1.2px);
+            background-size: 28px 28px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 3;
+        }
+
+        .hero-content {
+            flex: 1.2;
+        }
+
+        .hero-content h1 {
+            font-size: 60px;
+            font-weight: 800;
+            background: linear-gradient(115deg, #0b3550, #0078b6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+            margin-bottom: 25px;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 35px;
+            max-width: 580px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(95deg, #0078b6, #0096d9);
+            border: none;
+            padding: 14px 36px;
+            border-radius: 44px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: 0.25s;
+            display: inline-block;
+            box-shadow: 0 8px 18px rgba(0, 120, 182, 0.28);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 26px rgba(0, 120, 182, 0.35);
+            background: linear-gradient(95deg, #0096d9, #0078b6);
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 48px;
+            box-shadow: 0 32px 48px -12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s;
+        }
+
+        .hero-image img:hover {
+            transform: scale(1.02);
+        }
+
+        /* trust / stats */
+        .stats-row {
+            display: flex;
+            gap: 40px;
+            margin-top: 55px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: left;
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: 800;
+            color: #0078b6;
+            line-height: 1.1;
+        }
+
+        /* ---------- КАТАЛОГ (динамичный) ---------- */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-size: 44px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 18px;
+            color: #0c3146;
+        }
+
+        .section-sub {
+            text-align: center;
+            color: #5e778e;
+            max-width: 620px;
+            margin: 0 auto 55px auto;
+            font-size: 18px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+        }
+
+        .filter-btn {
+            background: #f0f4f9;
+            border: none;
+            padding: 8px 26px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #2a4b6e;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: #0078b6;
+            color: white;
+            transform: scale(1.02);
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 32px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e9eef4;
+        }
+
+        .product-card:hover {
+            transform: translateY(-12px);
+            border-color: #b9dcff;
+            box-shadow: 0 28px 38px rgba(0, 0, 0, 0.07);
+        }
+
+        .product-img {
+            background: #fafcff;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            color: #0078b6;
+        }
+
+        .product-info {
+            padding: 24px 20px;
+        }
+
+        .product-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-weight: 800;
+            font-size: 22px;
+            color: #0078b6;
+            margin: 12px 0;
+        }
+
+        /* ---------- ПРЕИМУЩЕСТВА с эффектами ---------- */
+        .adv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 35px;
+        }
+
+        .adv-card {
+            background: white;
+            padding: 32px 20px;
+            border-radius: 32px;
+            text-align: center;
+            transition: 0.25s;
+            border: 1px solid #eef2f8;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.02);
+        }
+
+        .adv-card i {
+            font-size: 52px;
+            color: #0078b6;
+            margin-bottom: 24px;
+        }
+
+        .adv-card h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .adv-card:hover {
+            transform: translateY(-6px);
+            border-color: #0078b6;
+        }
+
+        /* Двойная секция (анимация компьютер/телефон) */
+        .dual-section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 50px;
+            background: #f7fafd;
+            border-radius: 60px;
+            padding: 50px;
+        }
+
+        .dual-text {
+            flex: 1;
+        }
+
+        .dual-media {
+            flex: 1;
+            text-align: center;
+        }
+
+        .dual-media img {
+            max-width: 100%;
+            border-radius: 36px;
+            box-shadow: 0 20px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Форма обратной связи */
+        .callback-form {
+            background: #ffffff;
+            border-radius: 48px;
+            box-shadow: 0 24px 42px rgba(0, 0, 0, 0.05);
+            padding: 48px;
+            border: 1px solid #eef2f8;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 32px;
+            border: 1.5px solid #dee6ef;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #0078b6;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 120, 182, 0.1);
+        }
+
+        /* SWIPER STYLE (ручной слайдер) */
+        .brand-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 40px;
+            padding: 20px 8px 32px 8px;
+            scrollbar-width: thin;
+        }
+
+        .brand-slider::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .brand-logo {
+            background: #fff;
+            border-radius: 32px;
+            padding: 30px 32px;
+            text-align: center;
+            min-width: 170px;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.03);
+            border: 1px solid #eef2f8;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0a1a29;
+            color: #cfdfed;
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .social-icons a {
+            font-size: 26px;
+            color: #a3bbd0;
+            margin-right: 18px;
+            transition: 0.2s;
+        }
+
+        .social-icons a:hover {
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 28, 40, 0.85);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            z-index: 2100;
+        }
+
+        .modal-window {
+            background: white;
+            max-width: 500px;
+            width: 90%;
+            border-radius: 56px;
+            padding: 40px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 22px;
+            right: 28px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #8b9ab0;
+        }
+
+        /* адаптивность */
+        @media (max-width: 960px) {
+            .nav {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: white;
+                padding: 24px;
+                gap: 18px;
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+                border-radius: 32px;
+            }
+            .nav.open {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .hero-content h1 {
+                font-size: 44px;
+            }
+            .section-title {
+                font-size: 34px;
+            }
+            .dual-section {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-grid {
+                flex-direction: column;
+            }
+            .stats-row {
+                justify-content: center;
+            }
+            .callback-form {
+                padding: 28px;
+            }
+        }
+
+        /* ---------- карта яндекс (iframe) ---------- */
+        .map-wrap {
+            border-radius: 36px;
+            overflow: hidden;
+            margin-top: 20px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+        }
+
+        iframe {
+            width: 100%;
+            border: 0;
+        }
+
+        .toast-success {
+            position: fixed;
+            bottom: 30px;
+            left: 20px;
+            background: #1d7e3c;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 60px;
+            z-index: 2000;
+            font-weight: 500;
+            animation: fadeSlideUp 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="container">
+        <div class="header-inner">
+            <div class="logo">ХИМАЛК<span>®</span><small>дистрибуция FMCG</small></div>
+            <button class="mobile-menu-btn" id="mobileMenuToggle"><i class="fas fa-bars"></i></button>
+            <div class="nav" id="mainNav">
+                <a href="#" class="active">Главная</a>
+                <a href="#catalog">Каталог</a>
+                <a href="#about">О компании</a>
+                <a href="#partners">Партнёры</a>
+                <a href="#contacts">Контакты</a>
+                <button class="btn-outline" id="openPartnerModalBtn"><i class="fas fa-handshake"></i> Стать партнёром</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- HERO секция с качественным изображением (ваша ссылка) -->
+<section class="hero">
+    <div class="hero-bg-particles"></div>
+    <div class="container">
+        <div class="hero-grid">
+            <div class="hero-content animate-on-scroll">
+                <h1>Оптовые поставки<br>бытовой химии №1</h1>
+                <p>ХимАлк – эксклюзивный дистрибьютор ведущих европейских и азиатских брендов. Собственные склады, сертификация, доставка день в день.</p>
+                <button class="btn-primary" id="heroOrderBtn"><i class="fas fa-chart-line"></i> Получить коммерческое предложение</button>
+                <div class="stats-row">
+                    <div class="stat-item"><div class="stat-number">290+</div><div>брендов</div></div>
+                    <div class="stat-item"><div class="stat-number">12 400+</div><div>товаров</div></div>
+                    <div class="stat-item"><div class="stat-number">98%</div><div>повторных заказов</div></div>
+                </div>
+            </div>
+            <div class="hero-image animate-on-scroll">
+                <img src="https://s10.iimage.su/s/05/gLFM9NExG1XppWa8O2tSTjdM6kqAvuezSzosHPFBX.jpg" alt="Бытовая химия оптом ХимАлк">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- КАТАЛОГ (с фильтрацией и карточками) -->
+<section id="catalog" class="section">
+    <div class="container">
+        <div class="section-title animate-on-scroll">Каталог хитов</div>
+        <div class="section-sub animate-on-scroll">Средства для стирки, уборки, гигиены – в наличии на складе в Москве</div>
+        <div class="filter-buttons animate-on-scroll">
+            <button class="filter-btn active" data-filter="all">Все товары</button>
+            <button class="filter-btn" data-filter="stirka">Стирка</button>
+            <button class="filter-btn" data-filter="uborka">Уборка / хозтовары</button>
+            <button class="filter-btn" data-filter="gigiena">Гигиена</button>
+        </div>
+        <div class="catalog-grid" id="catalogGrid">
+            <!-- карточки наполняются через JS -->
+        </div>
+    </div>
+</section>
+
+<!-- СЕКЦИЯ "Сделать заказ за 1 день" (анимированная, компьютер+телефон) -->
+<section class="section" style="background: linear-gradient(115deg, #ffffff 0%, #f2f8ff 100%);">
+    <div class="container">
+        <div class="dual-section animate-on-scroll">
+            <div class="dual-text">
+                <h2 style="font-size: 36px; font-weight: 700; color: #0b3550;">Сделать заказ можно в один день</h2>
+                <p style="margin: 20px 0 16px; font-size: 17px;">Складской комплекс находится в пределах МКАД. После оформления заявки вы получаете товар в течение 24 часов. Полная автоматизация документооборота и контроль каждой позиции.</p>
+                <button class="btn-primary" id="fastOrderBtn">Оформить быстрый заказ</button>
+            </div>
+            <div class="dual-media">
+                <img src="https://static.tildacdn.com/tild3935-6364-4330-b239-373432613661/interactive-website-.gif" alt="анимация процесс заказа">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ПРЕИМУЩЕСТВА (большой блок) -->
+<section class="section" style="background: #ffffff;">
+    <div class="container">
+        <div class="section-title animate-on-scroll">Почему ХимАлк — ваш идеальный поставщик</div>
+        <div class="adv-grid animate-on-scroll">
+            <div class="adv-card"><i class="fas fa-truck-fast"></i><h3>Своя логистика</h3><div>Доставка по всей РФ, отгрузка со склада в день заказа</div></div>
+            <div class="adv-card"><i class="fas fa-certificate"></i><h3>Сертификаты качества</h3><div>Вся продукция имеет декларации ЕАЭС и СГР</div></div>
+            <div class="adv-card"><i class="fas fa-chart-line"></i><h3>Гибкая система скидок</h3><div>Индивидуальные условия для оптовиков, бонусы за объём</div></div>
+            <div class="adv-card"><i class="fas fa-headset"></i><h3>Личный менеджер</h3><div>Сопровождение сделки "под ключ" 24/7</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- БРЕНДЫ / ПАРТНЕРЫ (слайдер) -->
+<section id="partners" class="section" style="background: #f8fbfe;">
+    <div class="container">
+        <div class="section-title animate-on-scroll">Наши партнёры и бренды</div>
+        <div class="brand-slider animate-on-scroll">
+            <div class="brand-logo"><i class="fab fa-asymmetrik fa-3x" style="color:#0078b6"></i><div>ZALCHEM</div></div>
+            <div class="brand-logo"><i class="fas fa-leaf fa-3x" style="color:#0078b6"></i><div>CLOVIN</div></div>
+            <div class="brand-logo"><i class="fas fa-recycle fa-3x" style="color:#0078b6"></i><div>POWERWASH</div></div>
+            <div class="brand-logo"><i class="fas fa-hand-sparkles fa-3x" style="color:#0078b6"></i><div>WASCHKÖNIG</div></div>
+            <div class="brand-logo"><i class="fas fa-flask fa-3x" style="color:#0078b6"></i><div>ECOVER</div></div>
+            <div class="brand-logo"><i class="fas fa-pump-soap fa-3x" style="color:#0078b6"></i><div>FROSCH</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- КАРТА И КОНТАКТЫ -->
+<section id="contacts" class="section">
+    <div class="container">
+        <div class="section-title animate-on-scroll">Контакты и география</div>
+        <div class="callback-form animate-on-scroll">
+            <div class="form-grid" style="display: flex; gap: 40px; flex-wrap: wrap;">
+                <div style="flex:1">
+                    <h3>Офис и склад в Москве</h3>
+                    <p><i class="fas fa-map-marker-alt" style="color:#0078b6; width: 28px;"></i> Дмитровское шоссе, 100с2, Москва</p>
+                    <p><i class="fas fa-phone-alt"></i> +7 (495) 223-77-44</p>
+                    <p><i class="fas fa-envelope"></i> opt@himalk.ru</p>
+                    <p><i class="fas fa-clock"></i> Пн-Пт 09:00 – 20:00, склад 24/7</p>
+                </div>
+                <div style="flex:1.5">
+                    <div class="map-wrap">
+                        <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A3a6e9d0b2f8c4d2a7b5e1c3f4a2d6b8e&ll=37.517332%2C55.869732&z=14&l=map" height="240" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ФОРМА ОБРАТНОЙ СВЯЗИ (подробная) -->
+<section class="section" style="padding-top: 0;">
+    <div class="container">
+        <div class="callback-form animate-on-scroll">
+            <h3 style="font-size: 32px; margin-bottom: 16px; text-align: center;">Отправьте заявку на сотрудничество</h3>
+            <form id="mainContactForm">
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <input type="text" placeholder="Ваше имя" required style="flex:1">
+                    <input type="tel" placeholder="Телефон с кодом" required style="flex:1">
+                    <input type="email" placeholder="E-mail" style="flex:1">
+                </div>
+                <textarea rows="4" placeholder="Какая продукция интересует? / Комментарий" style="margin: 20px 0;"></textarea>
+                <button class="btn-primary" type="submit" style="width: 100%;"><i class="fas fa-paper-plane"></i> Отправить запрос</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div><div style="font-size: 28px; font-weight: 800;">ХИМАЛК<span style="color:#3e9ac8;">®</span></div><div style="margin-top: 15px;">Официальный дистрибьютор FMCG c 2012 года</div></div>
+            <div><h4>Меню</h4><div>Каталог</div><div>О компании</div><div>Условия доставки</div></div>
+            <div><h4>Контакты</h4><div>+7 (495) 223-77-44</div><div>opt@himalk.ru</div></div>
+            <div><h4>Соцсети</h4><div class="social-icons"><a href="#"><i class="fab fa-telegram"></i></a><a href="#"><i class="fab fa-whatsapp"></i></a><a href="#"><i class="fab fa-vk"></i></a></div></div>
+        </div>
+        <div style="text-align: center; margin-top: 48px; border-top: 1px solid #1d3042; padding-top: 25px;">© 2025 ХимАлк – оптовая бытовая химия, средства гигиены, хозтовары.</div>
+    </div>
+</footer>
+
+<!-- МОДАЛЬНОЕ ОКНО ЗАЯВКИ -->
+<div class="modal" id="globalModal">
+    <div class="modal-window">
+        <span class="close-modal" id="closeModalBtn">&times;</span>
+        <h3>Стать партнёром / заказать КП</h3>
+        <form id="modalForm">
+            <input type="text" placeholder="Ваше имя" required>
+            <input type="tel" placeholder="Телефон" required>
+            <textarea rows="2" placeholder="Объём закупок, нужен прайс"></textarea>
+            <button class="btn-primary" type="submit" style="margin-top: 15px;">Отправить</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // ---------- КАТАЛОГ товаров (динамическая генерация) ----------
+    const products = [
+        { name: "Гель для стирки PowerWash", price: "от 890 ₽", type: "stirka", icon: "fas fa-jug-detergent" },
+        { name: "Порошок OxyClean", price: "от 450 ₽/кг", type: "stirka", icon: "fas fa-dove" },
+        { name: "Кондиционер Softness", price: "320 ₽/л", type: "stirka", icon: "fas fa-feather-alt" },
+        { name: "Универсальное чистящее средство", price: "260 ₽/шт", type: "uborka", icon: "fas fa-spray-can-sparkles" },
+        { name: "Мешки для мусора 120л", price: "от 890 ₽/упак", type: "uborka", icon: "fas fa-trash-alt" },
+        { name: "Антисептик для рук", price: "165 ₽/250мл", type: "gigiena", icon: "fas fa-hand-holding-heart" },
+        { name: "Гель для душа", price: "от 210 ₽", type: "gigiena", icon: "fas fa-shower" },
+        { name: "Набор губок и салфеток", price: "1240 ₽/комплект", type: "uborka", icon: "fas fa-broom" },
+    ];
+
+    function renderCatalog(filter = "all") {
+        const container = document.getElementById("catalogGrid");
+        container.innerHTML = "";
+        const filtered = filter === "all" ? products : products.filter(p => p.type === filter);
+        filtered.forEach(prod => {
+            const card = document.createElement("div");
+            card.className = "product-card";
+            card.innerHTML = `
+                <div class="product-img"><i class="${prod.icon} fa-3x"></i></div>
+                <div class="product-info">
+                    <div class="product-title">${prod.name}</div>
+                    <div class="product-price">${prod.price}</div>
+                    <button class="btn-outline" style="padding: 6px 20px; font-size: 13px;">Запросить опт</button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // фильтры
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    filterBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            filterBtns.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            const filterVal = btn.getAttribute("data-filter");
+            renderCatalog(filterVal);
+        });
+    });
+    renderCatalog("all");
+
+    // мобильное меню
+    const toggleBtn = document.getElementById("mobileMenuToggle");
+    const mainNav = document.getElementById("mainNav");
+    toggleBtn.addEventListener("click", () => {
+        mainNav.classList.toggle("open");
+    });
+
+    // модальное окно (партнёрство)
+    const modal = document.getElementById("globalModal");
+    const openModalBtns = [
+        document.getElementById("openPartnerModalBtn"),
+        document.getElementById("heroOrderBtn"),
+        document.getElementById("fastOrderBtn")
+    ];
+    openModalBtns.forEach(btn => {
+        if(btn) btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            modal.style.display = "flex";
+        });
+    });
+    const closeModalSpan = document.getElementById("closeModalBtn");
+    closeModalSpan.addEventListener("click", () => modal.style.display = "none");
+    window.addEventListener("click", (e) => { if(e.target === modal) modal.style.display = "none"; });
+
+    // обработка отправки модальной формы
+    const modalForm = document.getElementById("modalForm");
+    modalForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("✅ Спасибо! Наш менеджер свяжется с вами в ближайшее время.");
+        modal.style.display = "none";
+        modalForm.reset();
+    });
+
+    // главная контактная форма
+    const mainForm = document.getElementById("mainContactForm");
+    mainForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const toastDiv = document.createElement("div");
+        toastDiv.className = "toast-success";
+        toastDiv.innerText = "✅ Заявка отправлена, ждите звонка специалиста!";
+        document.body.appendChild(toastDiv);
+        setTimeout(() => toastDiv.remove(), 3500);
+        mainForm.reset();
+    });
+
+    // анимация при скролле
+    const observerElements = document.querySelectorAll(".animate-on-scroll");
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                scrollObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    observerElements.forEach(el => scrollObserver.observe(el));
+
+    // Дополнительный эффект для кнопок "Запросить опт" (динамически добавленные)
+    document.addEventListener("click", (e) => {
+        if(e.target.classList && e.target.classList.contains("btn-outline") && e.target.innerText.includes("Запросить опт")) {
+            e.preventDefault();
+            modal.style.display = "flex";
+        }
+    });
+</script>
+</body>
+</html>
