@@ -1,400 +1,725 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShadowBoost — Добавить сайт</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="description" content="ХИМАЛК – официальный дистрибьютор бытовой химии, хозтоваров и средств гигиены. Прямые поставки от производителей, оптовые цены, сотрудничество с сетями и розницей.">
+  <title>ХИМАЛК – дистрибьютор бытовой химии и хозтоваров</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0A0A0A;
-            color: #FFFFFF;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #1a1f2c;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
 
-        /* Неоновые фоновые элементы */
-        .neon-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
 
-        .neon-circle {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
-        }
+    /* Анимации при скролле */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-        .circle-1 {
-            width: 500px;
-            height: 500px;
-            background: #6366F1;
-            top: -200px;
-            left: -200px;
-            animation: float 20s ease-in-out infinite;
-        }
+    /* Header */
+    .header {
+      background-color: #ffffff;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.03);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #eef2f5;
+    }
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      flex-wrap: wrap;
+    }
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .logo span {
+      color: #0077b6;
+    }
+    .logo .sub {
+      font-size: 12px;
+      font-weight: 400;
+      color: #5c6f87;
+      display: block;
+      letter-spacing: 0;
+    }
+    .nav {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    .nav a {
+      text-decoration: none;
+      color: #1e2a3a;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav a:hover, .nav a.active {
+      color: #0077b6;
+    }
+    .btn-outline {
+      border: 1.5px solid #0077b6;
+      background: transparent;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: #0077b6;
+      transition: 0.2s;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn-outline:hover {
+      background: #0077b6;
+      color: white;
+    }
+    .btn-primary {
+      background: #0077b6;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 16px;
+      display: inline-block;
+      text-decoration: none;
+    }
+    .btn-primary:hover {
+      background: #005f8c;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,119,182,0.2);
+    }
+    .mobile-menu-btn {
+      display: none;
+      font-size: 26px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #1e2a3a;
+    }
 
-        .circle-2 {
-            width: 600px;
-            height: 600px;
-            background: #8B5CF6;
-            bottom: -300px;
-            right: -200px;
-            animation: float 25s ease-in-out infinite reverse;
-        }
+    /* Hero section с каплями воды */
+    .hero {
+      position: relative;
+      background: linear-gradient(135deg, #f0f6ff 0%, #e6edf8 100%);
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    .hero .container {
+      position: relative;
+      z-index: 2;
+      padding: 80px 24px;
+    }
+    .hero-grid {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+      flex-wrap: wrap;
+    }
+    .hero-content {
+      flex: 1;
+    }
+    .hero-content h1 {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 24px;
+      color: #0a2540;
+    }
+    .hero-content p {
+      font-size: 18px;
+      color: #2c3e50;
+      margin-bottom: 32px;
+      max-width: 550px;
+    }
+    .hero-stats {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    .stat-card {
+      background: white;
+      padding: 24px 20px;
+      border-radius: 24px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+    .stat-card .number {
+      font-size: 36px;
+      font-weight: 800;
+      color: #0077b6;
+    }
 
-        .circle-3 {
-            width: 300px;
-            height: 300px;
-            background: #10B981;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: pulse 8s ease-in-out infinite;
-        }
+    /* Секции */
+    .section {
+      padding: 70px 0;
+    }
+    .section-title {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      text-align: center;
+      color: #0a2540;
+    }
+    .section-sub {
+      text-align: center;
+      color: #5c6f87;
+      margin-bottom: 48px;
+      font-size: 18px;
+    }
+    .categories-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+    }
+    .category-card {
+      background: #f9fafc;
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: center;
+      width: 220px;
+      transition: 0.3s;
+      border: 1px solid #eef2f5;
+    }
+    .category-card i {
+      font-size: 48px;
+      color: #0077b6;
+      margin-bottom: 20px;
+    }
+    .category-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .category-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+    }
 
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(30px, 30px); }
-        }
+    /* Двойная секция: текст + анимация */
+    .double-section {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+      flex-wrap: wrap;
+    }
+    .double-text {
+      flex: 1;
+    }
+    .double-text h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #0a2540;
+    }
+    .double-text p {
+      font-size: 18px;
+      color: #2c3e50;
+      margin-bottom: 30px;
+    }
+    .double-media {
+      flex: 1;
+      text-align: center;
+    }
+    .double-media img, .double-media .gif-placeholder {
+      max-width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    .gif-placeholder {
+      background: #eef2f8;
+      padding: 40px;
+      border-radius: 20px;
+      display: inline-block;
+    }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 0.2; transform: translate(-50%, -50%) scale(1.2); }
-        }
+    /* Карточки преимуществ (4 колонки) */
+    .advantages-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    .adv-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 30px 20px;
+      text-align: center;
+      flex: 1;
+      min-width: 200px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      transition: all 0.3s;
+      border: 1px solid #eef2f5;
+    }
+    .adv-card i {
+      font-size: 40px;
+      color: #0077b6;
+      margin-bottom: 20px;
+    }
+    .adv-card h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
 
-        /* Основной контент */
-        .container {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 500px;
-            padding: 20px;
-        }
+    /* Бренды */
+    .brands-slider {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 30px;
+    }
+    .brand-item {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      width: 140px;
+      text-align: center;
+    }
+    .brand-item img {
+      max-width: 100px;
+      height: auto;
+      filter: grayscale(0%);
+      transition: 0.3s;
+    }
+    .brand-item:hover img {
+      filter: grayscale(0%);
+      transform: scale(1.05);
+    }
 
-        .card {
-            background: rgba(26, 24, 34, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 32px;
-            padding: 48px 40px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
+    /* Форма обратной связи */
+    .contact-form {
+      background: #ffffff;
+      border-radius: 32px;
+      box-shadow: 0 20px 35px rgba(0,0,0,0.05);
+      padding: 48px;
+      margin-top: 20px;
+    }
+    .form-grid {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    .form-left, .form-right {
+      flex: 1;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid #cdd9ed;
+      margin-bottom: 20px;
+      font-size: 15px;
+      transition: 0.2s;
+    }
+    input:focus, textarea:focus {
+      border-color: #0077b6;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(0,119,182,0.1);
+    }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 32px;
-        }
+    /* Footer */
+    .footer {
+      background: #0f172a;
+      color: #cbd5e1;
+      padding: 50px 0 20px;
+    }
+    .footer a {
+      color: #cbd5e1;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      color: white;
+    }
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-col {
+      flex: 1;
+      min-width: 180px;
+    }
+    .social-icons a {
+      font-size: 22px;
+      margin-right: 15px;
+    }
+    .copyright {
+      text-align: center;
+      border-top: 1px solid #1e293b;
+      padding-top: 25px;
+      font-size: 14px;
+    }
 
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #6366F1, #8B5CF6);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
+    /* Модальное окно */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: white;
+      max-width: 480px;
+      width: 90%;
+      border-radius: 32px;
+      padding: 32px;
+      position: relative;
+    }
+    .close-modal {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+    }
 
-        .logo-text {
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #6366F1, #8B5CF6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: #FFFFFF;
-        }
-
-        .subtitle {
-            color: #B0B0B0;
-            font-size: 16px;
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 500;
-            color: #FFFFFF;
-            font-size: 14px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 18px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            color: #FFFFFF;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #6366F1;
-            background: rgba(99, 102, 241, 0.1);
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
-        }
-
-        .form-input::placeholder {
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #6366F1, #8B5CF6);
-            color: white;
-            border: none;
-            border-radius: 16px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            margin-top: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .message {
-            padding: 15px;
-            border-radius: 12px;
-            margin-top: 20px;
-            display: none;
-            font-size: 14px;
-        }
-
-        .message.error {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #EF4444;
-            display: block;
-        }
-
-        .message.success {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #10B981;
-            display: block;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #B0B0B0;
-            text-decoration: none;
-            margin-top: 24px;
-            font-size: 14px;
-            transition: color 0.3s ease;
-        }
-
-        .back-link:hover {
-            color: #FFFFFF;
-        }
-
-        @media (max-width: 600px) {
-            .card {
-                padding: 32px 24px;
-            }
-            
-            .title {
-                font-size: 24px;
-            }
-            
-            .circle-1, .circle-2, .circle-3 {
-                opacity: 0.1;
-            }
-        }
-    </style>
+    /* Адаптивность */
+    @media (max-width: 900px) {
+      .nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: white;
+        padding: 20px;
+        gap: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      }
+      .nav.open {
+        display: flex;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .header-inner {
+        flex-wrap: wrap;
+      }
+      .hero-content h1 {
+        font-size: 34px;
+      }
+      .hero-stats {
+        margin-top: 20px;
+      }
+      .contact-form {
+        padding: 28px;
+      }
+      .section-title {
+        font-size: 28px;
+      }
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 0 16px;
+      }
+      .hero-grid {
+        flex-direction: column;
+      }
+      .category-card {
+        width: calc(50% - 12px);
+        padding: 20px;
+      }
+      .double-section {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Неоновые фоновые элементы -->
-    <div class="neon-bg">
-        <div class="neon-circle circle-1"></div>
-        <div class="neon-circle circle-2"></div>
-        <div class="neon-circle circle-3"></div>
-    </div>
 
+<div class="header">
+  <div class="container">
+    <div class="header-inner">
+      <div class="logo">
+        ХИМАЛК<span>®</span>
+        <div class="sub">дистрибуция бытовой химии</div>
+      </div>
+      <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+      <div class="nav" id="navMenu">
+        <a href="#" class="active">Главная</a>
+        <a href="#">Каталог</a>
+        <a href="#">О компании</a>
+        <a href="#">Партнёрам</a>
+        <a href="#">Контакты</a>
+        <button class="btn-outline" id="openPartnerBtn">Стать партнёром</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <!-- Hero с каплями воды -->
+  <section class="hero">
+    <!-- Изображение капель воды (можно заменить на свою ссылку) -->
+    <img class="hero-bg" src="https://i.imgur.com/6Z6WZQc.jpeg" alt="water drops" style="opacity:0.2; object-fit:cover;" onerror="this.style.display='none'">
     <div class="container">
-        <div class="card">
-            <div class="logo">
-                <div class="logo-icon">⚡</div>
-                <span class="logo-text">ShadowBoost</span>
-            </div>
-            
-            <h1 class="title">Добавить сайт</h1>
-            <p class="subtitle">Введите адрес сайта, чтобы начать продвижение</p>
-            
-            <div id="message" class="message"></div>
-            
-            <form id="addSiteForm">
-                <div class="form-group">
-                    <label for="siteUrl" class="form-label">
-                        URL сайта
-                    </label>
-                    <input 
-                        type="url" 
-                        id="siteUrl" 
-                        class="form-input" 
-                        placeholder="https://ваш-сайт.ru"
-                        required
-                        autofocus
-                    >
-                </div>
-                
-                <button type="submit" class="btn" id="submitBtn">
-                    <span>→</span>
-                    Продолжить
-                </button>
-            </form>
-            
-            <a href="dashboard.html" class="back-link">
-                ← Вернуться в кабинет
-            </a>
+      <div class="hero-grid">
+        <div class="hero-content fade-up">
+          <h1>Прямые поставки бытовой химии и хозтоваров от производителей</h1>
+          <p>ХИМАЛК — более 20 лет на рынке дистрибуции. Собственные склады, работа с федеральными сетями, индивидуальные условия для оптовиков.</p>
+          <button class="btn-primary" id="openOrderBtn">Запросить коммерческое предложение</button>
         </div>
+        <div class="hero-stats fade-up">
+          <div class="stat-card"><div class="number">150+</div><div>брендов-партнёров</div></div>
+          <div class="stat-card"><div class="number">8000+</div><div>наименований товаров</div></div>
+          <div class="stat-card"><div class="number">300+</div><div>клиентов по всей РФ</div></div>
+          <div class="stat-card"><div class="number">24/7</div><div>поставки и логистика</div></div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <script>
-        // Получаем элементы
-        const form = document.getElementById('addSiteForm');
-        const siteUrlInput = document.getElementById('siteUrl');
-        const submitBtn = document.getElementById('submitBtn');
-        const messageDiv = document.getElementById('message');
+  <!-- Категории товаров -->
+  <section class="section">
+    <div class="container">
+      <div class="section-title fade-up">Ключевые направления</div>
+      <div class="section-sub fade-up">Полный спектр товаров для дома, клининга и промышленности</div>
+      <div class="categories-grid fade-up">
+        <div class="category-card"><i class="fas fa-hand-sparkles"></i><h3>Бытовая химия</h3><div>порошки, гели, пятновыводители</div></div>
+        <div class="category-card"><i class="fas fa-pump-soap"></i><h3>Средства гигиены</h3><div>мыло, шампуни, гель для душа</div></div>
+        <div class="category-card"><i class="fas fa-tools"></i><h3>Хозтовары</h3><div>губки, перчатки, мешки для мусора</div></div>
+        <div class="category-card"><i class="fas fa-wind"></i><h3>Для уборки</h3><div>концентраты, чистящие средства</div></div>
+        <div class="category-card"><i class="fas fa-baby-carriage"></i><h3>Детские товары</h3><div>гипоаллергенные серии</div></div>
+      </div>
+    </div>
+  </section>
 
-        // Функция показа сообщения
-        function showMessage(text, type = 'error') {
-            messageDiv.textContent = text;
-            messageDiv.className = `message ${type}`;
-            
-            setTimeout(() => {
-                messageDiv.style.display = 'none';
-            }, 5000);
-        }
+  <!-- Преимущества (иконки) -->
+  <section class="section" style="background:#f8fafd;">
+    <div class="container">
+      <div class="section-title fade-up">Почему выбирают ХИМАЛК</div>
+      <div class="advantages-grid fade-up">
+        <div class="adv-card"><i class="fas fa-truck-fast"></i><h3>Собственная логистика</h3><div>Доставка по всей РФ</div></div>
+        <div class="adv-card"><i class="fas fa-tag"></i><h3>Гибкие цены</h3><div>Индивидуальные скидки</div></div>
+        <div class="adv-card"><i class="fas fa-certificate"></i><h3>Сертификаты качества</h3><div>Вся продукция сертифицирована</div></div>
+        <div class="adv-card"><i class="fas fa-users"></i><h3>Персональный менеджмент</h3><div>Личный подход</div></div>
+      </div>
+    </div>
+  </section>
 
-        // Валидация URL
-        function isValidUrl(url) {
-            try {
-                new URL(url);
-                return true;
-            } catch {
-                return false;
-            }
-        }
+  <!-- Сделать заказ в один день (анимация компьютер/телефон) -->
+  <section class="section">
+    <div class="container">
+      <div class="double-section">
+        <div class="double-text fade-up">
+          <h2>Сделать заказ и забрать его вы можете в один день</h2>
+          <p>Склад находится в пределах МКАД — после оформления заказа, забрать или получить его вы сможете в этот же день. Контроль каждой погрузки и оперативная обработка документов.</p>
+          <button class="btn-primary" id="openOrderBtn2">Оформить заказ</button>
+        </div>
+        <div class="double-media fade-up">
+          <!-- Анимированная картинка (взята из предоставленного кода: интерактивный веб-сайт GIF) -->
+          <img src="https://static.tildacdn.com/tild3935-6364-4330-b239-373432613661/interactive-website-.gif" alt="Анимация процессов на компьютере" style="max-width:100%; border-radius:20px;">
+        </div>
+      </div>
+    </div>
+  </section>
 
-        // Обработка отправки формы
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const siteUrl = siteUrlInput.value.trim();
-            
-            // Проверка на пустое поле
-            if (!siteUrl) {
-                showMessage('Введите URL сайта', 'error');
-                siteUrlInput.focus();
-                return;
-            }
-            
-            // Проверка формата URL
-            if (!isValidUrl(siteUrl)) {
-                showMessage('Введите корректный URL (например: https://example.ru)', 'error');
-                siteUrlInput.focus();
-                return;
-            }
-            
-            // Проверка авторизации
-            const userEmail = localStorage.getItem('shadowboost_email');
-            if (!userEmail) {
-                window.location.href = 'register.html';
-                return;
-            }
-            
-            // Сохраняем сайт
-            const siteData = {
-                id: Date.now().toString(),
-                url: siteUrl,
-                date: new Date().toISOString(),
-                status: 'draft', // draft - черновик, не запущен
-                settings: {}
-            };
-            
-            let sites = JSON.parse(localStorage.getItem('shadowboost_sites') || '[]');
-            sites.push(siteData);
-            localStorage.setItem('shadowboost_sites', JSON.stringify(sites));
-            localStorage.setItem('current_site_id', siteData.id);
-            localStorage.setItem('last_site_url', siteUrl);
-            
-            // Переходим в личный кабинет с этим сайтом
-            window.location.href = `dashboard.html?site=${siteData.id}`;
-        });
+  <!-- Контроль каждой погрузки и склад (изображение склада) -->
+  <section class="section" style="background:#f0f6fa;">
+    <div class="container">
+      <div class="double-section">
+        <div class="double-media fade-up">
+          <img src="https://i.imgur.com/Y8Z7ZQx.jpg" alt="Склад" style="max-width:100%; border-radius:20px;" onerror="this.src='https://via.placeholder.com/500x300?text=Склад'">
+        </div>
+        <div class="double-text fade-up">
+          <h2>Контроль каждой погрузки</h2>
+          <p>Каждый заказ мы контролируем лично, начиная от оформления документов до погрузки. Все накладные будут доставлены вам вместе с товаром вовремя. Поставки продукции на склад происходят 3-4 раза в месяц, поэтому вся бытовая химия всегда в наличии!</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        // Автофокус на поле ввода
-        siteUrlInput.focus();
-    </script>
+  <!-- Преимущества продукции (5 пунктов) -->
+  <section class="section">
+    <div class="container">
+      <div class="section-title fade-up">Преимущества продукции ХИМАЛК</div>
+      <div class="advantages-grid fade-up">
+        <div class="adv-card"><i class="fas fa-star"></i><h3>Уникальность</h3><div>Уникальный ассортимент, не имеющий аналогов</div></div>
+        <div class="adv-card"><i class="fas fa-check-circle"></i><h3>Качество</h3><div>Европейское сырьё, современное оборудование</div></div>
+        <div class="adv-card"><i class="fas fa-box"></i><h3>Упаковка</h3><div>Удобная и экономичная упаковка</div></div>
+        <div class="adv-card"><i class="fas fa-ruble-sign"></i><h3>Низкая цена</h3><div>Цена и отличные потребительские свойства</div></div>
+        <div class="adv-card"><i class="fas fa-handshake"></i><h3>Гарантия</h3><div>Успех на рынках Европы и СНГ</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Бренды (партнеры) -->
+  <section class="section" style="background:#ffffff;">
+    <div class="container">
+      <div class="section-title fade-up">Наши бренды</div>
+      <div class="brands-slider fade-up">
+        <div class="brand-item"><img src="https://via.placeholder.com/100x60?text=ZALCHEM" alt="ZALCHEM"></div>
+        <div class="brand-item"><img src="https://via.placeholder.com/100x60?text=CLOVIN" alt="CLOVIN"></div>
+        <div class="brand-item"><img src="https://via.placeholder.com/100x60?text=POWERWASH" alt="POWERWASH"></div>
+        <div class="brand-item"><img src="https://via.placeholder.com/100x60?text=WASCHKONIG" alt="WASCHKONIG"></div>
+        <div class="brand-item"><img src="https://via.placeholder.com/100x60?text=ELKOSAI" alt="ELKOSAI"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Форма обратной связи -->
+  <section class="section" style="background:#f8fafd;">
+    <div class="container">
+      <div class="section-title fade-up">Станьте нашим партнёром</div>
+      <div class="section-sub fade-up">Оставьте заявку, и мы предложим персональные условия сотрудничества</div>
+      <div class="contact-form fade-up">
+        <form id="partnerForm">
+          <div class="form-grid">
+            <div class="form-left">
+              <input type="text" placeholder="Ваше имя" required>
+              <input type="tel" placeholder="Телефон" required>
+            </div>
+            <div class="form-right">
+              <input type="email" placeholder="E-mail">
+              <textarea rows="3" placeholder="Комментарий / вид продукции"></textarea>
+            </div>
+          </div>
+          <div style="text-align: center;"><button class="btn-primary" type="submit">Отправить заявку</button></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="logo" style="color:white;">ХИМАЛК<span style="color:#44a6d4;">®</span></div>
+        <p style="margin-top:12px;">Оптовые поставки бытовой химии и хозтоваров с 2004 года.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Контакты</h4>
+        <p><i class="fas fa-phone-alt"></i> +7 (495) 123-45-67</p>
+        <p><i class="fas fa-envelope"></i> info@himalk.ru</p>
+        <p><i class="fas fa-map-marker-alt"></i> 115114, Москва, Дербеневская наб., 7</p>
+      </div>
+      <div class="footer-col">
+        <h4>Режим работы</h4>
+        <p>Пн–Пт: 9:00 – 19:00</p>
+        <p>Склад: круглосуточно</p>
+      </div>
+      <div class="footer-col">
+        <h4>Соцсети</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-telegram"></i></a>
+          <a href="#"><i class="fab fa-vk"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="copyright">© 2025 ООО «ХИМАЛК». Все права защищены. Коммерческое предложение по запросу.</div>
+  </div>
+</footer>
+
+<!-- Модальное окно -->
+<div id="partnerModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h3>Заявка на сотрудничество</h3>
+    <form id="modalForm">
+      <input type="text" placeholder="Компания / ИП" required>
+      <input type="text" placeholder="Контактное лицо" required>
+      <input type="tel" placeholder="Телефон" required>
+      <textarea rows="2" placeholder="Какая продукция интересует?"></textarea>
+      <button class="btn-primary" type="submit" style="width:100%;">Отправить</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Мобильное меню
+  const menuBtn = document.getElementById('mobileMenuBtn');
+  const navMenu = document.getElementById('navMenu');
+  menuBtn.addEventListener('click', () => navMenu.classList.toggle('open'));
+
+  // Модальное окно
+  const modal = document.getElementById('partnerModal');
+  const openPartnerBtn = document.getElementById('openPartnerBtn');
+  const openOrderBtn = document.getElementById('openOrderBtn');
+  const openOrderBtn2 = document.getElementById('openOrderBtn2');
+  const closeModal = document.querySelector('.close-modal');
+  
+  function openModalFunc() { modal.style.display = 'flex'; }
+  function closeModalFunc() { modal.style.display = 'none'; }
+  
+  if(openPartnerBtn) openPartnerBtn.addEventListener('click', openModalFunc);
+  if(openOrderBtn) openOrderBtn.addEventListener('click', openModalFunc);
+  if(openOrderBtn2) openOrderBtn2.addEventListener('click', openModalFunc);
+  closeModal.addEventListener('click', closeModalFunc);
+  window.addEventListener('click', (e) => { if(e.target === modal) closeModalFunc(); });
+  
+  // Отправка форм (заглушка)
+  const forms = document.querySelectorAll('form');
+  forms.forEach(form => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Спасибо! Наш менеджер свяжется с вами в ближайшее время.');
+      modal.style.display = 'none';
+      form.reset();
+    });
+  });
+
+  // Анимация при скролле
+  const fadeElements = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  fadeElements.forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
